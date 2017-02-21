@@ -1,11 +1,12 @@
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
-*.o
-*.a
-*.so
+# Object files
+.DS_Store
+.vscode
 
-# Folders
-_obj
-_test
+# Debug files
+*.dSYM/
+*.su
+debug
 
 # Architecture specific extensions/prefixes
 *.[568vq]
@@ -19,6 +20,31 @@ _cgo_export.*
 
 _testmain.go
 
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
 *.exe
-*.test
-*.prof
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex

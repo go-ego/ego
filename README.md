@@ -23,7 +23,7 @@ This is a work in progress.
 - [Update](#update)
 - [Examples](#examples)
 - [Test](#test)
-- [Futures](#futures)
+- [Plans](#plans)
 - [Donate](#donate)
 - [Acknowledgments](#acknowledgments)
 - [Contributing](#contributing)
@@ -72,7 +72,7 @@ go get -u github.com/go-ego/ego
 
 ```
 
-## Futures
+## Plans
 - Compression and merge css/js
 - CSS Preprocessing
 - Try supports MVVM and vdom

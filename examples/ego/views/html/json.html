@@ -1,0 +1,458 @@
+<!--
+// Copyright 2016 The go-ego Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// https://github.com/go-ego/ego/blob/master/LICENSE
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms. -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JSON</title>
+    <style type="text/css">
+        #title {
+            font-size: 20px;
+            text-align: center;
+        }
+        
+        .http-link {
+            margin-left: 10px;
+            color: rgba(0, 191, 255, .9);
+        }
+        
+        #keyword {
+            width: 99.5%;
+            height: 37px;
+            margin-top: 10px;
+            padding: 5px 10px;
+            outline: medium;
+            border-radius: 2px;
+            background-color: rgba(0, 0, 0, 0);
+            border: 0;
+            font-size: 1rem;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        
+        #abtn p {
+            height: 55px;
+            margin-bottom: 0px;
+            padding: 0 0 0 0;
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+            text-align: center;
+            line-height: 55px;
+            font-size: 20px;
+            color: #fff;
+        }
+        
+        #psearch {
+            left: 50%;
+            width: 50%;
+            background-color: rgba(0, 0, 0, .6);
+        }
+        
+        #prefresh {
+            /*left: 50%;*/
+            left: 0;
+            width: 50%;
+            background-color: rgba(0, 191, 255, .6);
+        }
+        /*.btn {
+             padding: 10px 85px; 
+        }*/
+        
+        .abtn {
+            font-size: 20px;
+            font-weight: 300;
+            /* color: #fff;*/
+            color: #1ab2e8;
+            cursor: pointer;
+            outline: none;
+            padding: 7px 98px;
+            border: 2px solid #1ab2e8;
+            background: none;
+            border-radius: 0.3em;
+            -o-border-radius: 0.3em;
+            -webkit-border-radius: 0.3em;
+            -moz-border-radius: 0.3em;
+        }
+        
+        .abtn:hover {
+            /*background: none;*/
+            background: #1ab2e8;
+            color: #fff;
+            border: 2px solid #1ab2e8;
+        }
+        
+        i {
+            border: 1px solid #555555;
+            border-radius: 3px;
+            text-align: center;
+            padding: 0px 2.8px;
+            margin-left: -10px;
+            max-height: 1px;
+            cursor: pointer;
+        }
+        
+        .canvas {
+            margin-top: 10px;
+            font: 10pt Georgia;
+            background-color: #FFFFFF;
+            color: #000000;
+            border: solid 1px #CECECE;
+            border-radius: 2px;
+            font-size: 14px;
+            line-height: 1.42857143;
+        }
+        
+        .objBrace {
+            color: #00AA00;
+            font-weight: bold
+        }
+        
+        .arrBrace {
+            color: #0033FF;
+            font-weight: bold
+        }
+        
+        .propertyBrace {
+            color: #92278f;
+            font-weight: bold
+        }
+        
+        .line-num {
+            /*text-align: left;*/
+            float: left;
+            color: #007777;
+        }
+        
+        .String {
+            color: #3ab54a;
+            font-weight: bold;
+        }
+        
+        .Number {
+            color: #25aae2;
+        }
+        
+        .Boolean {
+            color: #0000FF
+        }
+        
+        .Function {
+            color: #AA6633;
+            font-style: italic;
+        }
+        
+        .Null {
+            color: #0000FF;
+        }
+        
+        .Comma {
+            color: #000000;
+            font-weight: bold;
+        }
+        
+        pre.codeContainer {
+            margin: 0 0 0 28px;
+            padding: 10px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="title"><b>Test:</b><span class="http-link">{{.test}}</span></p>
+    <hr>
+    <input type="text" id="keyword" name="find" placeholder="Search Json">
+    <button type="submit" id="refresh" onclick="refresh()" class="btn abtn">Refresh</button>
+    <button type="submit" id="search" class="btn abtn">Search</button>
+    <!-- <br/> -->
+    <div id="canvas" class="canvas"></div>
+</body>
+<script type="text/javascript" src="ajax"></script>
+<script type="text/javascript">
+    function refresh() {
+        window.location.reload(true);
+    }
+
+    var aurl = decodeURI(window.location.href);
+    var strurl = aurl + "json";
+
+    renderJson(strurl);
+
+    function renderJson(url) {
+        ajax({
+            // type: 'post',
+            type: 'get',
+            url: url,
+            // contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function(data) {
+                console.log("data: ", data);
+
+                ProcessJson(data);
+
+                var fdata;
+                fdata = JSON.stringify(data, null, 4);
+
+            },
+            fail: function(error) {
+                console.log(JSON.stringify(error));
+            }
+        });
+    }
+
+    function clickCanvas() {
+        var canvas = document.getElementById("canvas");
+        canvas.onclick = function(ev) {
+
+            var ev = ev || window.event;
+            var target = ev.target || ev.srcElement;
+
+            if (target.nodeName.toLowerCase() == "i") {
+                var aid = target.getAttribute("id");
+
+                var objid = "obj" + aid;
+                if (document.getElementById(objid).style.display == "none") {
+                    document.getElementById(objid).style.display = "inline";
+                } else {
+                    document.getElementById(objid).style.display = "none";
+                }
+
+            }
+
+            if (target.nodeName.toLowerCase() == "span" || target.nodeName.toLowerCase() == "i") {
+                if (target.style.background != "rgb(212, 212, 212)") {
+                    // target.style.background = "red";
+                    target.style.background = "#d4d4d4";
+                } else {
+                    target.style.background = "#ffffff";
+                }
+            }
+        }
+    }
+
+    clickCanvas();
+
+    function isDisplay(arg) {
+
+        var isDisplay = arg.style.display;
+
+        if (isDisplay == "none") {
+            isDisplay = "inline-block";
+        } else {
+            isDisplay = "none";
+        }
+
+    }
+
+    function IsArray(obj) {
+        return obj && typeof obj === 'object' && typeof obj.length === 'number' && !(obj.propertyIsEnumerable('length'));
+    }
+
+    function getId(id) {
+        return document.getElementById(id)
+    }
+
+    getId('search').onclick = function() {
+
+        var content = JSON.parse(localStorage.getItem("sjson"));
+
+        var keyWord = getId('keyword').value;
+
+        if (keyWord == "" || keyWord == undefined) {
+            ProcessJson(JSON.stringify(content));
+            return;
+        }
+        var html = "";
+        var linenum = 0;
+        var jlen = content.length;
+        for (var key in content) {
+
+            for (akey in content[key]) {
+
+                if (content[key].length > 1) {
+
+                    for (ckey in content[key][akey]) {
+
+                        if (ckey.toLowerCase().indexOf(keyWord.toLowerCase()) != -1) {
+                            linenum++;
+                            if (linenum > jlen) {
+                                linenum = 1;
+                            }
+                            var conval;
+                            try {
+                                conval = content[key][linenum - 1][ckey];
+                            } catch (e) {
+                                // statements
+                                console.log(e);
+                            }
+
+                            html += '<b class="line-num">' + linenum + ': </b><span class="propertyBrace">' + ckey + '"</span>: <span class="String">' + conval + '<span class="Comma">,</span> </span></br>';
+
+                        }
+                    }
+                } else {
+                    if (akey.toLowerCase().indexOf(keyWord.toLowerCase()) != -1) {
+                        linenum++;
+                        if (linenum > jlen) {
+                            linenum = 1;
+                        }
+
+                        html += '<b class="line-num">' + linenum + ': </b><span class="propertyBrace">' + akey + '"</span>: <span class="String">' + content[linenum - 1][akey] + '<span class="Comma">,</span> </span></br>';
+                    }
+                }
+            }
+        }
+
+        document.getElementById("canvas").innerHTML = "<pre class='codeContainer'>" + html + "</pre>";
+    }
+
+    function ProcessJson(json) {
+        localStorage.setItem("sjson", json);
+        var jlen = JSON.parse(json).length;
+
+        window.TAB = "  ";
+        var html = "";
+
+        try {
+            if (json == "") json = "\"\"";
+            var obj = eval("[" + json + "]");
+            html = ProcessObj(obj[0], 0, false, false, false);
+            document.getElementById("canvas").innerHTML = '<pre class="codeContainer">' + html + "</pre>"
+
+            var x = document.getElementsByClassName("arrBrace");
+            for (var i = 0; i < x.length; i++) {
+
+                x[i].addEventListener('click', function(event) {
+
+                    var len = i / 2 - 1;
+                    // localStorage.setItem("alen", len);
+                    isDisplay(x[len]);
+                })
+            }
+        } catch (e) {
+            alert("JSON syntax error, can not be formatted, error message: \n" + e.message);
+            document.getElementById("canvas").innerHTML = "";
+        }
+    }
+
+    function Process() {
+        window.TAB = "  ";
+        var html = "";
+        var json = document.getElementById("RawJson").value;
+        try {
+            if (json == "") json = "\"\"";
+            var obj = eval("[" + json + "]");
+            html = ProcessObj(obj[0], 0, false, false, false);
+            document.getElementById("canvas").innerHTML = "<pre class='codeContainer'>" + html + "</pre>"
+
+            var x = document.getElementsByClassName("arrBrace");
+            for (var i = 0; i < x.length; i++) {
+
+                x[i].addEventListener('click', function(event) {
+
+                    var len = i / 2 - 1;
+                    isDisplay(x[len]);
+                })
+            }
+        } catch (e) {
+            alert("JSON syntax error, can not be formatted, error message: \n" + e.message);
+            document.getElementById("canvas").innerHTML = "";
+        }
+    }
+
+    function ProcessObj(obj, indent, addComma, isArray, isPropertyContent) {
+        var html = "";
+        var comma = (addComma) ? '<span class="Comma">,</span> ' : "";
+        var type = typeof obj;
+        var olen = 0;
+        var olenarr = [];
+        if (IsArray(obj)) {
+            if (obj.length == 0) {
+
+                html += GetRow(indent, '<span class="arrBrace"><i>-</i>[ ]</span>' + comma, isPropertyContent)
+            } else {
+
+                html += GetRow(indent, '<span class="arrBrace"><i id="i' + obj.length + '">-</i>[</span><label id="arri1">', isPropertyContent);
+                for (var i = 0; i < obj.length; i++) {
+                    // olen++;
+                    olen = i;
+                    olenarr.push(i);
+                    localStorage.setItem("olen", i);
+
+                    html += ProcessObj(obj[i], indent + 1, i < (obj.length - 1), true, false);
+                }
+                html += GetRow(indent, '<span class="arrBrace"></label>]</span>' + comma)
+            }
+        } else if (type == 'object' && obj == null) {
+            html += FmtLiteral("null", "", comma, indent, isArray, "Null")
+        } else if (type == 'object') {
+            var numProps = 0;
+            for (var prop in obj) numProps++;
+            if (numProps == 0) {
+                html += GetRow(indent, '<span class="objBrace">{ }</span>' + comma, isPropertyContent)
+            } else {
+
+                olen = localStorage.getItem("olen");
+
+                html += GetRow(indent, '<span class="objBrace"><i id="o' + olen + '">-</i>{</span><label id="objo' + olen + '">', isPropertyContent);
+                var j = 0;
+                for (var prop in obj) {
+                    html += GetRow(indent + 1, '<b class="line-num">' + j + '</b><span class="propertyBrace">' + prop + '"</span>: ' + ProcessObj(obj[prop], indent + 1, ++j < numProps, false, true));
+                    // console.log("line---------", j);
+                }
+                html += GetRow(indent, '<span class="objBrace"></label>}</span>' + comma);
+            }
+        } else if (type == 'number') {
+            html += FmtLiteral(obj, "", comma, indent, isArray, "Number");
+        } else if (type == 'boolean') {
+            html += FmtLiteral(obj, "", comma, indent, isArray, "Boolean");
+        } else if (type == 'function') {
+            obj = FmtFunc(indent, obj);
+            html += FmtLiteral(obj, "", comma, indent, isArray, "Function");
+        } else if (type == 'undefined') {
+            html += FmtLiteral("undefined", "", comma, indent, isArray, "Null");
+        } else {
+            html += FmtLiteral(obj, "\"", comma, indent, isArray, "String");
+        }
+
+        localStorage.removeItem("olen");
+        return html;
+    }
+
+    function FmtLiteral(literal, quote, comma, indent, isArray, style) {
+        if (typeof literal == 'string') literal = literal.split("<").join("&lt;").split(">").join("&gt;");
+        var str = '<span class="' + style + '">' + quote + literal + quote + comma + "</span>";
+        if (isArray) str = GetRow(indent, str);
+        return str
+    }
+
+    function FmtFunc(indent, obj) {
+        var tabs = "",
+            i;
+        for (i = 0; i < indent; i++) tabs += window.TAB;
+        var funcStrArray = obj.toString().split("\n");
+        var str = "";
+        for (i = 0; i < funcStrArray.length; i++) {
+            str += ((i == 0) ? "" : tabs) + funcStrArray[i] + "\n";
+        }
+        return str;
+    }
+
+    function GetRow(indent, data, isPropertyContent) {
+        var tabs = "";
+        for (var i = 0; i < indent && !isPropertyContent; i++) tabs += window.TAB;
+        if (data != null && data.length > 0 && data.charAt(data.length - 1) != "\n") data = data + "\n";
+        return tabs + data;
+    }
+</script>
+
+</html>

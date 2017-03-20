@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>my-ego</title>
+    <link rel="stylesheet" type="text/css" href="{{.root}}/src/toast/toast.css?2129404" />
+    <link rel="stylesheet" type="text/css" href="{{.root}}/src/icon/font.css?4324124" />
+    <style>
+    #banner {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    .icon-font {
+        max-height: 2rem;
+    }
+
+    #foot {
+        margin-top: 240px;
+    }
+    </style>
+    <style>
+    .header-left {
+        float: left;
+    }
+
+    .header-right {
+        float: right;
+    }
+
+    .iconfont {
+        position: relative;
+        font-size: 24px
+    }
+    </style>
+</head>
+
+<body>
+    <!-- <div>ego:{{.head}}</div> -->
+    <div id=app>
+        <div id="banner" class="icon-font">
+            <div class="head" id="head-11">
+                <p>go,go,go</p>
+                <p>{{.head}}</p>
+                <div class="icon">
+                    <i class="iconfont icon-star header-left" {node}></i>
+                    <p> tets-icon </p>
+                </div>
+                <div class="icon">
+                    <i class="iconfont icon-share-to" slot1></i>
+                    <p>node---1</p>
+                </div>
+            </div>
+            <div class="icon">
+                <i class="iconfont icon-share-to header-right"></i>
+                <p>node---2</p>
+            </div>
+            <p>banner</p>
+        </div>
+        <div id="foot">
+        </div>
+    </div>
+    <!-- built files will be auto injected -->
+</body>
+<script type="text/javascript" src="{{.root}}/src/toast/toast.js?6042474"></script>
+<script>
+toast("test");
+
+document.getElementById("foot").innerHTML = "foot";
+</script>
+
+</html>

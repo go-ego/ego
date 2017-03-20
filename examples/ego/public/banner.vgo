@@ -1,0 +1,57 @@
+import (
+	"toast"
+	head "head.vgo"
+
+	"icons"
+	icon "icons/icon.vgo"
+	)
+
+<div id="banner" class="icon-font">
+	<head>
+		title={go,go,go}
+		ahead="{{.head}}"
+		node={id="head-11"}
+
+		<icon vclass={icon-star header-left} prpo={ tets-icon }/>
+
+		<slot>
+			<icon>
+				vclass={icon-share-to}
+				node={ slot1}
+				prpo={node---1}
+			</icon>
+		</slot>
+
+		<icon
+			vclass={icon-share-to header-right}
+			node={ }
+			prpo={node---2}/>
+	</head>
+
+	<p>banner</p>
+</div>
+
+<div id="foot">
+
+</div>
+
+<style>
+	#banner {
+		fs:20px;
+		lh:20px;
+	}
+
+	.icon-font {
+		mh:2rem;
+	}
+
+	#foot{
+		mt:240px;
+	}
+</style>
+
+<script>
+	toast("test");
+
+	docid("foot").html="foot";
+</script>

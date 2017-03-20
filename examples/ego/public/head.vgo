@@ -1,0 +1,22 @@
+
+import (
+	"icons"
+	icon "icons/icon.vgo"
+	)
+
+<div class="head" {node}>
+	<p>{title}</p>
+	<p>{ahead}</p>
+
+	<icon>
+		...
+	</icon>
+
+	<slot></slot>
+</div>
+
+// <slot></slot>
+
+<icon>
+	...
+</icon>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>my-ego</title>
+    <link rel="stylesheet" type="text/css" href="{{.root}}/src/icon/font.css?1660623" />
+    <style>
+    .header-left {
+        float: left;
+    }
+
+    .header-right {
+        float: right;
+    }
+
+    .iconfont {
+        position: relative;
+        font-size: 24px
+    }
+    </style>
+</head>
+
+<body>
+    <!-- <div>ego:{{.head}}</div> -->
+    <div id=app>
+        <div class="head">
+            <div>ego:{{.head}}</div>
+            <div class="icon">
+                <i class="iconfont icon-share-to" id="slot1"></i>
+                <p>node---1</p>
+            </div>
+            <div>
+                {{range .parArr}}
+                <p>arr:::: {{.}}</p>
+                {{end}}
+            </div>
+        </div>
+    </div>
+    <!-- built files will be auto injected -->
+</body>
+
+</html>

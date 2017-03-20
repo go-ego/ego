@@ -1,0 +1,33 @@
+.toast-container {
+    position: fixed;
+    z-index: 9999;
+    /* bottom: 60px; */
+    top: 10rem;
+    width: 100%;
+    -webkit-transition: opacity .8s;
+    transition: opacity .8s;
+    opacity: 0;
+}
+
+.toast-container.active {
+    opacity: 0.8;
+}
+
+.toast-msg {
+    width: 5.5rem;
+    height: 5.5rem;
+    margin: 2px auto;
+    padding: 10px;
+    text-align: center;
+    border-radius: 7px;
+    background-color: #343434;
+    color: #ffffff;
+    font-size: 2.6rem;
+    /*  background-color: #d8d8d8;
+    color: #555; */
+}
+
+.toast-text {
+    font-size: 1.8rem;
+    margin-top: 8px;
+}

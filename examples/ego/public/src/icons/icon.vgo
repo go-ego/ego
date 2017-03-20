@@ -1,0 +1,22 @@
+// pkg icon
+
+<div class="icon">
+	<i class="iconfont {vclass}" {node}></i>
+	<p>{prpo}</p>
+</div>
+
+<style>
+
+.header-left{
+	float:left;
+}
+
+.header-right{
+	float:right;
+}
+
+.iconfont {
+  position: relative;
+  font-size:24px
+}
+</style>

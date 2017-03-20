@@ -21,6 +21,7 @@ This is a work in progress.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Update](#update)
+- [Build-tools](#build-tools)
 - [Examples](#examples)
 - [TestJson](#testjson)
 - [Plans](#plans)
@@ -45,6 +46,23 @@ go get github.com/go-ego/ego
 ## Update:
 ```
 go get -u github.com/go-ego/ego  
+```
+## Build-tools
+```
+go get -u github.com/go-ego/e 
+```
+### e new 
+To create a new Ego web application
+
+```
+$ e new my-webapp
+```
+
+### e run
+
+To run the application we just created, you can navigate to the application folder and execute:
+```
+$ cd my-webapp && e run
 ```
 
 ## [Examples:](https://github.com/go-ego/ego/tree/master/examples)
@@ -103,7 +121,7 @@ func main() {
 
 ```
 
-####[head.vgo](https://github.com/go-ego/ego/blob/master/examples/ego/public/head/head.vgo)
+#### [head.vgo](https://github.com/go-ego/ego/blob/master/examples/ego/public/head/head.vgo)
 
 ```html
 import (
@@ -158,7 +176,7 @@ func main() {
   }
   router.TestHtml(strUrl, paramMap)
 
-	router.Run(":3100")
+  router.Run(":3100")
 }
 
 ```

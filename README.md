@@ -26,9 +26,9 @@ This is a work in progress.
 - [TestJson](#testjson)
 - [Plans](#plans)
 - [Donate](#donate)
-- [Acknowledgments](#acknowledgments)
 - [Contributing](#contributing)
 - [License](#license)
+<!--- [Acknowledgments](#acknowledgments)-->
 
 ## Docs
   - [API Docs](https://github.com/go-ego/ego/blob/master/docs/doc.md) &nbsp;&nbsp;&nbsp;
@@ -189,9 +189,9 @@ func main() {
 
 ## Donate
 - Supporting ego, [buy me a coffee](https://github.com/go-vgo/buy-me-a-coffee).
-## Acknowledgments
-<!--- Thanks Ego for designing logo.-->
-- Thanks [gin](https://github.com/gin-gonic/gin) for providing power.
+<!--## Acknowledgments
+- Thanks Ego for designing logo.
+- Thanks [gin](https://github.com/gin-gonic/gin) for providing power.-->
 ## Contributing
 
 - To contribute to Ego, please see [Contribution Guidelines](https://github.com/go-ego/ego/blob/master/CONTRIBUTING.md).

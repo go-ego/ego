@@ -39,7 +39,7 @@ func roomGET(c *ego.Context) {
 	if len(nick) > 13 {
 		nick = nick[0:12] + "..."
 	}
-	c.HTML(200, "room_loego.templ.html", ego.H{
+	c.HTML(200, "room_loego.templ.html", ego.Map{
 		"roomid":    roomid,
 		"nick":      nick,
 		"timestamp": time.Now().Unix(),
@@ -56,14 +56,14 @@ func roomPOST(c *ego.Context) {
 	validMessage := len(message) > 1 && len(message) < 200
 	validNick := len(nick) > 1 && len(nick) < 14
 	if !validMessage || !validNick {
-		c.JSON(400, ego.H{
+		c.JSON(400, ego.Map{
 			"status": "failed",
 			"error":  "the message or nickname is too long",
 		})
 		return
 	}
 
-	post := ego.H{
+	post := ego.Map{
 		"nick":    html.EscapeString(nick),
 		"message": html.EscapeString(message),
 	}

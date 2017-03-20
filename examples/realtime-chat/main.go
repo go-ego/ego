@@ -34,7 +34,7 @@ func stream(c *ego.Context) {
 func roomGET(c *ego.Context) {
 	roomid := c.Param("roomid")
 	userid := fmt.Sprint(rand.Int31())
-	c.HTML(200, "chat_room", ego.H{
+	c.HTML(200, "chat_room", ego.Map{
 		"roomid": roomid,
 		"userid": userid,
 	})
@@ -46,7 +46,7 @@ func roomPOST(c *ego.Context) {
 	message := c.PostForm("message")
 	room(roomid).Submit(userid + ": " + message)
 
-	c.JSON(200, ego.H{
+	c.JSON(200, ego.Map{
 		"status":  "success",
 		"message": message,
 	})

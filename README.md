@@ -149,7 +149,7 @@ import (
 ```
 
 <p align="center">
-    <img src="https://github.com/go-ego/ego/tree/master/img/head.png" width="500" hight="500">
+    <img src="https://github.com/go-ego/ego/blob/master/img/head.png" width="500" hight="500">
 </p>
 
 ## TestJson
@@ -185,7 +185,7 @@ func main() {
 
 ```
 <p align="center">
-    <img src="https://github.com/go-ego/ego/tree/master/img/test.png" width="500" hight="500">
+    <img src="https://github.com/go-ego/ego/blob/master/img/test.png" width="500" hight="500">
 </p>
 
 ## Plans

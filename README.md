@@ -3,8 +3,8 @@
 <!--[![Build Status](https://travis-ci.org/go-ego/ego.svg)](https://travis-ci.org/go-ego/ego)
 [![codecov](https://codecov.io/gh/go-ego/ego/branch/master/graph/badge.svg)](https://codecov.io/gh/go-ego/ego)-->
 <!--<a href="https://circleci.com/gh/go-ego/ego/tree/dev"><img src="https://img.shields.io/circleci/project/go-ego/ego/dev.svg" alt="Build Status"></a>-->
-[![CircleCI Status](https://circleci.com/gh/go-ego/ego.svg?style=shield)](https://circleci.com/gh/go-ego/ego)
-[![Go Report Card](https://goreportcard.com/badge/github.com/go-ego/ego)](https://goreportcard.com/report/github.com/go-ego/ego)
+<!--[![CircleCI Status](https://circleci.com/gh/go-ego/ego.svg?style=shield)](https://circleci.com/gh/go-ego/ego)
+[![Go Report Card](https://goreportcard.com/badge/github.com/go-ego/ego)](https://goreportcard.com/report/github.com/go-ego/ego)-->
 [![GoDoc](https://godoc.org/github.com/go-ego/ego?status.svg)](https://godoc.org/github.com/go-ego/ego)
 [![Release](https://github-release-version.herokuapp.com/github/go-ego/ego/release.svg?style=flat)](https://github.com/go-ego/ego/releases/latest)
 [![Join the chat at https://gitter.im/go-ego/ego](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-ego/ego?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -22,7 +22,7 @@ This is a work in progress.
 - [Installation](#installation)
 - [Update](#update)
 - [Examples](#examples)
-- [Test](#test)
+- [TestJson](#testjson)
 - [Plans](#plans)
 - [Donate](#donate)
 - [Acknowledgments](#acknowledgments)
@@ -47,28 +47,119 @@ go get github.com/go-ego/ego
 go get -u github.com/go-ego/ego  
 ```
 
-##[Examples:](https://github.com/go-ego/ego/blob/master/example/main.go)
+## [Examples:](https://github.com/go-ego/ego/tree/master/examples)
 
-####[M](https://github.com/go-ego/ego/blob/master/example/)
+#### [Router](https://github.com/go-ego/ego/blob/master/examples/ego/main.go)
 
 ```Go
+  package main
 
+import (
+	"github.com/go-ego/ego"
+)
+
+func main() {
+
+	router := ego.Classic()
+	ego.UseRenders()
+
+	router.GlobHTML("views/html/*")
+
+	parArr := [5]int{1, 2, 3, 4, 5}
+	router.EgoRouter("/head/", "head/head.html", ego.Map{
+		"head":   "Test to load the HTML template",
+		"parArr": parArr,
+	})
+
+	router.Run(":3100")
+}
 ``` 
 
-####[K](https://github.com/go-ego/ego/blob/master/example/)
+#### [icon.vgo](https://github.com/go-ego/ego/tree/master/examples/ego/public/src/icons)
 
-```Go
+```html
+// pkg icon
+
+<div class="icon">
+	<i class="iconfont {vclass}" {node}></i>
+	<p>{prpo}</p>
+</div>
+
+<style>
+
+.header-left{
+	float:left;
+}
+
+.header-right{
+	float:right;
+}
+
+.iconfont {
+  position: relative;
+  font-size:24px
+}
+</style>
 
 ```
 
-####[S](https://github.com/go-ego/ego/blob/master/example/)
+####[head.vgo](https://github.com/go-ego/ego/blob/master/examples/ego/public/head/head.vgo)
 
-```Go
+```html
+import (
+	"icons"
+	icon "icons/icon.vgo"
+	)
+
+<div class="head">
+	<div>ego:{{.head}}</div>
+
+	<icon>
+		vclass={icon-share-to}
+		node={ id="slot1"}
+		prpo={node---1}
+	</icon>
+
+	<div>
+		{{range .parArr}}
+	        <p>arr::: {{.}}</p>
+		{{end}}
+	</div>
+
+</div>
 
 ```
 
-## Test
+## TestJson
 ```Go
+
+package main
+
+import (
+	"github.com/go-ego/ego"
+)
+
+const httpUrl string = "http://127.0.0.1:3000"
+
+func main() {
+
+  router := ego.Classic()
+  ego.UseRenders()
+
+  router.Static("/js", "./views/js")
+  router.Static("/src", "./views/src")
+  router.GlobHTML("views/html/*")
+
+  strUrl := httpUrl + "/test/hlist"
+  paramMap := ego.Map{
+    "lon":  "10.1010101",
+    "lat":  "20.202020",
+    "type": "1",
+  }
+  router.TestHtml(strUrl, paramMap)
+
+	router.Run(":3100")
+}
 
 ```
 

@@ -37,7 +37,7 @@ This is a work in progress.
 
 ## Requirements:
 
-Now, Please make sure Golang is installed correctly before installing Ego.
+Go Version ≥1.7
 
 ## Installation:
 ```

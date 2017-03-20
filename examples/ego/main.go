@@ -36,12 +36,12 @@ func main() {
 	// router.TestHtml(strUrl, paramMap)
 
 	router.EgoRouter("/banner/", "banner.html", ego.Map{
-		"head": "测试加载HTML模板",
+		"head": "Test to load the HTML template",
 	})
 
 	parArr := [5]int{1, 2, 3, 4, 5}
 	router.EgoRouter("/head/", "head/head.html", ego.Map{
-		"head":   "测试加载HTML模板",
+		"head":   "Test to load the HTML template",
 		"parArr": parArr,
 	})
 

@@ -12,9 +12,9 @@ import (
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Welcome Gin Server")
+	router := ego.Default()
+	router.GET("/", func(c *ego.Context) {
+		c.String(http.StatusOK, "Welcome ego Server")
 	})
 
 	server := &http.Server{

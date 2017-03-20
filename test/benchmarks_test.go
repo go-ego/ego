@@ -1,4 +1,4 @@
-package ego
+package test
 
 import (
 	"html/template"

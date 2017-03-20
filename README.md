@@ -70,7 +70,7 @@ $ cd my-webapp && e run
 #### [Router](https://github.com/go-ego/ego/blob/master/examples/ego/main.go)
 
 ```Go
-  package main
+package main
 
 import (
 	"github.com/go-ego/ego"
@@ -147,6 +147,7 @@ import (
 </div>
 
 ```
+### Renderings:
 
 <p align="center">
     <img src="https://github.com/go-ego/ego/blob/master/img/head.png" width="700" hight="500">
@@ -184,6 +185,8 @@ func main() {
 }
 
 ```
+### Renderings:
+
 <p align="center">
     <img src="https://github.com/go-ego/ego/blob/master/img/test.png" width="700" hight="500">
 </p>

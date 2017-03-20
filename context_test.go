@@ -427,7 +427,7 @@ func TestContextRenderJSON(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.JSON(201, H{"foo": "bar"})
+	c.JSON(201, Map{"foo": "bar"})
 
 	assert.Equal(t, 201, w.Code)
 	assert.Equal(t, "{\"foo\":\"bar\"}", w.Body.String())
@@ -439,7 +439,7 @@ func TestContextRenderNoContentJSON(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.JSON(204, H{"foo": "bar"})
+	c.JSON(204, Map{"foo": "bar"})
 
 	assert.Equal(t, 204, w.Code)
 	assert.Equal(t, "", w.Body.String())
@@ -453,7 +453,7 @@ func TestContextRenderAPIJSON(t *testing.T) {
 	c, _ := CreateTestContext(w)
 
 	c.Header("Content-Type", "application/vnd.api+json")
-	c.JSON(201, H{"foo": "bar"})
+	c.JSON(201, Map{"foo": "bar"})
 
 	assert.Equal(t, 201, w.Code)
 	assert.Equal(t, "{\"foo\":\"bar\"}", w.Body.String())
@@ -466,7 +466,7 @@ func TestContextRenderNoContentAPIJSON(t *testing.T) {
 	c, _ := CreateTestContext(w)
 
 	c.Header("Content-Type", "application/vnd.api+json")
-	c.JSON(204, H{"foo": "bar"})
+	c.JSON(204, Map{"foo": "bar"})
 
 	assert.Equal(t, 204, w.Code)
 	assert.Equal(t, "", w.Body.String())
@@ -479,7 +479,7 @@ func TestContextRenderIndentedJSON(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.IndentedJSON(201, H{"foo": "bar", "bar": "foo", "nested": H{"foo": "bar"}})
+	c.IndentedJSON(201, Map{"foo": "bar", "bar": "foo", "nested": Map{"foo": "bar"}})
 
 	assert.Equal(t, w.Code, 201)
 	assert.Equal(t, w.Body.String(), "{\n    \"bar\": \"foo\",\n    \"foo\": \"bar\",\n    \"nested\": {\n        \"foo\": \"bar\"\n    }\n}")
@@ -491,7 +491,7 @@ func TestContextRenderNoContentIndentedJSON(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.IndentedJSON(204, H{"foo": "bar", "bar": "foo", "nested": H{"foo": "bar"}})
+	c.IndentedJSON(204, Map{"foo": "bar", "bar": "foo", "nested": Map{"foo": "bar"}})
 
 	assert.Equal(t, 204, w.Code)
 	assert.Equal(t, "", w.Body.String())
@@ -506,7 +506,7 @@ func TestContextRenderHTML(t *testing.T) {
 	templ := template.Must(template.New("t").Parse(`Hello {{.name}}`))
 	router.SetHTMLTemplate(templ)
 
-	c.HTML(201, "t", H{"name": "alexandernyquist"})
+	c.HTML(201, "t", Map{"name": "alexandernyquist"})
 
 	assert.Equal(t, w.Code, 201)
 	assert.Equal(t, w.Body.String(), "Hello alexandernyquist")
@@ -520,7 +520,7 @@ func TestContextRenderNoContentHTML(t *testing.T) {
 	templ := template.Must(template.New("t").Parse(`Hello {{.name}}`))
 	router.SetHTMLTemplate(templ)
 
-	c.HTML(204, "t", H{"name": "alexandernyquist"})
+	c.HTML(204, "t", Map{"name": "alexandernyquist"})
 
 	assert.Equal(t, 204, w.Code)
 	assert.Equal(t, "", w.Body.String())
@@ -533,7 +533,7 @@ func TestContextRenderXML(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.XML(201, H{"foo": "bar"})
+	c.XML(201, Map{"foo": "bar"})
 
 	assert.Equal(t, w.Code, 201)
 	assert.Equal(t, w.Body.String(), "<map><foo>bar</foo></map>")
@@ -545,7 +545,7 @@ func TestContextRenderNoContentXML(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.XML(204, H{"foo": "bar"})
+	c.XML(204, Map{"foo": "bar"})
 
 	assert.Equal(t, 204, w.Code)
 	assert.Equal(t, "", w.Body.String())
@@ -638,7 +638,7 @@ func TestContextRenderSSE(t *testing.T) {
 		Id:   "123",
 		Data: "text",
 	})
-	c.SSEvent("chat", H{
+	c.SSEvent("chat", Map{
 		"foo": "bar",
 		"bar": "foo",
 	})
@@ -664,7 +664,7 @@ func TestContextRenderYAML(t *testing.T) {
 	w := httptest.NewRecorder()
 	c, _ := CreateTestContext(w)
 
-	c.YAML(201, H{"foo": "bar"})
+	c.YAML(201, Map{"foo": "bar"})
 
 	assert.Equal(t, w.Code, 201)
 	assert.Equal(t, w.Body.String(), "foo: bar\n")

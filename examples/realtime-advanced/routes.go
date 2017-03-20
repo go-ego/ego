@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-ego/ego"
 )
 
-func rateLimit(c *gin.Context) {
+func rateLimit(c *ego.Context) {
 
 	ip := c.ClientIP()
 	value := int(ips.Add(ip, 1))
@@ -26,11 +26,11 @@ func rateLimit(c *gin.Context) {
 	}
 }
 
-func index(c *gin.Context) {
+func index(c *ego.Context) {
 	c.Redirect(301, "/room/hn")
 }
 
-func roomGET(c *gin.Context) {
+func roomGET(c *ego.Context) {
 	roomid := c.Param("roomid")
 	nick := c.Query("nick")
 	if len(nick) < 2 {
@@ -39,7 +39,7 @@ func roomGET(c *gin.Context) {
 	if len(nick) > 13 {
 		nick = nick[0:12] + "..."
 	}
-	c.HTML(200, "room_login.templ.html", gin.H{
+	c.HTML(200, "room_loego.templ.html", ego.H{
 		"roomid":    roomid,
 		"nick":      nick,
 		"timestamp": time.Now().Unix(),
@@ -47,7 +47,7 @@ func roomGET(c *gin.Context) {
 
 }
 
-func roomPOST(c *gin.Context) {
+func roomPOST(c *ego.Context) {
 	roomid := c.Param("roomid")
 	nick := c.Query("nick")
 	message := c.PostForm("message")
@@ -56,14 +56,14 @@ func roomPOST(c *gin.Context) {
 	validMessage := len(message) > 1 && len(message) < 200
 	validNick := len(nick) > 1 && len(nick) < 14
 	if !validMessage || !validNick {
-		c.JSON(400, gin.H{
+		c.JSON(400, ego.H{
 			"status": "failed",
 			"error":  "the message or nickname is too long",
 		})
 		return
 	}
 
-	post := gin.H{
+	post := ego.H{
 		"nick":    html.EscapeString(nick),
 		"message": html.EscapeString(message),
 	}
@@ -72,7 +72,7 @@ func roomPOST(c *gin.Context) {
 	c.JSON(200, post)
 }
 
-func streamRoom(c *gin.Context) {
+func streamRoom(c *ego.Context) {
 	roomid := c.Param("roomid")
 	listener := openListener(roomid)
 	ticker := time.NewTicker(1 * time.Second)

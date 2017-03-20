@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-ego/ego"
 )
 
 func main() {
 	ConfigRuntime()
 	StartWorkers()
-	StartGin()
+	StartEgo()
 }
 
 func ConfigRuntime() {
@@ -23,11 +23,11 @@ func StartWorkers() {
 	go statsWorker()
 }
 
-func StartGin() {
-	gin.SetMode(gin.ReleaseMode)
+func StartEgo() {
+	ego.SetMode(ego.ReleaseMode)
 
-	router := gin.New()
-	router.Use(rateLimit, gin.Recovery())
+	router := ego.New()
+	router.Use(rateLimit, ego.Recovery())
 	router.LoadHTMLGlob("resources/*.templ.html")
 	router.Static("/static", "resources/static")
 	router.GET("/", index)

@@ -5,11 +5,11 @@ import (
 	"io"
 	"math/rand"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-ego/ego"
 )
 
 func main() {
-	router := gin.Default()
+	router := ego.Default()
 	router.SetHTMLTemplate(html)
 
 	router.GET("/room/:roomid", roomGET)
@@ -20,7 +20,7 @@ func main() {
 	router.Run(":3000")
 }
 
-func stream(c *gin.Context) {
+func stream(c *ego.Context) {
 	roomid := c.Param("roomid")
 	listener := openListener(roomid)
 	defer closeListener(roomid, listener)
@@ -31,28 +31,28 @@ func stream(c *gin.Context) {
 	})
 }
 
-func roomGET(c *gin.Context) {
+func roomGET(c *ego.Context) {
 	roomid := c.Param("roomid")
 	userid := fmt.Sprint(rand.Int31())
-	c.HTML(200, "chat_room", gin.H{
+	c.HTML(200, "chat_room", ego.H{
 		"roomid": roomid,
 		"userid": userid,
 	})
 }
 
-func roomPOST(c *gin.Context) {
+func roomPOST(c *ego.Context) {
 	roomid := c.Param("roomid")
 	userid := c.PostForm("user")
 	message := c.PostForm("message")
 	room(roomid).Submit(userid + ": " + message)
 
-	c.JSON(200, gin.H{
+	c.JSON(200, ego.H{
 		"status":  "success",
 		"message": message,
 	})
 }
 
-func roomDELETE(c *gin.Context) {
+func roomDELETE(c *ego.Context) {
 	roomid := c.Param("roomid")
 	deleteBroadcast(roomid)
 }

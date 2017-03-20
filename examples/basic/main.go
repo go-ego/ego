@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/go-ego/ego"
 )
 
 var DB = make(map[string]string)

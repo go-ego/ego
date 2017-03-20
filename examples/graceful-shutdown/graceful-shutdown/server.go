@@ -10,14 +10,14 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-ego/ego"
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/", func(c *gin.Context) {
+	router := ego.Default()
+	router.GET("/", func(c *ego.Context) {
 		time.Sleep(5 * time.Second)
-		c.String(http.StatusOK, "Welcome Gin Server")
+		c.String(http.StatusOK, "Welcome ego Server")
 	})
 
 	srv := &http.Server{

@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-const BindKey = "_gin-gonic/gin/bindkey"
+const BindKey = "_go-ego/ego/bindkey"
 
 func Bind(val interface{}) HandlerFunc {
 	value := reflect.ValueOf(val)

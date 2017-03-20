@@ -6,13 +6,13 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-ego/ego"
 )
 
 func main() {
-	router := gin.Default()
+	router := ego.Default()
 	router.Static("/", "./public")
-	router.POST("/upload", func(c *gin.Context) {
+	router.POST("/upload", func(c *ego.Context) {
 		name := c.PostForm("name")
 		email := c.PostForm("email")
 

@@ -10,7 +10,7 @@
 [![Join the chat at https://gitter.im/go-ego/ego](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-ego/ego?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!--<a href="https://github.com/go-ego/ego/releases"><img src="https://img.shields.io/badge/%20version%20-%206.0.0%20-blue.svg?style=flat-square" alt="Releases"></a>-->
   
-  >Ego is a full-stack web framework written in Go, lightweight and efficient front-end component solutions. Thanks [gin](https://github.com/gin-gonic/gin) for providing power.
+  >Ego is a full-stack web framework written in Go, lightweight and efficient front-end component solutions, based on gin. The front-end is compiled, does not affect the back-end. Thanks [gin](https://github.com/gin-gonic/gin) for providing power.
 
 This is a work in progress.
 

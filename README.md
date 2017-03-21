@@ -28,7 +28,6 @@ This is a work in progress.
 - [Donate](#donate)
 - [Contributing](#contributing)
 - [License](#license)
-<!--- [Acknowledgments](#acknowledgments)-->
 
 ## Docs
   - [API Docs](https://github.com/go-ego/ego/blob/master/docs/doc.md) &nbsp;&nbsp;&nbsp;
@@ -167,7 +166,6 @@ const httpUrl string = "http://127.0.0.1:3000"
 func main() {
 
   router := ego.Classic()
-  ego.UseRenders()
 
   router.Static("/js", "./views/js")
   router.Static("/src", "./views/src")
@@ -199,9 +197,7 @@ func main() {
 
 ## Donate
 - Supporting ego, [buy me a coffee](https://github.com/go-vgo/buy-me-a-coffee).
-<!--## Acknowledgments
-- Thanks Ego for designing logo.
-- Thanks [gin](https://github.com/gin-gonic/gin) for providing power.-->
+
 ## Contributing
 
 - To contribute to Ego, please see [Contribution Guidelines](https://github.com/go-ego/ego/blob/master/CONTRIBUTING.md).

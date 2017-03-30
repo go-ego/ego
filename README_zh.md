@@ -14,8 +14,6 @@
 
 这是一项正在完善的工作.
 
-[简体中文](https://github.com/go-ego/ego/blob/master/README_zh.md)
-
 ## Contents
 - [Docs](#docs)
 - [Requirements](#requirements)

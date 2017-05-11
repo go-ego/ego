@@ -46,22 +46,22 @@ go get github.com/go-ego/ego
 ```
 go get -u github.com/go-ego/ego  
 ```
-## [Build-tools](https://github.com/go-ego/e)
+## [Build-tools](https://github.com/go-ego/re)
 ```
-go get -u github.com/go-ego/e 
+go get -u github.com/go-ego/re 
 ```
-### e new 
+### re new 
 To create a new Ego web application
 
 ```
-$ e new my-webapp
+$ re new my-webapp
 ```
 
-### e run
+### re run
 
 To run the application we just created, you can navigate to the application folder and execute:
 ```
-$ cd my-webapp && e run
+$ cd my-webapp && re run
 ```
 
 ## [Examples:](https://github.com/go-ego/ego/tree/master/examples)

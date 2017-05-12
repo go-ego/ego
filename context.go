@@ -18,7 +18,7 @@ import (
 
 	"github.com/go-ego/ego/mid/binding"
 	"github.com/go-ego/ego/mid/render"
-	"github.com/go-ego/egom/mid/util"
+	"github.com/go-ego/ego/mid/util"
 
 	"gopkg.in/gin-contrib/sse.v0"
 )

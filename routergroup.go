@@ -21,7 +21,7 @@ import (
 	"regexp"
 	"strings"
 
-	"githb.com/go-ego/ego/mid/util"
+	"github.com/go-ego/ego/mid/util"
 	"github.com/go-ego/ego/renders"
 )
 

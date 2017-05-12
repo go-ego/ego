@@ -8,7 +8,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/go-ego/ego/middle/binding"
+	"github.com/go-ego/ego/mid/binding"
 )
 
 const ENV_GIN_MODE = "GIN_MODE"

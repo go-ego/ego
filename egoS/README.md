@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	egoS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
+	egoS.GET("/", func(c *ego.Context) { c.String(200, "Hello World") })
 	egoS.Run()
 }
 ```

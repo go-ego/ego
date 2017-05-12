@@ -73,12 +73,11 @@ package main
 
 import (
 	"github.com/go-ego/ego"
-	"github.com/go-ego/ego/mid"
 )
 
 func main() {
 
-	router := mid.Classic()
+	router := ego.Classic()
 	ego.UseRenders()
 
 	router.GlobHTML("views/html/*")
@@ -160,14 +159,13 @@ package main
 
 import (
 	"github.com/go-ego/ego"
-	"github.com/go-ego/ego/mid"
 )
 
 const httpUrl string = "http://127.0.0.1:3000"
 
 func main() {
 
-  router := mid.Classic()
+  router := ego.Classic()
 
   router.Static("/js", "./views/js")
   router.Static("/src", "./views/src")

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package ego
+package logger
 
 import (
 	"bytes"
@@ -12,6 +12,8 @@ import (
 	"log"
 	"net/http/httputil"
 	"runtime"
+
+	"github.com/go-ego/ego"
 )
 
 var (
@@ -22,16 +24,16 @@ var (
 )
 
 // Recovery returns a middleware that recovers from any panics and writes a 500 if there was one.
-func Recovery() HandlerFunc {
-	return RecoveryWithWriter(DefaultErrorWriter)
+func Recovery() ego.HandlerFunc {
+	return RecoveryWithWriter(ego.DefaultErrorWriter)
 }
 
-func RecoveryWithWriter(out io.Writer) HandlerFunc {
+func RecoveryWithWriter(out io.Writer) ego.HandlerFunc {
 	var logger *log.Logger
 	if out != nil {
 		logger = log.New(out, "\n\n\x1b[31m", log.LstdFlags)
 	}
-	return func(c *Context) {
+	return func(c *ego.Context) {
 		defer func() {
 			if err := recover(); err != nil {
 				if logger != nil {

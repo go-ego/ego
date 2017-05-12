@@ -16,8 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-ego/ego/middle/binding"
-	"github.com/go-ego/ego/middle/render"
+	"github.com/go-ego/ego/mid/binding"
+	"github.com/go-ego/ego/mid/render"
+	"github.com/go-ego/egom/mid/util"
 
 	"gopkg.in/gin-contrib/sse.v0"
 )
@@ -52,7 +53,7 @@ type Context struct {
 
 	engine   *Engine
 	Keys     map[string]interface{}
-	Errors   errorMsgs
+	Errors   util.ErrorMsgs
 	Accepted []string
 }
 
@@ -133,7 +134,7 @@ func (c *Context) AbortWithStatusJSON(code int, jsonObj interface{}) {
 // AbortWithError calls `AbortWithStatus()` and `Error()` internally. This method stops the chain, writes the status code and
 // pushes the specified error to `c.Errors`.
 // See Context.Error() for more details.
-func (c *Context) AbortWithError(code int, err error) *Error {
+func (c *Context) AbortWithError(code int, err error) *util.Error {
 	c.AbortWithStatus(code)
 	return c.Error(err)
 }
@@ -146,15 +147,15 @@ func (c *Context) AbortWithError(code int, err error) *Error {
 // It's a good idea to call Error for each error that occurred during the resolution of a request.
 // A middleware can be used to collect all the errors
 // and push them to a database together, print a log, or append it in the HTTP response.
-func (c *Context) Error(err error) *Error {
-	var parsedError *Error
+func (c *Context) Error(err error) *util.Error {
+	var parsedError *util.Error
 	switch err.(type) {
-	case *Error:
-		parsedError = err.(*Error)
+	case *util.Error:
+		parsedError = err.(*util.Error)
 	default:
-		parsedError = &Error{
+		parsedError = &util.Error{
 			Err:  err,
-			Type: ErrorTypePrivate,
+			Type: util.ErrorTypePrivate,
 		}
 	}
 	c.Errors = append(c.Errors, parsedError)
@@ -353,7 +354,7 @@ func (c *Context) BindJSON(obj interface{}) error {
 // See the binding package.
 func (c *Context) BindWith(obj interface{}, b binding.Binding) error {
 	if err := b.Bind(c.Request, obj); err != nil {
-		c.AbortWithError(400, err).SetType(ErrorTypeBind)
+		c.AbortWithError(400, err).SetType(util.ErrorTypeBind)
 		return err
 	}
 	return nil

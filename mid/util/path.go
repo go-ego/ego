@@ -3,7 +3,7 @@
 // Use of this source code is governed by a BSD-style license that can be found
 // in the LICENSE file.
 
-package ego
+package util
 
 // CleanPath is the URL version of path.Clean, it returns a canonical URL path
 // for p, eliminating . and .. elements.
@@ -18,7 +18,7 @@ package ego
 //	   that is, replace "/.." by "/" at the beginning of a path.
 //
 // If the result of this process is an empty string, "/" is returned
-func cleanPath(p string) string {
+func CleanPath(p string) string {
 	// Turn empty string into "/"
 	if p == "" {
 		return "/"

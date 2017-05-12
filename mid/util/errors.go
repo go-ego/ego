@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package ego
+package util
 
 import (
 	"bytes"
@@ -10,6 +10,8 @@ import (
 	"fmt"
 	"reflect"
 )
+
+type Map map[string]interface{}
 
 type ErrorType uint64
 
@@ -30,7 +32,7 @@ type (
 		Meta interface{}
 	}
 
-	errorMsgs []*Error
+	ErrorMsgs []*Error
 )
 
 var _ error = &Error{}
@@ -83,14 +85,14 @@ func (msg *Error) IsType(flags ErrorType) bool {
 
 // Returns a readonly copy filterd the byte.
 // ie ByType(gin.ErrorTypePublic) returns a slice of errors with type=ErrorTypePublic
-func (a errorMsgs) ByType(typ ErrorType) errorMsgs {
+func (a ErrorMsgs) ByType(typ ErrorType) ErrorMsgs {
 	if len(a) == 0 {
 		return nil
 	}
 	if typ == ErrorTypeAny {
 		return a
 	}
-	var result errorMsgs
+	var result ErrorMsgs
 	for _, msg := range a {
 		if msg.IsType(typ) {
 			result = append(result, msg)
@@ -101,7 +103,7 @@ func (a errorMsgs) ByType(typ ErrorType) errorMsgs {
 
 // Returns the last error in the slice. It returns nil if the array is empty.
 // Shortcut for errors[len(errors)-1]
-func (a errorMsgs) Last() *Error {
+func (a ErrorMsgs) Last() *Error {
 	length := len(a)
 	if length > 0 {
 		return a[length-1]
@@ -115,7 +117,7 @@ func (a errorMsgs) Last() *Error {
 // 		c.Error(errors.New("second"))
 // 		c.Error(errors.New("third"))
 // 		c.Errors.Errors() // == []string{"first", "second", "third"}
-func (a errorMsgs) Errors() []string {
+func (a ErrorMsgs) Errors() []string {
 	if len(a) == 0 {
 		return nil
 	}
@@ -126,7 +128,7 @@ func (a errorMsgs) Errors() []string {
 	return errorStrings
 }
 
-func (a errorMsgs) JSON() interface{} {
+func (a ErrorMsgs) JSON() interface{} {
 	switch len(a) {
 	case 0:
 		return nil
@@ -141,11 +143,11 @@ func (a errorMsgs) JSON() interface{} {
 	}
 }
 
-func (a errorMsgs) MarshalJSON() ([]byte, error) {
+func (a ErrorMsgs) MarshalJSON() ([]byte, error) {
 	return json.Marshal(a.JSON())
 }
 
-func (a errorMsgs) String() string {
+func (a ErrorMsgs) String() string {
 	if len(a) == 0 {
 		return ""
 	}

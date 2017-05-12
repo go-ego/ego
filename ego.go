@@ -23,7 +23,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/go-ego/ego/middle/render"
+	"github.com/go-ego/ego/mid/render"
+	"github.com/go-ego/ego/mid/util"
 )
 
 // Version is Framework's version
@@ -155,11 +156,11 @@ func Default() *Engine {
 	return engine
 }
 
-func Classic() *Engine {
-	engine := New()
-	engine.Use(Logger(), Recovery())
-	return engine
-}
+// func Classic() *Engine {
+// 	engine := New()
+// 	engine.Use(Logger(), Recovery())
+// 	return engine
+// }
 
 func (engine *Engine) allocateContext() *Context {
 	return &Context{engine: engine}
@@ -436,7 +437,7 @@ func redirectFixedPath(c *Context, root *node, trailingSlash bool) bool {
 	path := req.URL.Path
 
 	fixedPath, found := root.findCaseInsensitivePath(
-		cleanPath(path),
+		util.CleanPath(path),
 		trailingSlash,
 	)
 	if found {

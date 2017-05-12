@@ -21,6 +21,7 @@ import (
 	"regexp"
 	"strings"
 
+	"githb.com/go-ego/ego/mid/util"
 	"github.com/go-ego/ego/renders"
 )
 
@@ -175,11 +176,11 @@ func (group *RouterGroup) StaticFile(relativePath, filepath string) IRoutes {
 // use :
 //     router.Static("/static", "/var/www")
 func (group *RouterGroup) Static(relativePath, root string) IRoutes {
-	return group.StaticFS(relativePath, Dir(root, false))
+	return group.StaticFS(relativePath, util.Dir(root, false))
 }
 
 func (group *RouterGroup) StaticT(relativePath, root string) IRoutes {
-	return group.StaticFS(relativePath, Dir(root, true))
+	return group.StaticFS(relativePath, util.Dir(root, true))
 }
 
 // StaticFS works just like `Static()` but a custom `http.FileSystem` can be used instead.
@@ -200,7 +201,7 @@ func (group *RouterGroup) StaticFS(relativePath string, fs http.FileSystem) IRou
 func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileSystem) HandlerFunc {
 	absolutePath := group.calculateAbsolutePath(relativePath)
 	fileServer := http.StripPrefix(absolutePath, http.FileServer(fs))
-	_, nolisting := fs.(*onlyfilesFS)
+	_, nolisting := fs.(*util.OnlyfilesFS)
 	return func(c *Context) {
 		if nolisting {
 			c.Writer.WriteHeader(404)
@@ -319,7 +320,7 @@ func (router *Engine) Go500(html ...string) {
 
 	router.Use(func(c *Context) {
 		c.Next()
-		errorToPrint := c.Errors.ByType(ErrorTypePublic).Last()
+		errorToPrint := c.Errors.ByType(util.ErrorTypePublic).Last()
 		if errorToPrint != nil {
 			c.HTML(500, ahtml, nil)
 		}

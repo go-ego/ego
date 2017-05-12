@@ -2,13 +2,16 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package ego
+package logger
 
 import (
 	"fmt"
 	"io"
 	"os"
 	"time"
+
+	"github.com/go-ego/ego"
+	"github.com/go-ego/ego/mid/util"
 
 	"github.com/mattn/go-isatty"
 )
@@ -29,12 +32,12 @@ func DisableConsoleColor() {
 	disableColor = true
 }
 
-func ErrorLogger() HandlerFunc {
-	return ErrorLoggerT(ErrorTypeAny)
+func ErrorLogger() ego.HandlerFunc {
+	return ErrorLoggerT(util.ErrorTypeAny)
 }
 
-func ErrorLoggerT(typ ErrorType) HandlerFunc {
-	return func(c *Context) {
+func ErrorLoggerT(typ util.ErrorType) ego.HandlerFunc {
+	return func(c *ego.Context) {
 		c.Next()
 		errors := c.Errors.ByType(typ)
 		if len(errors) > 0 {
@@ -45,13 +48,13 @@ func ErrorLoggerT(typ ErrorType) HandlerFunc {
 
 // Logger instances a Logger middleware that will write the logs to gin.DefaultWriter
 // By default gin.DefaultWriter = os.Stdout
-func Logger() HandlerFunc {
-	return LoggerWithWriter(DefaultWriter)
+func Logger() ego.HandlerFunc {
+	return LoggerWithWriter(ego.DefaultWriter)
 }
 
 // LoggerWithWriter instance a Logger middleware with the specified writter buffer.
 // Example: os.Stdout, a file opened in write mode, a socket...
-func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
+func LoggerWithWriter(out io.Writer, notlogged ...string) ego.HandlerFunc {
 	isTerm := true
 
 	// if w, ok := out.(*os.File); !ok || !isatty.IsTerminal(w.Fd()) {
@@ -71,7 +74,7 @@ func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
 		}
 	}
 
-	return func(c *Context) {
+	return func(c *ego.Context) {
 		// Start timer
 		start := time.Now()
 		path := c.Request.URL.Path
@@ -94,7 +97,7 @@ func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
 				statusColor = colorForStatus(statusCode)
 				methodColor = colorForMethod(method)
 			}
-			comment := c.Errors.ByType(ErrorTypePrivate).String()
+			comment := c.Errors.ByType(util.ErrorTypePrivate).String()
 
 			// fmt.Fprintf(out, "[EGO] %v |%s %3d %s| %13v | %s |%s  %s %-7s %s\n%s",
 			fmt.Fprintf(out, "[EGO] %v |%s %3d %s| %13v | %15s |%s  %s %-7s %s\n%s",

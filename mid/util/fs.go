@@ -1,4 +1,4 @@
-package ego
+package util
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 )
 
 type (
-	onlyfilesFS struct {
+	OnlyfilesFS struct {
 		fs http.FileSystem
 	}
 	neuteredReaddirFile struct {
@@ -24,11 +24,11 @@ func Dir(root string, listDirectory bool) http.FileSystem {
 	if listDirectory {
 		return fs
 	}
-	return &onlyfilesFS{fs}
+	return &OnlyfilesFS{fs}
 }
 
 // Conforms to http.Filesystem
-func (fs onlyfilesFS) Open(name string) (http.File, error) {
+func (fs OnlyfilesFS) Open(name string) (http.File, error) {
 	f, err := fs.fs.Open(name)
 	if err != nil {
 		return nil, err

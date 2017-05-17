@@ -51,7 +51,7 @@ go get -u github.com/go-ego/ego
 go get -u github.com/go-ego/re 
 ```
 ### re new 
-To create a new Ego web application
+创建一个新的 Ego web 项目
 
 ```
 $ re new my-webapp
@@ -59,7 +59,7 @@ $ re new my-webapp
 
 ### re run
 
-To run the application we just created, you can navigate to the application folder and execute:
+运行我们创建的 web 项目, you can navigate to the application folder and execute:
 ```
 $ cd my-webapp && re run
 ```
@@ -146,7 +146,7 @@ import (
 </div>
 
 ```
-### Renderings:
+### 渲染效果:
 
 <p align="center">
     <img src="https://github.com/go-ego/ego/blob/master/img/head.png" width="700" hight="500">
@@ -183,7 +183,7 @@ func main() {
 }
 
 ```
-### Renderings:
+### 效果图:
 
 <p align="center">
     <img src="https://github.com/go-ego/ego/blob/master/img/test.png" width="700" hight="500">

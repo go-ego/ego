@@ -233,7 +233,7 @@ func (group *RouterGroup) returnObj() IRoutes {
 }
 
 /////////////
-//GoRouter
+// GoRouter
 func (group *RouterGroup) GoRouter(url, name string, obj ...interface{}) {
 	var aobj interface{}
 
@@ -260,7 +260,7 @@ func UseRenders() {
 	rendersInt = 1
 }
 
-//EgoRouter
+// EgoRouter
 func (group *RouterGroup) EgoRouter(url, name string, obj ...interface{}) {
 	var aobj interface{}
 
@@ -293,14 +293,20 @@ func (group *RouterGroup) EgoGroup(rmap Map) {
 	}
 }
 
-//Http error
+// Http error
 
+// Go404 configurates http.HandlerFunc which is called when no matching route is
+// found. If it is not set, http.NotFound is used.
+// Be sure to set 404 response code in your handler.
 func Go404(html string) {
 	var c *Context
 	c.Next()
 	c.HTML(http.StatusNotFound, html, nil)
 }
 
+// NotFound configurates http.HandlerFunc which is called when no matching route is
+// found. If it is not set, http.NotFound is used.
+// Be sure to set 404 response code in your handler.
 func (router *Engine) NotFound(html ...string) {
 	ahtml := "404.html"
 	if len(html) > 0 {
@@ -312,6 +318,9 @@ func (router *Engine) NotFound(html ...string) {
 	})
 }
 
+// Go500 configurates handler which is called when route handler returns
+// error. If it is not set, default handler is used.
+// Be sure to set 500 response code in your handler.
 func (router *Engine) Go500(html ...string) {
 	ahtml := "500.html"
 	if len(html) > 0 {

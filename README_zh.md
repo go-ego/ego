@@ -3,8 +3,8 @@
 <!--[![Build Status](https://travis-ci.org/go-ego/ego.svg)](https://travis-ci.org/go-ego/ego)
 [![codecov](https://codecov.io/gh/go-ego/ego/branch/master/graph/badge.svg)](https://codecov.io/gh/go-ego/ego)-->
 <!--<a href="https://circleci.com/gh/go-ego/ego/tree/dev"><img src="https://img.shields.io/circleci/project/go-ego/ego/dev.svg" alt="Build Status"></a>-->
-<!--[![CircleCI Status](https://circleci.com/gh/go-ego/ego.svg?style=shield)](https://circleci.com/gh/go-ego/ego)
-[![Go Report Card](https://goreportcard.com/badge/github.com/go-ego/ego)](https://goreportcard.com/report/github.com/go-ego/ego)-->
+[![CircleCI Status](https://circleci.com/gh/go-ego/ego.svg?style=shield)](https://circleci.com/gh/go-ego/ego)
+[![Go Report Card](https://goreportcard.com/badge/github.com/go-ego/ego)](https://goreportcard.com/report/github.com/go-ego/ego)
 [![GoDoc](https://godoc.org/github.com/go-ego/ego?status.svg)](https://godoc.org/github.com/go-ego/ego)
 [![Release](https://github-release-version.herokuapp.com/github/go-ego/ego/release.svg?style=flat)](https://github.com/go-ego/ego/releases/latest)
 [![Join the chat at https://gitter.im/go-ego/ego](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-ego/ego?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

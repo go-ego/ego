@@ -156,6 +156,7 @@ func Default() *Engine {
 	return engine
 }
 
+// Classic returns an Engine instance with the Logger and Recovery middleware already attached.
 func Classic() *Engine {
 	engine := New()
 	engine.Use(Logger(), Recovery())
@@ -188,7 +189,7 @@ func (engine *Engine) GlobFHTML(pattern string) {
 	}
 }
 
-//GlobHTML
+// GlobHTML
 func (engine *Engine) GlobHTML(pattern string) {
 	if IsDebugging() {
 		debugPrintLoadTemplate(template.Must(template.ParseGlob(pattern)))

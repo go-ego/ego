@@ -19,14 +19,14 @@ func TestError(t *testing.T) {
 		Type: ErrorTypePrivate,
 	}
 	assert.Equal(t, err.Error(), baseError.Error())
-	assert.Equal(t, err.JSON(), H{"error": baseError.Error()})
+	assert.Equal(t, err.JSON(), Map{"error": baseError.Error()})
 
 	assert.Equal(t, err.SetType(ErrorTypePublic), err)
 	assert.Equal(t, err.Type, ErrorTypePublic)
 
 	assert.Equal(t, err.SetMeta("some data"), err)
 	assert.Equal(t, err.Meta, "some data")
-	assert.Equal(t, err.JSON(), H{
+	assert.Equal(t, err.JSON(), Map{
 		"error": baseError.Error(),
 		"meta":  "some data",
 	})
@@ -34,22 +34,22 @@ func TestError(t *testing.T) {
 	jsonBytes, _ := json.Marshal(err)
 	assert.Equal(t, string(jsonBytes), "{\"error\":\"test error\",\"meta\":\"some data\"}")
 
-	err.SetMeta(H{
+	err.SetMeta(Map{
 		"status": "200",
 		"data":   "some data",
 	})
-	assert.Equal(t, err.JSON(), H{
+	assert.Equal(t, err.JSON(), Map{
 		"error":  baseError.Error(),
 		"status": "200",
 		"data":   "some data",
 	})
 
-	err.SetMeta(H{
+	err.SetMeta(Map{
 		"error":  "custom error",
 		"status": "200",
 		"data":   "some data",
 	})
-	assert.Equal(t, err.JSON(), H{
+	assert.Equal(t, err.JSON(), Map{
 		"error":  "custom error",
 		"status": "200",
 		"data":   "some data",
@@ -57,10 +57,10 @@ func TestError(t *testing.T) {
 }
 
 func TestErrorSlice(t *testing.T) {
-	errs := errorMsgs{
+	errs := ErrorMsgs{
 		{Err: errors.New("first"), Type: ErrorTypePrivate},
 		{Err: errors.New("second"), Type: ErrorTypePrivate, Meta: "some data"},
-		{Err: errors.New("third"), Type: ErrorTypePublic, Meta: H{"status": "400"}},
+		{Err: errors.New("third"), Type: ErrorTypePublic, Meta: Map{"status": "400"}},
 	}
 
 	assert.Equal(t, errs, errs.ByType(ErrorTypeAny))
@@ -79,20 +79,20 @@ Error #03: third
      Meta: map[status:400]
 `)
 	assert.Equal(t, errs.JSON(), []interface{}{
-		H{"error": "first"},
-		H{"error": "second", "meta": "some data"},
-		H{"error": "third", "status": "400"},
+		Map{"error": "first"},
+		Map{"error": "second", "meta": "some data"},
+		Map{"error": "third", "status": "400"},
 	})
 	jsonBytes, _ := json.Marshal(errs)
 	assert.Equal(t, string(jsonBytes), "[{\"error\":\"first\"},{\"error\":\"second\",\"meta\":\"some data\"},{\"error\":\"third\",\"status\":\"400\"}]")
-	errs = errorMsgs{
+	errs = ErrorMsgs{
 		{Err: errors.New("first"), Type: ErrorTypePrivate},
 	}
-	assert.Equal(t, errs.JSON(), H{"error": "first"})
+	assert.Equal(t, errs.JSON(), Map{"error": "first"})
 	jsonBytes, _ = json.Marshal(errs)
 	assert.Equal(t, string(jsonBytes), "{\"error\":\"first\"}")
 
-	errs = errorMsgs{}
+	errs = ErrorMsgs{}
 	assert.Nil(t, errs.Last())
 	assert.Nil(t, errs.JSON())
 	assert.Empty(t, errs.String())

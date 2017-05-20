@@ -27,9 +27,8 @@ import (
 	"github.com/go-ego/ego/mid/util"
 )
 
-// Version is Framework's version
-
 const (
+	// Version is Framework's version
 	Version string = "v0.10.0.49, First!"
 )
 

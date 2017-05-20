@@ -30,12 +30,12 @@ import (
 // Version is Framework's version
 
 const (
-	version string = "v0.10.0.10, First!"
+	Version string = "v0.10.0.49, First!"
 )
 
-//GetVersion get version
+// GetVersion get version
 func GetVersion() string {
-	return version
+	return Version
 }
 
 var default404Body = []byte("404 page not found")

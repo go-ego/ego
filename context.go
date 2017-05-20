@@ -689,3 +689,12 @@ func (c *Context) Value(key interface{}) interface{} {
 	}
 	return nil
 }
+
+// CreateTestContext Create a Context test help
+// func CreateTestContext(w http.ResponseWriter) (c *Context, r *Engine) {
+// 	r = New()
+// 	c = r.allocateContext()
+// 	c.reset()
+// 	c.writermem.reset(w)
+// 	return
+// }

@@ -8,6 +8,7 @@ import (
 	"errors"
 	"io"
 	"io/ioutil"
+	"log"
 	"math"
 	"mime/multipart"
 	"net"
@@ -482,6 +483,12 @@ func (c *Context) SetCookie(
 		Secure:   secure,
 		HttpOnly: httpOnly,
 	})
+}
+
+// GetCookie Deprecated
+func (c *Context) GetCookie(name string) (string, error) {
+	log.Println("GetCookie() method is deprecated. Use Cookie() instead.")
+	return c.Cookie(name)
 }
 
 func (c *Context) Cookie(name string) (string, error) {

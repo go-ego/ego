@@ -7,7 +7,7 @@ See [contributors page](https://github.com/go-ego/ego/graphs/contributors)for fu
 
 List of all the awesome people working to make Gin the best Web Framework in Go.
 
-##gin 0.x series authors
+## gin 0.x series authors
 
 **Maintainer:** Manu Martinez-Almeida (@manucorporat), Javier Provecho (@javierprovecho)
 

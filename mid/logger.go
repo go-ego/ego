@@ -46,8 +46,8 @@ func ErrorLoggerT(typ util.ErrorType) ego.HandlerFunc {
 	}
 }
 
-// Logger instances a Logger middleware that will write the logs to gin.DefaultWriter
-// By default gin.DefaultWriter = os.Stdout
+// Logger instances a Logger middleware that will write the logs to mid.DefaultWriter
+// By default mid.DefaultWriter = os.Stdout
 func Logger() ego.HandlerFunc {
 	return LoggerWithWriter(ego.DefaultWriter)
 }

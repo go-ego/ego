@@ -252,12 +252,12 @@ func TestRouteStaticFile(t *testing.T) {
 		t.Error(err)
 	}
 	defer os.Remove(f.Name())
-	f.WriteString("Gin Web Framework")
+	f.WriteString("Ego Web Framework")
 	f.Close()
 
 	dir, filename := filepath.Split(f.Name())
 
-	// SETUP gin
+	// SETUP ego
 	router := New()
 	router.Static("/using_static", dir)
 	router.StaticFile("/result", f.Name())
@@ -267,7 +267,7 @@ func TestRouteStaticFile(t *testing.T) {
 
 	assert.Equal(t, w, w2)
 	assert.Equal(t, w.Code, 200)
-	assert.Equal(t, w.Body.String(), "Gin Web Framework")
+	assert.Equal(t, w.Body.String(), "Ego Web Framework")
 	assert.Equal(t, w.HeaderMap.Get("Content-Type"), "text/plain; charset=utf-8")
 
 	w3 := performRequest(router, "HEAD", "/using_static/"+filename)
@@ -297,7 +297,7 @@ func TestRouteStaticNoListing(t *testing.T) {
 	w := performRequest(router, "GET", "/")
 
 	assert.Equal(t, w.Code, 404)
-	assert.NotContains(t, w.Body.String(), "gin.go")
+	assert.NotContains(t, w.Body.String(), "ego.go")
 }
 
 func TestRouterMiddlewareAndStatic(t *testing.T) {
@@ -305,18 +305,18 @@ func TestRouterMiddlewareAndStatic(t *testing.T) {
 	static := router.Group("/", func(c *Context) {
 		c.Writer.Header().Add("Last-Modified", "Mon, 02 Jan 2006 15:04:05 MST")
 		c.Writer.Header().Add("Expires", "Mon, 02 Jan 2006 15:04:05 MST")
-		c.Writer.Header().Add("X-GIN", "Gin Framework")
+		c.Writer.Header().Add("X-EGO", "Ego Framework")
 	})
 	static.Static("/", "./")
 
-	w := performRequest(router, "GET", "/gin.go")
+	w := performRequest(router, "GET", "/ego.go")
 
 	assert.Equal(t, w.Code, 200)
-	assert.Contains(t, w.Body.String(), "package gin")
+	assert.Contains(t, w.Body.String(), "package ego")
 	assert.Equal(t, w.HeaderMap.Get("Content-Type"), "text/plain; charset=utf-8")
 	assert.NotEqual(t, w.HeaderMap.Get("Last-Modified"), "Mon, 02 Jan 2006 15:04:05 MST")
 	assert.Equal(t, w.HeaderMap.Get("Expires"), "Mon, 02 Jan 2006 15:04:05 MST")
-	assert.Equal(t, w.HeaderMap.Get("x-GIN"), "Gin Framework")
+	assert.Equal(t, w.HeaderMap.Get("x-EGO"), "Ego Framework")
 }
 
 func TestRouteNotAllowedEnabled(t *testing.T) {

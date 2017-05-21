@@ -381,16 +381,16 @@ func TestContextPostFormMultipart(t *testing.T) {
 
 func TestContextSetCookie(t *testing.T) {
 	c, _ := CreateTestContext(httptest.NewRecorder())
-	c.SetCookie("user", "gin", 1, "/", "localhost", true, true)
-	assert.Equal(t, c.Writer.Header().Get("Set-Cookie"), "user=gin; Path=/; Domain=localhost; Max-Age=1; HttpOnly; Secure")
+	c.SetCookie("user", "ego", 1, "/", "localhost", true, true)
+	assert.Equal(t, c.Writer.Header().Get("Set-Cookie"), "user=ego; Path=/; Domain=localhost; Max-Age=1; HttpOnly; Secure")
 }
 
 func TestContextGetCookie(t *testing.T) {
 	c, _ := CreateTestContext(httptest.NewRecorder())
 	c.Request, _ = http.NewRequest("GET", "/get", nil)
-	c.Request.Header.Set("Cookie", "user=gin")
+	c.Request.Header.Set("Cookie", "user=ego")
 	cookie, _ := c.Cookie("user")
-	assert.Equal(t, cookie, "gin")
+	assert.Equal(t, cookie, "ego")
 }
 
 func TestContextBodyAllowedForStatus(t *testing.T) {
@@ -652,7 +652,7 @@ func TestContextRenderFile(t *testing.T) {
 	c, _ := CreateTestContext(w)
 
 	c.Request, _ = http.NewRequest("GET", "/", nil)
-	c.File("./gin.go")
+	c.File("./ego.go")
 
 	assert.Equal(t, w.Code, 200)
 	assert.Contains(t, w.Body.String(), "func New() *Engine {")
@@ -1012,9 +1012,9 @@ func TestWebsocketsRequired(t *testing.T) {
 func TestGetRequestHeaderValue(t *testing.T) {
 	c, _ := CreateTestContext(httptest.NewRecorder())
 	c.Request, _ = http.NewRequest("GET", "/chat", nil)
-	c.Request.Header.Set("Gin-Version", "1.0.0")
+	c.Request.Header.Set("Ego-Version", "1.0.0")
 
-	assert.Equal(t, "1.0.0", c.GetHeader("Gin-Version"))
+	assert.Equal(t, "1.0.0", c.GetHeader("Ego-Version"))
 	assert.Equal(t, "", c.GetHeader("Connection"))
 }
 

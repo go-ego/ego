@@ -11,7 +11,7 @@ import (
 	"github.com/go-ego/ego/mid/binding"
 )
 
-const ENV_GIN_MODE = "GIN_MODE"
+const ENV_EGO_MODE = "EGO_MODE"
 
 const (
 	DebugMode   string = "debug"
@@ -38,7 +38,7 @@ var egoMode = debugCode
 var modeName = DebugMode
 
 func init() {
-	mode := os.Getenv(ENV_GIN_MODE)
+	mode := os.Getenv(ENV_EGO_MODE)
 	if len(mode) == 0 {
 		SetMode(DebugMode)
 	} else {
@@ -55,7 +55,7 @@ func SetMode(value string) {
 	case TestMode:
 		egoMode = testCode
 	default:
-		panic("gin mode unknown: " + value)
+		panic("ego mode unknown: " + value)
 	}
 	modeName = value
 }

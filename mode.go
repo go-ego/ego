@@ -34,7 +34,7 @@ const (
 var DefaultWriter io.Writer = os.Stdout
 var DefaultErrorWriter io.Writer = os.Stderr
 
-var ginMode = debugCode
+var egoMode = debugCode
 var modeName = DebugMode
 
 func init() {
@@ -49,11 +49,11 @@ func init() {
 func SetMode(value string) {
 	switch value {
 	case DebugMode:
-		ginMode = debugCode
+		egoMode = debugCode
 	case ReleaseMode:
-		ginMode = releaseCode
+		egoMode = releaseCode
 	case TestMode:
-		ginMode = testCode
+		egoMode = testCode
 	default:
 		panic("gin mode unknown: " + value)
 	}

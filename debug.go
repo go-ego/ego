@@ -17,7 +17,7 @@ func init() {
 // IsDebugging returns true if the framework is running in debug mode.
 // Use SetMode(gin.Release) to switch to disable the debug mode.
 func IsDebugging() bool {
-	return ginMode == debugCode
+	return egoMode == debugCode
 }
 
 func debugPrintRoute(httpMethod, absolutePath string, handlers HandlersChain) {

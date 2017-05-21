@@ -285,7 +285,7 @@ func TestRouteStaticListingDir(t *testing.T) {
 	w := performRequest(router, "GET", "/")
 
 	assert.Equal(t, w.Code, 200)
-	assert.Contains(t, w.Body.String(), "gin.go")
+	assert.Contains(t, w.Body.String(), "ego.go")
 	assert.Equal(t, w.HeaderMap.Get("Content-Type"), "text/html; charset=utf-8")
 }
 

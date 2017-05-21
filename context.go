@@ -199,7 +199,7 @@ func (c *Context) MustGet(key string) interface{} {
 
 // Param returns the value of the URL param.
 // It is a shortcut for c.Params.ByName(key)
-//		router.GET("/user/:id", func(c *gin.Context) {
+//		router.GET("/user/:id", func(c *ego.Context) {
 //			// a GET request to /user/john
 //			id := c.Param("id") // id == "john"
 //		})

@@ -20,7 +20,7 @@ func Bind(val interface{}) HandlerFunc {
 	value := reflect.ValueOf(val)
 	if value.Kind() == reflect.Ptr {
 		panic(`Bind struct can not be a pointer. Example:
-	Use: gin.Bind(Struct{}) instead of gin.Bind(&Struct{})
+	Use: ego.Bind(Struct{}) instead of ego.Bind(&Struct{})
 `)
 	}
 	typ := value.Type()

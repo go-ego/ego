@@ -10,7 +10,7 @@
 [![Join the chat at https://gitter.im/go-ego/ego](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-ego/ego?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!--<a href="https://github.com/go-ego/ego/releases"><img src="https://img.shields.io/badge/%20version%20-%206.0.0%20-blue.svg?style=flat-square" alt="Releases"></a>-->
   
-  >Ego 是一个基于 Gin 用 Go 编写的全栈 Web 框架，轻量级和高效的前端组件解决方案. 前端编译执行，不影响后端效率. Thanks [gin](https://github.com/gin-gonic/gin) for providing power.
+  >Ego 是一个基于 Gin 用 Go 编写的全栈 Web 框架，轻量级和高效的前端组件解决方案. 前端编译执行，不影响后端效率.
 
 这是一项正在完善的工作.
 

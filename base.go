@@ -92,7 +92,7 @@ func Get(apiUrl string, params url.Values) (rs []byte, err error) {
 	return ioutil.ReadAll(resp.Body)
 }
 
-// Post http,params is url.Values type
+// Post http, params is url.Values type
 func Post(apiUrl string, params url.Values) (rs []byte, err error) {
 
 	resp, err := http.PostForm(apiUrl, params)

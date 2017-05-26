@@ -182,8 +182,15 @@ func (router *Engine) TestJson(httpUrl string, param url.Values, args ...string)
 	})
 }
 
+var (
+	ajax int64
+)
+
 func (router *Engine) TestHtml(httpUrl string, paramMap Map, args ...string) {
-	router.StaticFile("/t/ajax", "./views/js/ajax.js")
+	if ajax != 1 {
+		router.StaticFile("/t/ajax", "./views/js/ajax.js")
+	}
+	ajax = 1
 
 	param := url.Values{}
 	for k, v := range paramMap {

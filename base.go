@@ -11,9 +11,12 @@
 package ego
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"net/url"
 	"os"
@@ -73,7 +76,7 @@ func ListDir(dirPth string, suffix string) (files []string, err error) {
 	return files, nil
 }
 
-//Get http
+// Get http
 func Get(apiUrl string, params url.Values) (rs []byte, err error) {
 	var Url *url.URL
 	Url, err = url.Parse(apiUrl)
@@ -212,4 +215,96 @@ func (router *Engine) TestHtml(httpUrl string, paramMap Map, args ...string) {
 			"test": httpUrl,
 		})
 	})
+}
+
+func (router *Engine) TestFile(httpUrl string, paramMap Map, filename, upParam string) {
+	if ajax != 1 {
+		router.StaticFile("/t/ajax", "./views/js/ajax.js")
+	}
+	ajax = 1
+
+	var (
+		url string
+		i   int64
+	)
+
+	for k, v := range paramMap {
+		i++
+		if i == 1 {
+			url += k + "=" + v.(string)
+		} else {
+			url += "&" + k + "=" + v.(string)
+		}
+	}
+
+	confUrl := httpUrl + "?" + url
+
+	fmt.Println("confUrl-------", confUrl)
+	// confUrl := url.Values{}
+
+	listUrl := strings.Split(httpUrl, "/")
+	lastUrl := listUrl[len(listUrl)-1]
+
+	htmlurl := "/t/" + lastUrl
+	jsonurl := htmlurl + "json"
+
+	router.GET(jsonurl, func(c *Context) {
+		resp, err := PostFile(filename, confUrl, upParam)
+		if err != nil {
+			fmt.Println("err--------", err)
+		}
+		fmt.Println("resp---------", resp)
+
+		c.JSON(200, resp)
+	})
+
+	router.GET(htmlurl, func(c *Context) {
+		c.HTML(200, "json.html", Map{
+			"test": httpUrl,
+		})
+	})
+
+}
+
+func PostFile(filename, targetUrl, upParam string) (string, error) {
+	bodyBuf := &bytes.Buffer{}
+	bodyWriter := multipart.NewWriter(bodyBuf)
+
+	// uploadfile
+	fileWriter, err := bodyWriter.CreateFormFile(upParam, filename)
+	if err != nil {
+		fmt.Println("error writing to buffer")
+		return "", err
+	}
+
+	// openfile
+	fh, err := os.Open(filename)
+	if err != nil {
+		fmt.Println("error opening file")
+		return "", err
+	}
+
+	// iocopy
+	_, err = io.Copy(fileWriter, fh)
+	if err != nil {
+		return "", err
+	}
+
+	contentType := bodyWriter.FormDataContentType()
+	bodyWriter.Close()
+
+	resp, err := http.Post(targetUrl, contentType, bodyBuf)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	resp_body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	fmt.Println(resp.Status)
+	// fmt.Println(string(resp_body))
+
+	return string(resp_body), nil
 }

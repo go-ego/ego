@@ -107,6 +107,7 @@ func Post(apiUrl string, params url.Values) (rs []byte, err error) {
 	return ioutil.ReadAll(resp.Body)
 }
 
+// API
 func API(httpUrl string, paramMap Map, method ...string) (rs []byte, err error) {
 	param := url.Values{}
 	for k, v := range paramMap {
@@ -133,6 +134,7 @@ func API(httpUrl string, paramMap Map, method ...string) (rs []byte, err error) 
 
 var Url url.Values = url.Values{}
 
+// TestRest test restful and return json
 func (router *Engine) TestRest(httpUrl string, param url.Values) {
 
 	listUrl := strings.Split(httpUrl, "/")
@@ -157,6 +159,7 @@ func (router *Engine) TestRest(httpUrl string, param url.Values) {
 	})
 }
 
+// TestJson test restful and return json
 func (router *Engine) TestJson(httpUrl string, param url.Values, args ...string) {
 	var content string
 
@@ -189,6 +192,7 @@ var (
 	ajax int64
 )
 
+// TestHtml test restful and show pretty in the browser
 func (router *Engine) TestHtml(httpUrl string, paramMap Map, args ...string) {
 	if ajax != 1 {
 		router.StaticFile("/t/ajax", "./views/js/ajax.js")
@@ -217,6 +221,7 @@ func (router *Engine) TestHtml(httpUrl string, paramMap Map, args ...string) {
 	})
 }
 
+// TestFile test restful and show pretty in the browser
 func (router *Engine) TestFile(httpUrl string, paramMap Map, filename, upParam string) {
 	if ajax != 1 {
 		router.StaticFile("/t/ajax", "./views/js/ajax.js")
@@ -266,6 +271,7 @@ func (router *Engine) TestFile(httpUrl string, paramMap Map, filename, upParam s
 
 }
 
+// PostFile post file
 func PostFile(filename, targetUrl, upParam string) (string, error) {
 	bodyBuf := &bytes.Buffer{}
 	bodyWriter := multipart.NewWriter(bodyBuf)
@@ -298,13 +304,13 @@ func PostFile(filename, targetUrl, upParam string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
-	resp_body, err := ioutil.ReadAll(resp.Body)
+	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
 
 	fmt.Println(resp.Status)
-	// fmt.Println(string(resp_body))
+	// fmt.Println(string(respBody))
 
-	return string(resp_body), nil
+	return string(respBody), nil
 }

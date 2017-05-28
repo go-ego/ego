@@ -12,6 +12,7 @@
 
 - Update vendor.json
 - Update name and refactoring
+- Update examples json.html
 - Update Build-tools name
 - Update and Cleanup README.md
 - Move changelog.md and authors.md

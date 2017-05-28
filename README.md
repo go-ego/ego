@@ -23,7 +23,7 @@ This is a work in progress.
 - [Update](#update)
 - [Build-tools](#build-tools)
 - [Examples](#examples)
-- [TestJson](#testjson)
+- [TestRestful](#testrestful)
 - [Plans](#plans)
 - [Donate](#donate)
 - [Contributing](#contributing)
@@ -152,7 +152,7 @@ import (
     <img src="https://github.com/go-ego/ego/blob/master/img/head.png" width="700" hight="500">
 </p>
 
-## TestJson
+## TestRestful
 ```Go
 
 package main
@@ -188,6 +188,8 @@ func main() {
 <p align="center">
     <img src="https://github.com/go-ego/ego/blob/master/img/test.png" width="700" hight="500">
 </p>
+
+[More instructions](https://github.com/go-ego/RESTest)
 
 ## Plans
 - Compression and merge css/js

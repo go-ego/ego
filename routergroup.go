@@ -232,9 +232,10 @@ func (group *RouterGroup) returnObj() IRoutes {
 	return group
 }
 
-/////////////
-// GoRouter
-func (group *RouterGroup) GoRouter(url, name string, obj ...interface{}) {
+/////////////  Router
+
+// Go Router
+func (group *RouterGroup) Go(url, name string, obj ...interface{}) {
 	var aobj interface{}
 
 	if len(obj) > 0 {
@@ -249,7 +250,7 @@ func (group *RouterGroup) GoRouter(url, name string, obj ...interface{}) {
 // GoGroup
 func (group *RouterGroup) GoGroup(rmap Map) {
 	for k, v := range rmap {
-		group.GoRouter(k, v.(string))
+		group.Go(k, v.(string))
 	}
 }
 
@@ -260,8 +261,9 @@ func UseRenders() {
 	rendersInt = 1
 }
 
-// EgoRouter
-func (group *RouterGroup) EgoRouter(url, name string, obj ...interface{}) {
+// Ego Router
+func (group *RouterGroup) Ego(url, name string, obj ...interface{}) {
+	// func (group *RouterGroup) EgoRouter(url, name string, obj ...interface{}) {
 	var aobj interface{}
 
 	if len(obj) > 0 {
@@ -289,7 +291,7 @@ func (group *RouterGroup) EgoRouter(url, name string, obj ...interface{}) {
 // EgoGroup
 func (group *RouterGroup) EgoGroup(rmap Map) {
 	for k, v := range rmap {
-		group.EgoRouter(k, v.(string))
+		group.Ego(k, v.(string))
 	}
 }
 

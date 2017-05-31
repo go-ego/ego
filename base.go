@@ -166,7 +166,8 @@ func (router *Engine) TestJson(httpUrl string, param url.Values, args ...string)
 	if len(args) > 0 {
 		content = args[0]
 	} else {
-		content = "Content"
+		// content = "Content"
+		content = "Data"
 	}
 
 	listUrl := strings.Split(httpUrl, "/")

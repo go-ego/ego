@@ -84,7 +84,7 @@ func Get(apiUrl string, params url.Values) (rs []byte, err error) {
 		fmt.Printf("analytic url error:\r\n%v", err)
 		return nil, err
 	}
-	//URLEncode
+	// URLEncode
 	Url.RawQuery = params.Encode()
 	resp, err := http.Get(Url.String())
 	if err != nil {

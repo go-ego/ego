@@ -5,6 +5,7 @@ import (
 	// "github.com/go-ego/ego/mid/logger"
 )
 
+// Classic returns an Engine instance with the Logger and Recovery middleware already attached.
 func Classic() *ego.Engine {
 	engine := ego.New()
 	engine.Use(Logger(), Recovery())
@@ -12,6 +13,7 @@ func Classic() *ego.Engine {
 	return engine
 }
 
+// Default returns an Engine instance with the Logger and Recovery middleware already attached.
 func Default() *ego.Engine {
 	engine := ego.New()
 	engine.Use(Logger(), Recovery())

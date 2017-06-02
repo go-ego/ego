@@ -150,11 +150,6 @@ func New() *Engine {
 	return engine
 }
 
-func (engine *Engine) Delims(left, right string) *Engine {
-	engine.delims = render.Delims{left, right}
-	return engine
-}
-
 // Default returns an Engine instance with the Logger and Recovery middleware already attached.
 func Default() *Engine {
 	engine := New()
@@ -171,6 +166,11 @@ func Classic() *Engine {
 
 func (engine *Engine) allocateContext() *Context {
 	return &Context{engine: engine}
+}
+
+func (engine *Engine) Delims(left, right string) *Engine {
+	engine.delims = render.Delims{left, right}
+	return engine
 }
 
 func (engine *Engine) LoadHTMLGlob(pattern string) {

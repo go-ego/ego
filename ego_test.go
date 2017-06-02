@@ -5,8 +5,12 @@
 package ego
 
 import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -18,6 +22,49 @@ import (
 
 func init() {
 	SetMode(TestMode)
+}
+
+func setupHTMLFiles(t *testing.T) func() {
+	go func() {
+		router := New()
+		router.Delims("{[{", "}]}")
+		router.LoadHTMLFiles("./test/basic/hello.tmpl")
+		router.GET("/test", func(c *Context) {
+			c.HTML(http.StatusOK, "hello.tmpl", map[string]string{"name": "world"})
+		})
+		router.Run(":8888")
+	}()
+	t.Log("waiting 1 second for server startup")
+	time.Sleep(1 * time.Second)
+	return func() {}
+}
+
+func setupHTMLGlob(t *testing.T) func() {
+	go func() {
+		router := New()
+		router.Delims("{[{", "}]}")
+		router.LoadHTMLGlob("./test/basic/*")
+		router.GET("/test", func(c *Context) {
+			c.HTML(http.StatusOK, "hello.tmpl", map[string]string{"name": "world"})
+		})
+		router.Run(":8888")
+	}()
+	t.Log("waiting 1 second for server startup")
+	time.Sleep(1 * time.Second)
+	return func() {}
+}
+
+func TestLoadHTMLGlob(t *testing.T) {
+	td := setupHTMLGlob(t)
+	res, err := http.Get("http://127.0.0.1:8888/test")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	resp, _ := ioutil.ReadAll(res.Body)
+	assert.Equal(t, "<h1>Hello world</h1>", string(resp[:]))
+
+	td()
 }
 
 func TestCreateEngine(t *testing.T) {
@@ -42,6 +89,17 @@ func TestCreateEngine(t *testing.T) {
 // 	SetMode(TestMode)
 // }
 
+func TestLoadHTMLFiles(t *testing.T) {
+	td := setupHTMLFiles(t)
+	res, err := http.Get("http://127.0.0.1:8888/test")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	resp, _ := ioutil.ReadAll(res.Body)
+	assert.Equal(t, "<h1>Hello world</h1>", string(resp[:]))
+	td()
+}
 func TestLoadHTMLReleaseMode(t *testing.T) {
 
 }

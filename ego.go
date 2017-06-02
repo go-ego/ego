@@ -175,7 +175,7 @@ func (engine *Engine) allocateContext() *Context {
 
 func (engine *Engine) LoadHTMLGlob(pattern string) {
 	if IsDebugging() {
-		debugPrintLoadTemplate(template.New("").Delims(engine.delims.Left, engine.delims.Right).(template.ParseGlob(pattern)))
+		debugPrintLoadTemplate(template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).ParseGlob(pattern)))
 		engine.HTMLRender = render.HTMLDebug{Glob: pattern, Delims: engine.delims}
 	} else {
 		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).ParseGlob(pattern))

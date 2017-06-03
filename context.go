@@ -513,7 +513,7 @@ func (c *Context) ClientIP() string {
 
 // ContentType returns the Content-Type header of the request.
 func (c *Context) ContentType() string {
-	return filterFlags(c.RequestHeader("Content-Type"))
+	return filterFlags(c.requestHeader("Content-Type"))
 }
 
 // IsWebsocket returns true if the request headers indicate that a websocket
@@ -762,7 +762,7 @@ func (c *Context) NegotiateFormat(offered ...string) string {
 	assert1(len(offered) > 0, "you must provide at least one offer")
 
 	if c.Accepted == nil {
-		c.Accepted = parseAccept(c.RequestHeader("Accept"))
+		c.Accepted = parseAccept(c.requestHeader("Accept"))
 	}
 	if len(c.Accepted) == 0 {
 		return offered[0]

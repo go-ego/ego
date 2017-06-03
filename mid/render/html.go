@@ -53,6 +53,7 @@ func (r HTMLDebug) Instance(name string, data interface{}) Render {
 		Data:     data,
 	}
 }
+
 func (r HTMLDebug) loadTemplate() *template.Template {
 	if len(r.Files) > 0 {
 		return template.Must(template.New("").Delims(r.Delims.Left, r.Delims.Right).ParseFiles(r.Files...))

@@ -32,7 +32,7 @@ func Try(fun func(), handler func(interface{})) {
 	fun()
 }
 
-func checkErr(err error) {
+func CheckErr(err error) {
 	if err != nil {
 		panic(err)
 	}
@@ -152,7 +152,7 @@ func (router *Engine) TestRest(httpUrl string, param url.Values) {
 
 			json.Unmarshal(data, &netReturn)
 
-			reContent := netReturn["Content"]
+			reContent := netReturn["content"]
 
 			c.JSON(200, reContent)
 		}
@@ -166,8 +166,8 @@ func (router *Engine) TestJson(httpUrl string, param url.Values, args ...string)
 	if len(args) > 0 {
 		content = args[0]
 	} else {
-		// content = "Content"
-		content = "Data"
+		// content = "content"
+		content = "data"
 	}
 
 	listUrl := strings.Split(httpUrl, "/")

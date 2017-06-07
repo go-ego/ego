@@ -15,10 +15,10 @@
             "revisionTime": "2014-06-27T04:00:55Z"
         },
         {
-            "checksumSHA1": "kBeNcaKk56FguvPSUCEaH6AxpRc=",
+            "checksumSHA1": "qlPUeFabwF4RKAOF1H+yBFU1Veg=",
             "path": "github.com/golang/protobuf/proto",
-            "revision": "8ee79997227bf9b34611aee7946ae64735e6fd93",
-            "revisionTime": "2016-11-17T03:31:26Z"
+            "revision": "5a0f697c9ed9d68fef0116532c6e05cfeae00e55",
+            "revisionTime": "2017-06-01T23:02:30Z"
         },
         {
             "checksumSHA1": "9if9IBLsxkarJ804NPWAzgskIAk=",
@@ -40,11 +40,11 @@
             "revisionTime": "2016-01-10T10:55:54Z"
         },
         {
-            "checksumSHA1": "Q2V7Zs3diLmLfmfbiuLpSxETSuY=",
+            "checksumSHA1": "5NBHAe3S15q3L9hOLThnMZjIZRE=",
             "comment": "v1.1.4",
             "path": "github.com/stretchr/testify/assert",
-            "revision": "976c720a22c8eb4eb6a0b4348ad85ad12491a506",
-            "revisionTime": "2016-09-25T22:06:09Z"
+            "revision": "f6abca593680b2315d2075e0f5e2a9751e3f431a",
+            "revisionTime": "2017-06-01T20:57:54Z"
         },
         {
             "checksumSHA1": "CoxdaTYdPZNJXr8mJfLxye428N0=",
@@ -79,11 +79,11 @@
             "revisionTime": "2016-07-18T13:41:25Z"
         },
         {
-            "checksumSHA1": "12GqsW8PiRPnezDDy0v4brZrndM=",
+            "checksumSHA1": "fALlQNY1fM99NesfLJ50KguWsio=",
             "comment": "v2",
             "path": "gopkg.in/yaml.v2",
-            "revision": "a5b47d31c556af34a302ce5d659e6fea44d90de0",
-            "revisionTime": "2016-09-28T15:37:09Z"
+            "revision": "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b",
+            "revisionTime": "2017-04-07T17:21:22Z"
         }
     ],
     "rootPath": "github.com/go-ego/ego"

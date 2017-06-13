@@ -7,7 +7,6 @@ package test
 import (
 	"errors"
 	"strings"
-
 	"testing"
 
 	"github.com/go-ego/ego"

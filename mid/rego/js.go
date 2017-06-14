@@ -8,14 +8,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-package renders
+package rego
 
 import (
 	// "fmt"
 	"strings"
 )
 
-func js(str string) string {
+func reJs(str string) string {
 	amap := Map{
 		//fn
 		"func ": "function ",

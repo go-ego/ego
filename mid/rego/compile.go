@@ -8,7 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-package renders
+// Package rego renders vgo
+package rego
 
 import (
 	"strings"

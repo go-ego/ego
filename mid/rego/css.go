@@ -8,11 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-package renders
+package rego
 
 // "fmt"
 
-func css(str string) string {
+func reCss(str string) string {
 	amap := Map{
 		//text
 		"lh:": "line-height:",

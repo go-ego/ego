@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-package renders
+package rego
 
 import (
 	"fmt"
@@ -42,11 +42,11 @@ func styScr(text string) ([]string, []string) {
 	scr := FindScr(text)
 
 	for i := 0; i < len(sty); i++ {
-		recss = append(recss, css(sty[i]))
+		recss = append(recss, reCss(sty[i]))
 	}
 
 	for i := 0; i < len(scr); i++ {
-		rejs = append(rejs, js(scr[i]))
+		rejs = append(rejs, reJs(scr[i]))
 	}
 
 	return recss, rejs

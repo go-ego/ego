@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-package renders
+package rego
 
 import (
 	"fmt"
@@ -326,7 +326,7 @@ func ImpStr(notes string) ([]string, string, []string, []string, [][]string, [][
 }
 
 var (
-	html   string
+	vhtml  string
 	thtml  string
 	header string
 	bodyer string
@@ -366,7 +366,12 @@ func WHtml(class []string, layout string, args ...string) {
 	bodyer = strings.Replace(header, "<div id=app>", "<div id=app>"+abody, -1)
 	thtml = strings.Replace(bodyer, "</body>", "</body>"+wjs, -1)
 
-	Wirtefile(thtml, aname)
+	minhtml, err := minStr(thtml, "text/html")
+	if err == nil {
+		Wirtefile(minhtml, aname)
+	} else {
+		Wirtefile(thtml, aname)
+	}
 }
 
 func ImpHtml(class []string, layout string) {
@@ -380,7 +385,7 @@ func ImpHtml(class []string, layout string) {
 	header = head[0] + impclass[1] + "</head>"
 	bodyer = body[0] + "</body>"
 	footer = impclass[0] + foot[1]
-	html = header + bodyer + footer
+	vhtml = header + bodyer + footer
 
-	Wirtefile(html, "views/t_vgo.html")
+	Wirtefile(vhtml, "views/t_vgo.html")
 }

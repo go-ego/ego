@@ -21,8 +21,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/go-ego/ego/mid/rego"
 	"github.com/go-ego/ego/mid/util"
-	"github.com/go-ego/ego/renders"
 )
 
 type (
@@ -272,7 +272,7 @@ func (group *RouterGroup) Ego(url, name string, obj ...interface{}) {
 
 	if rendersInt == 1 {
 		tname := strings.Replace(name, ".html", "", -1)
-		renders.RendersVgo(tname)
+		rego.RendersVgo(tname)
 	}
 
 	var wname string

@@ -84,6 +84,30 @@
             "path": "gopkg.in/yaml.v2",
             "revision": "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b",
             "revisionTime": "2017-04-07T17:21:22Z"
+        },
+        {
+            "checksumSHA1": "SOB3whm8gc2xsL6j7exUFghj94s=",
+            "path": "github.com/tdewolff/buffer",
+            "revision": "df6253e2a2cda5aba1b5d0c59fc5bdf0a98ae192",
+            "revisionTime": "2017-01-15T11:41:28Z"
+        },
+        {
+            "checksumSHA1": "aOx9JqecdG4tSpzdRyohR56FUMo=",
+            "path": "github.com/tdewolff/minify",
+            "revision": "2d28d6e43c68537a32f9b835a89d5038ebcb6ec9",
+            "revisionTime": "2017-06-05T20:11:15Z"
+        },
+        {
+            "checksumSHA1": "EiTbuOQ08YQ0Foy0R8y4WlbVcvA=",
+            "path": "github.com/tdewolff/parse",
+            "revision": "e3d09bbcbf6d7721468bbe5deb35fe71da57d0f3",
+            "revisionTime": "2017-06-10T22:17:54Z"
+        },
+        {
+            "checksumSHA1": "hR7GEsOkEtR/doq2kiCmOF8spEg=",
+            "path": "github.com/tdewolff/strconv",
+            "revision": "3e8091f4417ebaaa3910da63a45ea394ebbfb0e3",
+            "revisionTime": "2016-04-27T18:05:39Z"
         }
     ],
     "rootPath": "github.com/go-ego/ego"

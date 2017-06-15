@@ -13,9 +13,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/go-ego/ego"
+	"github.com/stretchr/testify/assert"
 )
 
 type route struct {

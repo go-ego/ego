@@ -177,7 +177,7 @@ func main() {
     "lat":  "20.202020",
     "type": "1",
   }
-  router.TestHtml(strUrl, paramMap)
+  router.TestHtml(strUrl, paramMap) // http url, http 参数, args (可选参数): 默认为 "data"
 
   router.Run(":3100")
 }

@@ -177,7 +177,7 @@ func main() {
     "lat":  "20.202020",
     "type": "1",
   }
-  router.TestHtml(strUrl, paramMap)
+  router.TestHtml(strUrl, paramMap) // http url, http parameter, args (optional parameters): The default is "data".
 
   router.Run(":3100")
 }

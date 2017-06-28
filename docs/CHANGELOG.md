@@ -4,9 +4,11 @@
 
 ### Add
 
-- Add TestFile
-- Add more test: Add middleware_test and other
-- Add circleci
+- [NEW] Add TestFile
+- [NEW] Add \*context.ShouldBindWith()
+- [NEW] Add custom template delimiters
+- [NEW] Add more test: Add middleware_test and other
+- [NEW] Add circleci
 
 ### Update
 

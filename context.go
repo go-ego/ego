@@ -17,11 +17,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gin-contrib/sse"
 	"github.com/go-ego/ego/mid/binding"
 	"github.com/go-ego/ego/mid/render"
 	"github.com/go-ego/ego/mid/util"
-
-	"gopkg.in/gin-contrib/sse.v0"
 )
 
 // Content-Type MIME of the most common data formats

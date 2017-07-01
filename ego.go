@@ -29,7 +29,7 @@ import (
 
 const (
 	// Version is Framework's version
-	Version string = "v0.10.0.69, Nile River!"
+	Version string = "v0.10.0.95, Nile River!"
 )
 
 // GetVersion get version

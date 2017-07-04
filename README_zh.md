@@ -59,7 +59,7 @@ $ re new my-webapp
 
 ### re run
 
-运行我们创建的 web 项目, you can navigate to the application folder and execute:
+运行我们创建的 web 项目, 你可以导航到应用程序文件夹并执行:
 ```
 $ cd my-webapp && re run
 ```

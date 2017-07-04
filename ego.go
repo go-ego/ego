@@ -134,6 +134,7 @@ func New() *Engine {
 			basePath: "/",
 			root:     true,
 		},
+		FuncMap:                template.FuncMap{},
 		RedirectTrailingSlash:  true,
 		RedirectFixedPath:      false,
 		HandleMethodNotAllowed: false,

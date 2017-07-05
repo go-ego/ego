@@ -16,15 +16,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//TODO
-// func (engine *Engine) LoadHTMLGlob(pattern string) {
-// func (engine *Engine) LoadHTMLFiles(files ...string) {
-// func (engine *Engine) RunTLS(addr string, cert string, key string) error {
-
-func init() {
-	SetMode(TestMode)
-}
-
 func formatAsDate(t time.Time) string {
 	year, month, day := t.Date()
 	return fmt.Sprintf("%d/%02d/%02d", year, month, day)
@@ -105,6 +96,13 @@ func TestLoadHTMLGlobFromFuncMap(t *testing.T) {
 	td()
 }
 
+//TODO
+// func (engine *Engine) LoadHTMLFiles(files ...string) {
+// func (engine *Engine) RunTLS(addr string, cert string, key string) error {
+
+func init() {
+	SetMode(TestMode)
+}
 func TestCreateEngine(t *testing.T) {
 	router := New()
 	assert.Equal(t, "/", router.basePath)

@@ -37,10 +37,12 @@ func GetVersion() string {
 	return Version
 }
 
-var default404Body = []byte("404 page not found")
-var default405Body = []byte("405 method not allowed")
+var (
+	default404Body = []byte("404 page not found")
+	default405Body = []byte("405 method not allowed")
 
-var defaultAppEngine bool
+	defaultAppEngine bool
+)
 
 type HandlerFunc func(*Context)
 type HandlersChain []HandlerFunc
@@ -212,9 +214,9 @@ func (engine *Engine) GlobHTML(pattern string) {
 
 func (engine *Engine) LoadHTMLFiles(files ...string) {
 	if IsDebugging() {
-		engine.HTMLRender = render.HTMLDebug{Files: files, Delims: engine.delims}
+		engine.HTMLRender = render.HTMLDebug{Files: files, FuncMap: engine.FuncMap, Delims: engine.delims}
 	} else {
-		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).ParseFiles(files...))
+		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseFiles(files...))
 		engine.SetHTMLTemplate(templ)
 	}
 }
@@ -223,6 +225,7 @@ func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
 	if len(engine.trees) > 0 {
 		debugPrintWARNINGSetHTMLTemplate()
 	}
+
 	engine.HTMLRender = render.HTMLProduction{Template: templ.Funcs(engine.FuncMap)}
 }
 

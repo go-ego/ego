@@ -23,7 +23,7 @@ func formatAsDate(t time.Time) string {
 
 func setupHTMLFiles(t *testing.T) func() {
 	go func() {
-		SetMode(TestMode)
+		// SetMode(TestMode)
 		router := New()
 		router.Delims("{[{", "}]}")
 		router.SetFuncMap(template.FuncMap{
@@ -47,7 +47,7 @@ func setupHTMLFiles(t *testing.T) func() {
 
 func setupHTMLGlob(t *testing.T) func() {
 	go func() {
-		SetMode(DebugMode)
+		// SetMode(DebugMode)
 		router := New()
 		router.Delims("{[{", "}]}")
 		router.SetFuncMap(template.FuncMap{

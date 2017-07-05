@@ -10,7 +10,7 @@
 [![Join the chat at https://gitter.im/go-ego/ego](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-ego/ego?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!--<a href="https://github.com/go-ego/ego/releases"><img src="https://img.shields.io/badge/%20version%20-%206.0.0%20-blue.svg?style=flat-square" alt="Releases"></a>-->
   
-  >Ego is a full-stack web framework written in Go, lightweight and efficient front-end component solutions, based on gin. The front-end is compiled, does not affect the back-end. Thanks [gin](https://github.com/gin-gonic/gin) for providing power.
+  >Ego is a full-stack web framework written in Go, lightweight and efficient front-end component solutions, based on gin. The front-end is compiled, does not affect the back-end. 
 
 This is a work in progress.
 
@@ -209,6 +209,6 @@ Fork -> Patch -> Push -> Test -> Pull Request.
 
 ## License
 
-Ego is primarily distributed under the terms of both the MIT license and the Apache License (Version 2.0), with portions covered by various BSD-like licenses.
+Ego is primarily distributed under the terms of both the MIT license and the Apache License (Version 2.0), with portions covered by various BSD-like licenses, base on [gin](https://github.com/gin-gonic/gin).
 
 See [LICENSE-APACHE](http://www.apache.org/licenses/LICENSE-2.0), [LICENSE-MIT](https://github.com/go-ego/ego/blob/master/LICENSE), and COPYRIGHT for details.

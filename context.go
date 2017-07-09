@@ -51,9 +51,15 @@ type Context struct {
 	handlers HandlersChain
 	index    int8
 
-	engine   *Engine
-	Keys     map[string]interface{}
-	Errors   util.ErrorMsgs
+	engine *Engine
+
+	// Keys is a key/value pair exclusively for the context of each request
+	Keys map[string]interface{}
+
+	// Errors is a list of errors attached to all the handlers/middlewares who used this context
+	Errors util.ErrorMsgs
+
+	// Accepted defines a list of manually accepted formats for content negotiation
 	Accepted []string
 }
 
@@ -99,7 +105,7 @@ func (c *Context) Handler() HandlerFunc {
 
 // Next should be used only inside middleware.
 // It executes the pending handlers in the chain inside the calling handler.
-// See example in Github.
+// See example in GitHub.
 func (c *Context) Next() {
 	c.index++
 	s := int8(len(c.handlers))
@@ -153,6 +159,9 @@ func (c *Context) AbortWithError(code int, err error) *util.Error {
 // A middleware can be used to collect all the errors
 // and push them to a database together, print a log, or append it in the HTTP response.
 func (c *Context) Error(err error) *util.Error {
+	if err == nil {
+		panic("err is nil")
+	}
 	var parsedError *util.Error
 	switch err.(type) {
 	case *util.Error:
@@ -659,14 +668,29 @@ func (c *Context) IndentedJSON(code int, obj interface{}) {
 	c.Render(code, render.IndentedJSON{Data: obj})
 }
 
+// SecureJSON serializes the given struct as Secure JSON into the response body.
+// Default prepends "while(1)," to response body if the given struct is array values.
+// It also sets the Content-Type as "application/json".
+func (c *Context) SecureJSON(code int, obj interface{}) {
+	c.Render(code, render.SecureJSON{Prefix: c.engine.secureJsonPrefix, Data: obj})
+}
+
 // JSON serializes the given struct as JSON into the response body.
 // It also sets the Content-Type as "application/json".
 func (c *Context) JSON(code int, obj interface{}) {
 	c.Render(code, render.JSON{Data: obj})
 }
 
+// FFJSON serializes the given struct as JSON into the response body.
+// It also sets the Content-Type as "application/json".
 func (c *Context) FFJSON(code int, obj interface{}) {
 	c.Render(code, render.JSON{Data: obj})
+}
+
+// IJSON serializes the given struct as JSON into the response body.
+// It also sets the Content-Type as "application/json".
+func (c *Context) IJSON(code int, obj interface{}) {
+	c.Render(code, render.IJSON{Data: obj})
 }
 
 // XML serializes the given struct as XML into the response body.

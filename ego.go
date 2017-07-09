@@ -49,8 +49,7 @@ type HandlersChain []HandlerFunc
 
 // Last returns the last handler in the chain. ie. the last handler is the main own.
 func (c HandlersChain) Last() HandlerFunc {
-	length := len(c)
-	if length > 0 {
+	if length := len(c); length > 0 {
 		return c[length-1]
 	}
 	return nil
@@ -69,15 +68,16 @@ type (
 // Create an instance of Engine, by using New() or Default()
 type Engine struct {
 	RouterGroup
-	delims      render.Delims
-	HTMLRender  render.HTMLRender
-	FuncMap     template.FuncMap
-	allNoRoute  HandlersChain
-	allNoMethod HandlersChain
-	noRoute     HandlersChain
-	noMethod    HandlersChain
-	pool        sync.Pool
-	trees       methodTrees
+	delims           render.Delims
+	secureJsonPrefix string
+	HTMLRender       render.HTMLRender
+	FuncMap          template.FuncMap
+	allNoRoute       HandlersChain
+	allNoMethod      HandlersChain
+	noRoute          HandlersChain
+	noMethod         HandlersChain
+	pool             sync.Pool
+	trees            methodTrees
 
 	// Enables automatic redirection if the current route can't be matched but a
 	// handler for the path with (without) the trailing slash exists.
@@ -146,6 +146,7 @@ func New() *Engine {
 		UnescapePathValues:     true,
 		trees:                  make(methodTrees, 0, 9),
 		delims:                 render.Delims{"{{", "}}"},
+		secureJsonPrefix:       "while(1);",
 	}
 	engine.RouterGroup.engine = engine
 	engine.pool.New = func() interface{} {
@@ -174,6 +175,11 @@ func (engine *Engine) allocateContext() *Context {
 
 func (engine *Engine) Delims(left, right string) *Engine {
 	engine.delims = render.Delims{left, right}
+	return engine
+}
+
+func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
+	engine.secureJsonPrefix = prefix
 	return engine
 }
 
@@ -341,7 +347,7 @@ func (engine *Engine) RunUnix(file string) (err error) {
 	return
 }
 
-// Conforms to the http.Handler interface.
+// ServeHTTP conforms to the http.Handler interface.
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c := engine.pool.Get().(*Context)
 	c.writermem.reset(w)
@@ -353,7 +359,7 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	engine.pool.Put(c)
 }
 
-// Re-enter a context that has been rewritten.
+// HandleContext re-enter a context that has been rewritten.
 // This can be done by setting c.Request.Path to your new target.
 // Disclaimer: You can loop yourself to death with this, use wisely.
 func (engine *Engine) HandleContext(c *Context) {

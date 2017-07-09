@@ -2,7 +2,6 @@ package render
 
 import (
 	"encoding/json"
-
 	"net/http"
 
 	"github.com/pquerna/ffjson/ffjson"
@@ -17,8 +16,6 @@ type (
 		Data interface{}
 	}
 )
-
-var ffjsonContentType = []string{"application/json; charset=utf-8"}
 
 func (r FFJSON) Render(w http.ResponseWriter) (err error) {
 	if err = FFWriteJSON(w, r.Data); err != nil {

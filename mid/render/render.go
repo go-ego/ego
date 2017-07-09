@@ -13,8 +13,10 @@ type Render interface {
 
 var (
 	_ Render     = JSON{}
+	_ Render     = IJSON{}
 	_ Render     = FFJSON{}
 	_ Render     = IndentedJSON{}
+	_ Render     = SecureJSON{}
 	_ Render     = XML{}
 	_ Render     = String{}
 	_ Render     = Redirect{}

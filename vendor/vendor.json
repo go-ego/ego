@@ -27,6 +27,12 @@
             "revisionTime": "2017-06-22T20:25:51Z"
         },
         {
+            "checksumSHA1": "9p1sOKj4RsRIvofIbSG0TVc+9w0=",
+            "path": "github.com/json-iterator/go",
+            "revision": "d3448d3dbde1d8411a9d150a4b5b2e71e58bc77e",
+            "revisionTime": "2017-07-09T06:21:12Z"
+        },
+        {
             "checksumSHA1": "9if9IBLsxkarJ804NPWAzgskIAk=",
             "path": "github.com/manucorporat/stats",
             "revision": "8f2d6ace262eba462e9beb552382c98be51d807b",

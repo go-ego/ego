@@ -7,7 +7,7 @@ import (
 	"github.com/json-iterator/go"
 )
 
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
+var ijson = jsoniter.ConfigCompatibleWithStandardLibrary
 
 type IJSON struct {
 	Data interface{}
@@ -39,7 +39,7 @@ func (r IJSON) WriteContentType(w http.ResponseWriter) {
 
 func IWriteJSON(w http.ResponseWriter, obj interface{}) error {
 	writeContentType(w, jsonContentType)
-	jsonBytes, err := json.Marshal(obj)
+	jsonBytes, err := ijson.Marshal(obj)
 	if err != nil {
 		return err
 	}
@@ -49,7 +49,7 @@ func IWriteJSON(w http.ResponseWriter, obj interface{}) error {
 
 func (r IIndentedJSON) Render(w http.ResponseWriter) error {
 	r.WriteContentType(w)
-	jsonBytes, err := json.MarshalIndent(r.Data, "", "    ")
+	jsonBytes, err := ijson.MarshalIndent(r.Data, "", "    ")
 	if err != nil {
 		return err
 	}
@@ -63,7 +63,7 @@ func (r IIndentedJSON) WriteContentType(w http.ResponseWriter) {
 
 func (r SecureJSON) Render(w http.ResponseWriter) error {
 	r.WriteContentType(w)
-	jsonBytes, err := json.Marshal(r.Data)
+	jsonBytes, err := ijson.Marshal(r.Data)
 	if err != nil {
 		return err
 	}

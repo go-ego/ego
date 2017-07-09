@@ -28,14 +28,17 @@ var (
 	disableColor = false
 )
 
+// DisableConsoleColor disables color output in the console
 func DisableConsoleColor() {
 	disableColor = true
 }
 
+// ErrorLogger returns a handlerfunc for any error type
 func ErrorLogger() ego.HandlerFunc {
 	return ErrorLoggerT(util.ErrorTypeAny)
 }
 
+// ErrorLoggerT returns a handlerfunc for a given error type
 func ErrorLoggerT(typ util.ErrorType) ego.HandlerFunc {
 	return func(c *ego.Context) {
 		c.Next()

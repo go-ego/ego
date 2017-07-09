@@ -1065,6 +1065,13 @@ func TestContextError(t *testing.T) {
 	assert.Equal(t, c.Errors[1].Type, util.ErrorTypePublic)
 
 	assert.Equal(t, c.Errors.Last(), c.Errors[1])
+
+	defer func() {
+		if recover() == nil {
+			t.Error("didn't panic")
+		}
+	}()
+	c.Error(nil)
 }
 
 func TestContextTypedError(t *testing.T) {

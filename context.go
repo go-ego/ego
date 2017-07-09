@@ -158,6 +158,7 @@ func (c *Context) AbortWithError(code int, err error) *util.Error {
 // It's a good idea to call Error for each error that occurred during the resolution of a request.
 // A middleware can be used to collect all the errors
 // and push them to a database together, print a log, or append it in the HTTP response.
+// Error will panic if err is nil.
 func (c *Context) Error(err error) *util.Error {
 	if err == nil {
 		panic("err is nil")
@@ -838,7 +839,8 @@ func (c *Context) Value(key interface{}) interface{} {
 	return nil
 }
 
-// CreateTestContext Create a Context test help
+// CreateTestContext create a Context test help
+// returns a fresh engine and context for testing purposes
 func CreateTestContext(w http.ResponseWriter) (c *Context, r *Engine) {
 	r = New()
 	c = r.allocateContext()

@@ -12,6 +12,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+/*
+Package ego implements a HTTP web framework called gin.
+
+See https://github.com/go-ego/ego for more information about ego.
+*/
 package ego
 
 import (

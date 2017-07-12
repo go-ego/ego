@@ -88,8 +88,8 @@ func (c *Context) Copy() *Context {
 	return &cp
 }
 
-// HandlerName returns the main handler's name. For example if the handler is "handleGetUsers()", this
-// function will return "main.handleGetUsers"
+// HandlerName returns the main handler's name. For example if the handler is "handleGetUsers()",
+// this function will return "main.handleGetUsers"
 func (c *Context) HandlerName() string {
 	return nameOfFunction(c.handlers.Last())
 }
@@ -120,8 +120,8 @@ func (c *Context) IsAborted() bool {
 }
 
 // Abort prevents pending handlers from being called. Note that this will not stop the current handler.
-// Let's say you have an authorization middleware that validates that the current request is authorized. If the
-// authorization fails (ex: the password does not match), call Abort to ensure the remaining handlers
+// Let's say you have an authorization middleware that validates that the current request is authorized.
+// If the authorization fails (ex: the password does not match), call Abort to ensure the remaining handlers
 // for this request are not called.
 func (c *Context) Abort() {
 	c.index = abortIndex
@@ -135,14 +135,16 @@ func (c *Context) AbortWithStatus(code int) {
 	c.Abort()
 }
 
-// AbortWithStatusJSON calls `Abort()` and then `JSON` internally. This method stops the chain, writes the status code and return a JSON body
+// AbortWithStatusJSON calls `Abort()` and then `JSON` internally.
+// This method stops the chain, writes the status code and return a JSON body
 // It also sets the Content-Type as "application/json".
 func (c *Context) AbortWithStatusJSON(code int, jsonObj interface{}) {
 	c.Abort()
 	c.JSON(code, jsonObj)
 }
 
-// AbortWithError calls `AbortWithStatus()` and `Error()` internally. This method stops the chain, writes the status code and
+// AbortWithError calls `AbortWithStatus()` and `Error()` internally.
+// This method stops the chain, writes the status code and
 // pushes the specified error to `c.Errors`.
 // See Context.Error() for more details.
 func (c *Context) AbortWithError(code int, err error) *util.Error {
@@ -156,8 +158,8 @@ func (c *Context) AbortWithError(code int, err error) *util.Error {
 
 // Error attaches an error to the current context. The error is pushed to a list of errors.
 // It's a good idea to call Error for each error that occurred during the resolution of a request.
-// A middleware can be used to collect all the errors
-// and push them to a database together, print a log, or append it in the HTTP response.
+// A middleware can be used to collect all the errors and push them to a database together,
+// print a log, or append it in the HTTP response.
 // Error will panic if err is nil.
 func (c *Context) Error(err error) *util.Error {
 	if err == nil {

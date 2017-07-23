@@ -17,12 +17,12 @@ type IIndentedJSON struct {
 	Data interface{}
 }
 
-type SecureJSON struct {
+type ISecureJSON struct {
 	Prefix string
 	Data   interface{}
 }
 
-type SecureJSONPrefix string
+type ISecureJSONPrefix string
 
 // var jsonContentType = []string{"application/json; charset=utf-8"}
 
@@ -61,7 +61,7 @@ func (r IIndentedJSON) WriteContentType(w http.ResponseWriter) {
 	writeContentType(w, jsonContentType)
 }
 
-func (r SecureJSON) Render(w http.ResponseWriter) error {
+func (r ISecureJSON) Render(w http.ResponseWriter) error {
 	r.WriteContentType(w)
 	jsonBytes, err := ijson.Marshal(r.Data)
 	if err != nil {
@@ -75,6 +75,6 @@ func (r SecureJSON) Render(w http.ResponseWriter) error {
 	return nil
 }
 
-func (r SecureJSON) WriteContentType(w http.ResponseWriter) {
+func (r ISecureJSON) WriteContentType(w http.ResponseWriter) {
 	writeContentType(w, jsonContentType)
 }

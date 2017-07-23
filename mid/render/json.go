@@ -5,24 +5,31 @@
 package render
 
 import (
-	"encoding/json"
+	"bytes"
 	"net/http"
+
+	"github.com/go-ego/ego/mid/render/json"
 )
 
-type (
-	JSON struct {
-		Data interface{}
-	}
+type JSON struct {
+	Data interface{}
+}
 
-	IndentedJSON struct {
-		Data interface{}
-	}
-)
+type IndentedJSON struct {
+	Data interface{}
+}
+
+type SecureJSON struct {
+	Prefix string
+	Data   interface{}
+}
+
+type SecureJSONPrefix string
 
 var jsonContentType = []string{"application/json; charset=utf-8"}
 
 func (r JSON) Render(w http.ResponseWriter) (err error) {
-	if err = WriteJSON(w, r.Data); err != nil {
+	if err = IWriteJSON(w, r.Data); err != nil {
 		panic(err)
 	}
 	return
@@ -53,5 +60,23 @@ func (r IndentedJSON) Render(w http.ResponseWriter) error {
 }
 
 func (r IndentedJSON) WriteContentType(w http.ResponseWriter) {
+	writeContentType(w, jsonContentType)
+}
+
+func (r SecureJSON) Render(w http.ResponseWriter) error {
+	r.WriteContentType(w)
+	jsonBytes, err := json.Marshal(r.Data)
+	if err != nil {
+		return err
+	}
+	// if the jsonBytes is array values
+	if bytes.HasPrefix(jsonBytes, []byte("[")) && bytes.HasSuffix(jsonBytes, []byte("]")) {
+		w.Write([]byte(r.Prefix))
+	}
+	w.Write(jsonBytes)
+	return nil
+}
+
+func (r SecureJSON) WriteContentType(w http.ResponseWriter) {
 	writeContentType(w, jsonContentType)
 }

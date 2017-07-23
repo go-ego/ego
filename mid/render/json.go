@@ -8,7 +8,7 @@ import (
 	"bytes"
 	"net/http"
 
-	"github.com/go-ego/ego/mid/render/json"
+	"github.com/go-ego/ego/mid/json"
 )
 
 type JSON struct {

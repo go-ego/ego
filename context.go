@@ -699,6 +699,12 @@ func (c *Context) SecureJSON(code int, obj interface{}) {
 
 // JSON serializes the given struct as JSON into the response body.
 // It also sets the Content-Type as "application/json".
+// Ego use `encoding/json` as default json package,
+// but you can change to [jsoniter](https://github.com/json-iterator/go)
+//  by build from other tags.
+// ```sh
+// $ go build -tags=jsoniter .
+// ```
 func (c *Context) JSON(code int, obj interface{}) {
 	c.Render(code, render.JSON{Data: obj})
 }

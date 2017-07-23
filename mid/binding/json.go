@@ -8,11 +8,10 @@ import (
 	"net/http"
 	// "encoding/json"
 
-	"github.com/json-iterator/go"
+	"github.com/go-ego/ego/mid/json"
 )
 
 var (
-	json                   = jsoniter.ConfigCompatibleWithStandardLibrary
 	EnableDecoderUseNumber = false
 )
 

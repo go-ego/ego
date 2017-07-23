@@ -6,9 +6,10 @@ package util
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"reflect"
+
+	"github.com/go-ego/ego/mid/json"
 )
 
 type Map map[string]interface{}

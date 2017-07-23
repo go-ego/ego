@@ -9,7 +9,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/go-ego/ego/mid/render/json"
+	"github.com/go-ego/ego/mid/json"
 	"github.com/stretchr/testify/assert"
 )
 

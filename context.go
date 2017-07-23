@@ -499,6 +499,11 @@ func (c *Context) BindJSON(obj interface{}) error {
 	return c.BindWith(obj, binding.JSON)
 }
 
+// BindQuery is a shortcut for c.BindWith(obj, binding.Query)
+func (c *Context) BindQuery(obj interface{}) error {
+	return c.BindWith(obj, binding.Query)
+}
+
 // BindWith binds the passed struct pointer using the specified binding engine.
 // See the binding package.
 func (c *Context) BindWith(obj interface{}, b binding.Binding) error {

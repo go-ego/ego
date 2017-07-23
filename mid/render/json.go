@@ -29,7 +29,7 @@ type SecureJSONPrefix string
 var jsonContentType = []string{"application/json; charset=utf-8"}
 
 func (r JSON) Render(w http.ResponseWriter) (err error) {
-	if err = IWriteJSON(w, r.Data); err != nil {
+	if err = WriteJSON(w, r.Data); err != nil {
 		panic(err)
 	}
 	return

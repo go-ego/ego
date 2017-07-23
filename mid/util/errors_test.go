@@ -5,10 +5,11 @@
 package util
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"errors"
 	"testing"
 
+	"github.com/go-ego/ego/mid/render/json"
 	"github.com/stretchr/testify/assert"
 )
 

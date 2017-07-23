@@ -192,10 +192,11 @@ func (engine *Engine) LoadHTMLGlob(pattern string) {
 	if IsDebugging() {
 		debugPrintLoadTemplate(template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern)))
 		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
-	} else {
-		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
-		engine.SetHTMLTemplate(templ)
+		return
 	}
+
+	templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
+	engine.SetHTMLTemplate(templ)
 }
 
 func (engine *Engine) GlobFHTML(pattern string) {
@@ -217,19 +218,21 @@ func (engine *Engine) GlobHTML(pattern string) {
 		// engine.HTMLRender = render.HTMLDebug{Glob: pattern}
 		debugPrintLoadTemplate(template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern)))
 		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
-	} else {
-		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
-		engine.SetHTMLTemplate(templ)
+		return
 	}
+
+	templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
+	engine.SetHTMLTemplate(templ)
 }
 
 func (engine *Engine) LoadHTMLFiles(files ...string) {
 	if IsDebugging() {
 		engine.HTMLRender = render.HTMLDebug{Files: files, FuncMap: engine.FuncMap, Delims: engine.delims}
-	} else {
-		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseFiles(files...))
-		engine.SetHTMLTemplate(templ)
+		return
 	}
+
+	templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseFiles(files...))
+	engine.SetHTMLTemplate(templ)
 }
 
 func (engine *Engine) SetHTMLTemplate(templ *template.Template) {

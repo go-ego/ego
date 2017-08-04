@@ -13,7 +13,7 @@
 // except according to those terms.
 
 /*
-Package ego implements a HTTP web framework called gin.
+Package ego implements a HTTP web framework called ego.
 
 See https://github.com/go-ego/ego for more information about ego.
 */

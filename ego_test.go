@@ -98,7 +98,7 @@ func TestLoadHTMLGlobFromFuncMap(t *testing.T) {
 
 //TODO
 // func (engine *Engine) LoadHTMLFiles(files ...string) {
-// func (engine *Engine) RunTLS(addr string, cert string, key string) error {
+// func (engine *Engine) RunTLS(addr, cert, key string) error {
 
 func init() {
 	SetMode(TestMode)

@@ -44,7 +44,7 @@ func CopyFile(src, dst string) (w int64, err error) {
 	defer srcFile.Close()
 	// if fileExist(dst) != true {
 	if !fileExist(dst) {
-		Wirtefile("", dst)
+		Writefile("", dst)
 	}
 	dstFile, err := os.Create(dst)
 	if err != nil {
@@ -96,7 +96,7 @@ func Readfile(fname string) (string, error) {
 	return restr, nil
 }
 
-func Wirtefile(wirtestr string, userFile string) {
+func Writefile(writeStr string, userFile string) {
 	os.MkdirAll(path.Dir(userFile), os.ModePerm)
 
 	fout, err := os.Create(userFile)
@@ -106,7 +106,7 @@ func Wirtefile(wirtestr string, userFile string) {
 		return
 	}
 
-	fout.WriteString(wirtestr)
+	fout.WriteString(writeStr)
 }
 
 func ListFile(dirPth string, suffix string) (files []string, err error) {

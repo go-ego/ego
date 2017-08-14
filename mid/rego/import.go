@@ -368,9 +368,9 @@ func WHtml(class []string, layout string, args ...string) {
 
 	minhtml, err := minStr(thtml, "text/html")
 	if err == nil {
-		Wirtefile(minhtml, aname)
+		Writefile(minhtml, aname)
 	} else {
-		Wirtefile(thtml, aname)
+		Writefile(thtml, aname)
 	}
 }
 
@@ -387,5 +387,5 @@ func ImpHtml(class []string, layout string) {
 	footer = impclass[0] + foot[1]
 	vhtml = header + bodyer + footer
 
-	Wirtefile(vhtml, "views/t_vgo.html")
+	Writefile(vhtml, "views/t_vgo.html")
 }

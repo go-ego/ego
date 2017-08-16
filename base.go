@@ -21,6 +21,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 )
 
 func Try(fun func(), handler func(interface{})) {
@@ -96,12 +97,23 @@ func Get(apiUrl string, params url.Values) (rs []byte, err error) {
 }
 
 // Post http, params is url.Values type
-func Post(apiUrl string, params url.Values) (rs []byte, err error) {
+func Post(apiUrl string, params url.Values, args ...int) (rs []byte, err error) {
+	out := 1000
+	if len(args) > 0 {
+		out = args[0]
+	}
 
-	resp, err := http.PostForm(apiUrl, params)
+	timeOut := time.Duration(out) * time.Millisecond
+
+	c := &http.Client{
+		Timeout: timeOut,
+	}
+
+	resp, err := c.PostForm(apiUrl, params)
 	if err != nil {
 		return nil, err
 	}
+
 	// fmt.Println("http:", resp)
 	defer resp.Body.Close()
 	return ioutil.ReadAll(resp.Body)

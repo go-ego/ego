@@ -33,11 +33,11 @@ import (
 )
 
 const (
-	// Version is Framework's version
+	// Version is Framework's version.
 	Version string = "v0.10.0.95, Nile River!"
 )
 
-// GetVersion get version
+// GetVersion get version.
 func GetVersion() string {
 	return Version
 }
@@ -253,7 +253,7 @@ func (engine *Engine) NoRoute(handlers ...HandlerFunc) {
 	engine.rebuild404Handlers()
 }
 
-// NoMethod sets the handlers called when... TODO
+// NoMethod sets the handlers called when... TODO.
 func (engine *Engine) NoMethod(handlers ...HandlerFunc) {
 	engine.noMethod = handlers
 	engine.rebuild405Handlers()

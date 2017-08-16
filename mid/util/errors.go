@@ -70,12 +70,12 @@ func (msg *Error) JSON() interface{} {
 	return json
 }
 
-// MarshalJSON implements the json.Marshaller interface
+// MarshalJSON implements the json.Marshaller interface.
 func (msg *Error) MarshalJSON() ([]byte, error) {
 	return json.Marshal(msg.JSON())
 }
 
-// Error implements the error interface
+// Error implements the error interface.
 func (msg *Error) Error() string {
 	return msg.Err.Error()
 }
@@ -85,7 +85,7 @@ func (msg *Error) IsType(flags ErrorType) bool {
 }
 
 // ByType returns a readonly copy filtered the byte.
-// ie ByType(util.ErrorTypePublic) returns a slice of errors with type = ErrorTypePublic
+// ie ByType(util.ErrorTypePublic) returns a slice of errors with type = ErrorTypePublic.
 func (a ErrorMsgs) ByType(typ ErrorType) ErrorMsgs {
 	if len(a) == 0 {
 		return nil
@@ -103,7 +103,7 @@ func (a ErrorMsgs) ByType(typ ErrorType) ErrorMsgs {
 }
 
 // Last returns the last error in the slice. It returns nil if the array is empty.
-// Shortcut for errors[len(errors)-1]
+// Shortcut for errors[len(errors)-1].
 func (a ErrorMsgs) Last() *Error {
 	length := len(a)
 	if length > 0 {

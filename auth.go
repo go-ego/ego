@@ -10,11 +10,11 @@ import (
 	"strconv"
 )
 
-// AuthUserKey is the cookie name for user credential in basic auth
+// AuthUserKey is the cookie name for user credential in basic auth.
 const AuthUserKey = "user"
 
 type (
-	// Accounts defines a key/value for user/pass list of authorized logins
+	// Accounts defines a key/value for user/pass list of authorized logins.
 	Accounts map[string]string
 	authPair struct {
 		Value string
@@ -46,7 +46,7 @@ func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
 	realm = "Basic realm=" + strconv.Quote(realm)
 	pairs := processAccounts(accounts)
 	return func(c *Context) {
-		// Search user in the slice of allowed credentials
+		// Search user in the slice of allowed credentials.
 		user, found := pairs.searchCredential(c.Request.Header.Get("Authorization"))
 		if !found {
 			// Credentials doesn't match, we return 401 and abort handlers chain.
@@ -56,7 +56,7 @@ func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
 		}
 
 		// The user credentials was found, set user's id to key AuthUserKey in this context, the user's id can be read later using
-		// c.MustGet(ego.AuthUserKey)
+		// c.MustGet(ego.AuthUserKey).
 		c.Set(AuthUserKey, user)
 	}
 }
@@ -90,6 +90,6 @@ func secureCompare(given, actual string) bool {
 	if subtle.ConstantTimeEq(int32(len(given)), int32(len(actual))) == 1 {
 		return subtle.ConstantTimeCompare([]byte(given), []byte(actual)) == 1
 	}
-	// Securely compare actual to itself to keep constant time, but always return false
+	// Securely compare actual to itself to keep constant time, but always return false.
 	return subtle.ConstantTimeCompare([]byte(actual), []byte(actual)) == 1 && false
 }

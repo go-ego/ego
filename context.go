@@ -24,7 +24,7 @@ import (
 	"github.com/go-ego/ego/mid/util"
 )
 
-// Content-Type MIME of the most common data formats
+// Content-Type MIME of the most common data formats.
 const (
 	MIMEJSON              = binding.MIMEJSON
 	MIMEHTML              = binding.MIMEHTML
@@ -54,13 +54,13 @@ type Context struct {
 
 	engine *Engine
 
-	// Keys is a key/value pair exclusively for the context of each request
+	// Keys is a key/value pair exclusively for the context of each request.
 	Keys map[string]interface{}
 
-	// Errors is a list of errors attached to all the handlers/middlewares who used this context
+	// Errors is a list of errors attached to all the handlers/middlewares who used this context.
 	Errors util.ErrorMsgs
 
-	// Accepted defines a list of manually accepted formats for content negotiation
+	// Accepted defines a list of manually accepted formats for content negotiation.
 	Accepted []string
 }
 
@@ -90,7 +90,7 @@ func (c *Context) Copy() *Context {
 }
 
 // HandlerName returns the main handler's name. For example if the handler is "handleGetUsers()",
-// this function will return "main.handleGetUsers"
+// this function will return "main.handleGetUsers".
 func (c *Context) HandlerName() string {
 	return nameOfFunction(c.handlers.Last())
 }
@@ -194,7 +194,7 @@ func (c *Context) Set(key string, value interface{}) {
 }
 
 // Get returns the value for the given key, ie: (value, true).
-// If the value does not exists it returns (nil, false)
+// If the value does not exists it returns (nil, false).
 func (c *Context) Get(key string) (value interface{}, exists bool) {
 	if c.Keys != nil {
 		value, exists = c.Keys[key]
@@ -494,17 +494,18 @@ func (c *Context) Bind(obj interface{}) error {
 	return c.BindWith(obj, b)
 }
 
-// BindJSON is a shortcut for c.BindWith(obj, binding.JSON)
+// BindJSON is a shortcut for c.BindWith(obj, binding.JSON).
 func (c *Context) BindJSON(obj interface{}) error {
 	return c.BindWith(obj, binding.JSON)
 }
 
-// BindQuery is a shortcut for c.BindWith(obj, binding.Query)
+// BindQuery is a shortcut for c.BindWith(obj, binding.Query).
 func (c *Context) BindQuery(obj interface{}) error {
 	return c.BindWith(obj, binding.Query)
 }
 
 // BindWith binds the passed struct pointer using the specified binding engine.
+// It will abort the request with HTTP 400 if any error ocurrs.
 // See the binding package.
 func (c *Context) BindWith(obj interface{}, b binding.Binding) error {
 	if err := b.Bind(c.Request, obj); err != nil {
@@ -514,8 +515,7 @@ func (c *Context) BindWith(obj interface{}, b binding.Binding) error {
 	return nil
 }
 
-// ShouldBindWith binds the passed struct pointer using the specified binding
-// engine.
+// ShouldBindWith binds the passed struct pointer using the specified binding engine.
 // See the binding package.
 func (c *Context) ShouldBindWith(obj interface{}, b binding.Binding) error {
 	return b.Bind(c.Request, obj)
@@ -584,7 +584,7 @@ func (c *Context) requestHeader(key string) string {
 /******** RESPONSE RENDERING ********/
 /************************************/
 
-// bodyAllowedForStatus is a copy of http.bodyAllowedForStatus non-exported function
+// bodyAllowedForStatus is a copy of http.bodyAllowedForStatus non-exported function.
 func bodyAllowedForStatus(status int) bool {
 	switch {
 	case status >= 100 && status <= 199:
@@ -602,7 +602,7 @@ func (c *Context) Status(code int) {
 	c.writermem.WriteHeader(code)
 }
 
-// Header is a intelligent shortcut for c.Writer.Header().Set(key, value)
+// Header is a intelligent shortcut for c.Writer.Header().Set(key, value).
 // It writes a header in the response.
 // If value == "", this method removes the header `c.Writer.Header().Del(key)`
 func (c *Context) Header(key, value string) {
@@ -613,12 +613,12 @@ func (c *Context) Header(key, value string) {
 	}
 }
 
-// GetHeader returns value from request headers
+// GetHeader returns value from request headers.
 func (c *Context) GetHeader(key string) string {
 	return c.requestHeader(key)
 }
 
-// GetRawData return stream data
+// GetRawData return stream data.
 func (c *Context) GetRawData() ([]byte, error) {
 	return ioutil.ReadAll(c.Request.Body)
 }

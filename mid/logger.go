@@ -28,17 +28,17 @@ var (
 	disableColor = false
 )
 
-// DisableConsoleColor disables color output in the console
+// DisableConsoleColor disables color output in the console.
 func DisableConsoleColor() {
 	disableColor = true
 }
 
-// ErrorLogger returns a handlerfunc for any error type
+// ErrorLogger returns a handlerfunc for any error type.
 func ErrorLogger() ego.HandlerFunc {
 	return ErrorLoggerT(util.ErrorTypeAny)
 }
 
-// ErrorLoggerT returns a handlerfunc for a given error type
+// ErrorLoggerT returns a handlerfunc for a given error type.
 func ErrorLoggerT(typ util.ErrorType) ego.HandlerFunc {
 	return func(c *ego.Context) {
 		c.Next()
@@ -49,8 +49,8 @@ func ErrorLoggerT(typ util.ErrorType) ego.HandlerFunc {
 	}
 }
 
-// Logger instances a Logger middleware that will write the logs to mid.DefaultWriter
-// By default mid.DefaultWriter = os.Stdout
+// Logger instances a Logger middleware that will write the logs to mid.DefaultWriter.
+// By default mid.DefaultWriter = os.Stdout.
 func Logger() ego.HandlerFunc {
 	return LoggerWithWriter(ego.DefaultWriter)
 }

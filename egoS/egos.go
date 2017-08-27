@@ -9,15 +9,15 @@ import (
 	"net/http"
 	"sync"
 
-	. "github.com/go-ego/ego"
+	"github.com/go-ego/ego"
 )
 
 var once sync.Once
-var internalEngine *Engine
+var internalEngine *ego.Engine
 
-func engine() *Engine {
+func engine() *ego.Engine {
 	once.Do(func() {
-		internalEngine = Default()
+		internalEngine = ego.Default()
 	})
 	return internalEngine
 }

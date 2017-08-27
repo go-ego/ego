@@ -378,14 +378,11 @@ func (engine *Engine) HandleContext(c *Context) {
 
 func (engine *Engine) handleHTTPRequest(context *Context) {
 	httpMethod := context.Request.Method
-	var path string
+	path := context.Request.URL.Path
 	var unescape bool
 	if engine.UseRawPath && len(context.Request.URL.RawPath) > 0 {
 		path = context.Request.URL.RawPath
 		unescape = engine.UnescapePathValues
-	} else {
-		path = context.Request.URL.Path
-		unescape = false
 	}
 
 	// Find root of the tree for the given HTTP method

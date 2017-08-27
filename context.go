@@ -541,7 +541,7 @@ func (c *Context) ClientIP() string {
 	}
 
 	if c.engine.AppEngine {
-		if addr := c.Request.Header.Get("X-Appengine-Remote-Addr"); addr != "" {
+		if addr := c.requestHeader("X-Appengine-Remote-Addr"); addr != "" {
 			return addr
 		}
 	}
@@ -569,11 +569,11 @@ func (c *Context) IsWebsocket() bool {
 }
 
 // RequestHeader returns the value for the respective header key, or "" if not existent.
-func (c *Context) RequestHeader(key string) string {
+func (c *Context) requestHeader(key string) string {
 	return c.Request.Header.Get(key)
 }
 
-func (c *Context) requestHeader(key string) string {
+func (c *Context) RequestHeader(key string) string {
 	if values, _ := c.Request.Header[key]; len(values) > 0 {
 		return values[0]
 	}

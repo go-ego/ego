@@ -3,6 +3,7 @@ sudo: false
 go:
   - 1.7.x
   - 1.8.x
+  - 1.9
   - tip
   
 # env:
@@ -16,6 +17,7 @@ go:
 #    - TARGET=ppc64le
 
 before_install:
+  - export PATH=$PATH:$HOME/gopath/bin
   - go get -t -v ./...
 
 # script:

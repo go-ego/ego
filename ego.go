@@ -34,7 +34,8 @@ import (
 
 const (
 	// Version is Framework's version.
-	Version string = "v0.10.0.95, Nile River!"
+	Version                string = "v0.10.0.95, Nile River!"
+	defaultMultipartMemory        = 32 << 20 // 32 MB
 )
 
 // GetVersion get version.
@@ -121,6 +122,10 @@ type Engine struct {
 	// If UseRawPath is false (by default), the UnescapePathValues effectively is true,
 	// as url.Path gonna be used, which is already unescaped.
 	UnescapePathValues bool
+
+	// Value of 'maxMemory' param that is given to http.Request's ParseMultipartForm
+	// method call.
+	MaxMultipartMemory int64
 }
 
 var _ IRouter = &Engine{}
@@ -149,6 +154,7 @@ func New() *Engine {
 		AppEngine:              defaultAppEngine,
 		UseRawPath:             false,
 		UnescapePathValues:     true,
+		MaxMultipartMemory:     defaultMultipartMemory,
 		trees:                  make(methodTrees, 0, 9),
 		delims:                 render.Delims{Left: "{{", Right: "}}"},
 		secureJsonPrefix:       "while(1);",

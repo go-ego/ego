@@ -9,6 +9,8 @@ import (
 
 func main() {
 	router := ego.Default()
+	// Set a lower memory limit for multipart forms (default is 32 MiB)
+	router.MaxMultipartMemory = 8 << 20 // 8 MiB
 	router.Static("/", "./public")
 	router.POST("/upload", func(c *ego.Context) {
 		name := c.PostForm("name")

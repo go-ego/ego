@@ -118,6 +118,7 @@ type Engine struct {
 
 	// If enabled, the url.RawPath will be used to find parameters.
 	UseRawPath bool
+
 	// If true, the path value will be unescaped.
 	// If UseRawPath is false (by default), the UnescapePathValues effectively is true,
 	// as url.Path gonna be used, which is already unescaped.
@@ -195,13 +196,16 @@ func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
 }
 
 func (engine *Engine) LoadHTMLGlob(pattern string) {
+	left := engine.delims.Left
+	right := engine.delims.Right
+
 	if IsDebugging() {
-		debugPrintLoadTemplate(template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern)))
+		debugPrintLoadTemplate(template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern)))
 		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
 		return
 	}
 
-	templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
+	templ := template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern))
 	engine.SetHTMLTemplate(templ)
 }
 
@@ -219,15 +223,18 @@ func (engine *Engine) GlobFHTML(pattern string) {
 
 // GlobHTML
 func (engine *Engine) GlobHTML(pattern string) {
+	left := engine.delims.Left
+	right := engine.delims.Right
+
 	if IsDebugging() {
 		// debugPrintLoadTemplate(template.Must(template.ParseGlob(pattern)))
 		// engine.HTMLRender = render.HTMLDebug{Glob: pattern}
-		debugPrintLoadTemplate(template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern)))
+		debugPrintLoadTemplate(template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern)))
 		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
 		return
 	}
 
-	templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
+	templ := template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern))
 	engine.SetHTMLTemplate(templ)
 }
 
@@ -382,12 +389,12 @@ func (engine *Engine) HandleContext(c *Context) {
 	engine.pool.Put(c)
 }
 
-func (engine *Engine) handleHTTPRequest(context *Context) {
-	httpMethod := context.Request.Method
-	path := context.Request.URL.Path
+func (engine *Engine) handleHTTPRequest(ctx *Context) {
+	httpMethod := ctx.Request.Method
+	path := ctx.Request.URL.Path
 	var unescape bool
-	if engine.UseRawPath && len(context.Request.URL.RawPath) > 0 {
-		path = context.Request.URL.RawPath
+	if engine.UseRawPath && len(ctx.Request.URL.RawPath) > 0 {
+		path = ctx.Request.URL.RawPath
 		unescape = engine.UnescapePathValues
 	}
 
@@ -397,22 +404,22 @@ func (engine *Engine) handleHTTPRequest(context *Context) {
 		if t[i].method == httpMethod {
 			root := t[i].root
 			// Find route in tree
-			handlers, params, tsr := root.getValue(path, context.Params, unescape)
+			handlers, params, tsr := root.getValue(path, ctx.Params, unescape)
 			if handlers != nil {
-				context.handlers = handlers
-				context.Params = params
-				context.Next()
-				context.writermem.WriteHeaderNow()
+				ctx.handlers = handlers
+				ctx.Params = params
+				ctx.Next()
+				ctx.writermem.WriteHeaderNow()
 				return
 
 			}
 
 			if httpMethod != "CONNECT" && path != "/" {
 				if tsr && engine.RedirectTrailingSlash {
-					redirectTrailingSlash(context)
+					redirectTrailingSlash(ctx)
 					return
 				}
-				if engine.RedirectFixedPath && redirectFixedPath(context, root, engine.RedirectFixedPath) {
+				if engine.RedirectFixedPath && redirectFixedPath(ctx, root, engine.RedirectFixedPath) {
 					return
 				}
 			}
@@ -425,15 +432,15 @@ func (engine *Engine) handleHTTPRequest(context *Context) {
 		for _, tree := range engine.trees {
 			if tree.method != httpMethod {
 				if handlers, _, _ := tree.root.getValue(path, nil, unescape); handlers != nil {
-					context.handlers = engine.allNoMethod
-					serveError(context, 405, default405Body)
+					ctx.handlers = engine.allNoMethod
+					serveError(ctx, 405, default405Body)
 					return
 				}
 			}
 		}
 	}
-	context.handlers = engine.allNoRoute
-	serveError(context, 404, default404Body)
+	ctx.handlers = engine.allNoRoute
+	serveError(ctx, 404, default404Body)
 }
 
 var mimePlain = []string{MIMEPlain}

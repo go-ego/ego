@@ -46,6 +46,7 @@ func createMultipartRequest() *http.Request {
 	must(mw.WriteField("id", ""))
 	must(mw.WriteField("time_local", "31/12/2016 14:55"))
 	must(mw.WriteField("time_utc", "31/12/2016 14:55"))
+	must(mw.WriteField("time_location", "31/12/2016 14:55"))
 	req, err := http.NewRequest("POST", "/", body)
 	must(err)
 	req.Header.Set("Content-Type", MIMEMultipartPOSTForm+"; boundary="+boundary)
@@ -469,14 +470,15 @@ func TestContextPostFormMultipart(t *testing.T) {
 	c.Request = createMultipartRequest()
 
 	var obj struct {
-		Foo       string    `form:"foo"`
-		Bar       string    `form:"bar"`
-		BarAsInt  int       `form:"bar"`
-		Array     []string  `form:"array"`
-		ID        string    `form:"id"`
-		TimeLocal time.Time `form:"time_local" time_format:"02/01/2006 15:04"`
-		TimeUTC   time.Time `form:"time_utc" time_format:"02/01/2006 15:04" time_utc:"1"`
-		BlankTime time.Time `form:"blank_time" time_format:"02/01/2006 15:04"`
+		Foo          string    `form:"foo"`
+		Bar          string    `form:"bar"`
+		BarAsInt     int       `form:"bar"`
+		Array        []string  `form:"array"`
+		ID           string    `form:"id"`
+		TimeLocal    time.Time `form:"time_local" time_format:"02/01/2006 15:04"`
+		TimeUTC      time.Time `form:"time_utc" time_format:"02/01/2006 15:04" time_utc:"1"`
+		BlankTime    time.Time `form:"blank_time" time_format:"02/01/2006 15:04"`
+		TimeLocation time.Time `form:"time_location" time_format:"02/01/2006 15:04" time_location:"Asia/Tokyo"`
 	}
 	assert.NoError(t, c.Bind(&obj))
 	assert.Equal(t, obj.Foo, "bar")
@@ -489,6 +491,9 @@ func TestContextPostFormMultipart(t *testing.T) {
 	assert.Equal(t, obj.TimeUTC.Format("02/01/2006 15:04"), "31/12/2016 14:55")
 	assert.Equal(t, obj.TimeUTC.Location(), time.UTC)
 	assert.True(t, obj.BlankTime.IsZero())
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	assert.Equal(t, obj.TimeLocation.Format("02/01/2006 15:04"), "31/12/2016 14:55")
+	assert.Equal(t, obj.TimeLocation.Location(), loc)
 
 	value, ok := c.GetQuery("foo")
 	assert.False(t, ok)

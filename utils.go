@@ -106,7 +106,7 @@ func parseAccept(acceptHeader string) []string {
 			part = part[0:index]
 		}
 		part = strings.TrimSpace(part)
-		if len(part) > 0 {
+		if part != "" {
 			out = append(out, part)
 		}
 	}
@@ -115,7 +115,7 @@ func parseAccept(acceptHeader string) []string {
 
 func lastChar(str string) uint8 {
 	size := len(str)
-	if size == 0 {
+	if str == "" {
 		panic("The length of the string can't be 0")
 	}
 	return str[size-1]
@@ -126,7 +126,7 @@ func nameOfFunction(f interface{}) string {
 }
 
 func joinPaths(absolutePath, relativePath string) string {
-	if len(relativePath) == 0 {
+	if relativePath == "" {
 		return absolutePath
 	}
 
@@ -141,7 +141,7 @@ func joinPaths(absolutePath, relativePath string) string {
 func resolveAddress(addr []string) string {
 	switch len(addr) {
 	case 0:
-		if port := os.Getenv("PORT"); len(port) > 0 {
+		if port := os.Getenv("PORT"); port != "" {
 			debugPrint("Environment variable PORT=\"%s\"", port)
 			return ":" + port
 		}

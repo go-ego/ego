@@ -15,7 +15,7 @@ func init() {
 }
 
 // IsDebugging returns true if the framework is running in debug mode.
-// Use SetMode(ego.Release) to disable debug mode.
+// Use SetMode(ego.ReleaseMode) to disable debug mode.
 func IsDebugging() bool {
 	return egoMode == debugCode
 }

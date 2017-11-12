@@ -554,11 +554,11 @@ func (c *Context) ClientIP() string {
 			clientIP = clientIP[0:index]
 		}
 		clientIP = strings.TrimSpace(clientIP)
-		if len(clientIP) > 0 {
+		if clientIP != "" {
 			return clientIP
 		}
 		clientIP = strings.TrimSpace(c.requestHeader("X-Real-Ip"))
-		if len(clientIP) > 0 {
+		if clientIP != "" {
 			return clientIP
 		}
 	}
@@ -629,7 +629,7 @@ func (c *Context) Status(code int) {
 // It writes a header in the response.
 // If value == "", this method removes the header `c.Writer.Header().Del(key)`
 func (c *Context) Header(key, value string) {
-	if len(value) == 0 {
+	if value == "" {
 		c.Writer.Header().Del(key)
 	} else {
 		c.Writer.Header().Set(key, value)

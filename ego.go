@@ -468,8 +468,9 @@ func redirectTrailingSlash(c *Context) {
 		code = 307
 	}
 
-	if len(path) > 1 && path[len(path)-1] == '/' {
-		req.URL.Path = path[:len(path)-1]
+	length := len(path)
+	if length > 1 && path[length-1] == '/' {
+		req.URL.Path = path[:length-1]
 	} else {
 		req.URL.Path = path + "/"
 	}

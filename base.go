@@ -133,18 +133,13 @@ func API(httpUrl string, paramMap Map, method ...string) (rs []byte, err error) 
 		apiMethod = method[0]
 	}
 
-	var (
-		// rebody ioutil.ReadAll
-		rebody []byte
-		aerr   error
-	)
 	if apiMethod == "get" {
-		rebody, aerr = Get(httpUrl, param)
-	} else {
-		rebody, aerr = Post(httpUrl, param)
+		rs, err = Get(httpUrl, param)
+		return rs, err
 	}
 
-	return rebody, aerr
+	rs, err = Post(httpUrl, param)
+	return rs, err
 }
 
 // PostFile post file

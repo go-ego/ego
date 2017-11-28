@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -77,26 +78,27 @@ func ListDir(dirPth string, suffix string) (files []string, err error) {
 	return files, nil
 }
 
-// Get http
+// Get http get
 func Get(apiUrl string, params url.Values) (rs []byte, err error) {
 	var Url *url.URL
 	Url, err = url.Parse(apiUrl)
 	if err != nil {
-		fmt.Printf("analytic url error:\r\n%v", err)
+		log.Printf("analytic url error:\r\n%v", err)
 		return nil, err
 	}
+
 	// URLEncode
 	Url.RawQuery = params.Encode()
 	resp, err := http.Get(Url.String())
 	if err != nil {
-		fmt.Println("err:", err)
+		log.Println("http get error:", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
 	return ioutil.ReadAll(resp.Body)
 }
 
-// Post http, params is url.Values type
+// Post http post, params is url.Values type
 func Post(apiUrl string, params url.Values, args ...int) (rs []byte, err error) {
 	out := 1000
 	if len(args) > 0 {
@@ -119,24 +121,25 @@ func Post(apiUrl string, params url.Values, args ...int) (rs []byte, err error) 
 	return ioutil.ReadAll(resp.Body)
 }
 
-// API
+// API http api
 func API(httpUrl string, paramMap Map, method ...string) (rs []byte, err error) {
 	param := url.Values{}
 	for k, v := range paramMap {
 		param.Set(k, v.(string))
 	}
 
-	amethod := "post"
+	apiMethod := "post"
 	if len(method) > 0 {
-		amethod = method[0]
+		apiMethod = method[0]
 	}
 
-	// var rebody ioutil.ReadAll
-	var rebody []byte
-	var aerr error
-	if amethod == "get" {
+	var (
+		// rebody ioutil.ReadAll
+		rebody []byte
+		aerr   error
+	)
+	if apiMethod == "get" {
 		rebody, aerr = Get(httpUrl, param)
-
 	} else {
 		rebody, aerr = Post(httpUrl, param)
 	}
@@ -144,7 +147,54 @@ func API(httpUrl string, paramMap Map, method ...string) (rs []byte, err error) 
 	return rebody, aerr
 }
 
-var Url url.Values = url.Values{}
+// PostFile post file
+func PostFile(filename, targetUrl, upParam string) (string, error) {
+	bodyBuf := &bytes.Buffer{}
+	bodyWriter := multipart.NewWriter(bodyBuf)
+
+	// uploadfile
+	fileWriter, err := bodyWriter.CreateFormFile(upParam, filename)
+	if err != nil {
+		log.Println("error writing to buffer")
+		return "", err
+	}
+
+	// openfile
+	fh, err := os.Open(filename)
+	if err != nil {
+		log.Println("error opening file")
+		return "", err
+	}
+
+	// iocopy
+	_, err = io.Copy(fileWriter, fh)
+	if err != nil {
+		return "", err
+	}
+
+	contentType := bodyWriter.FormDataContentType()
+	bodyWriter.Close()
+
+	resp, err := http.Post(targetUrl, contentType, bodyBuf)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	log.Println(resp.Status)
+	// fmt.Println(string(respBody))
+
+	return string(respBody), nil
+}
+
+var (
+	Url  url.Values = url.Values{}
+	ajax int64
+)
 
 // TestRest test restful and return json
 func (router *Engine) TestRest(httpUrl string, param url.Values) {
@@ -200,10 +250,6 @@ func (router *Engine) TestJson(httpUrl string, param url.Values, args ...string)
 		}
 	})
 }
-
-var (
-	ajax int64
-)
 
 // TestHtml test restful and show pretty in the browser
 func (router *Engine) TestHtml(httpUrl string, paramMap Map, args ...string) {
@@ -282,48 +328,4 @@ func (router *Engine) TestFile(httpUrl string, paramMap Map, filename, upParam s
 		})
 	})
 
-}
-
-// PostFile post file
-func PostFile(filename, targetUrl, upParam string) (string, error) {
-	bodyBuf := &bytes.Buffer{}
-	bodyWriter := multipart.NewWriter(bodyBuf)
-
-	// uploadfile
-	fileWriter, err := bodyWriter.CreateFormFile(upParam, filename)
-	if err != nil {
-		fmt.Println("error writing to buffer")
-		return "", err
-	}
-
-	// openfile
-	fh, err := os.Open(filename)
-	if err != nil {
-		fmt.Println("error opening file")
-		return "", err
-	}
-
-	// iocopy
-	_, err = io.Copy(fileWriter, fh)
-	if err != nil {
-		return "", err
-	}
-
-	contentType := bodyWriter.FormDataContentType()
-	bodyWriter.Close()
-
-	resp, err := http.Post(targetUrl, contentType, bodyBuf)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-	respBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
-	}
-
-	fmt.Println(resp.Status)
-	// fmt.Println(string(respBody))
-
-	return string(respBody), nil
 }

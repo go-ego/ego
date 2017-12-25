@@ -74,16 +74,6 @@ type (
 // Create an instance of Engine, by using New() or Default()
 type Engine struct {
 	RouterGroup
-	delims           render.Delims
-	secureJsonPrefix string
-	HTMLRender       render.HTMLRender
-	FuncMap          template.FuncMap
-	allNoRoute       HandlersChain
-	allNoMethod      HandlersChain
-	noRoute          HandlersChain
-	noMethod         HandlersChain
-	pool             sync.Pool
-	trees            methodTrees
 
 	// Enables automatic redirection if the current route can't be matched but a
 	// handler for the path with (without) the trailing slash exists.
@@ -127,6 +117,17 @@ type Engine struct {
 	// Value of 'maxMemory' param that is given to http.Request's ParseMultipartForm
 	// method call.
 	MaxMultipartMemory int64
+
+	delims           render.Delims
+	secureJsonPrefix string
+	HTMLRender       render.HTMLRender
+	FuncMap          template.FuncMap
+	allNoRoute       HandlersChain
+	allNoMethod      HandlersChain
+	noRoute          HandlersChain
+	noMethod         HandlersChain
+	pool             sync.Pool
+	trees            methodTrees
 }
 
 var _ IRouter = &Engine{}

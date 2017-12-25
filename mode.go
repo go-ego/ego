@@ -14,10 +14,11 @@ import (
 const ENV_EGO_MODE = "EGO_MODE"
 
 const (
-	DebugMode   string = "debug"
-	ReleaseMode string = "release"
-	TestMode    string = "test"
+	DebugMode   = "debug"
+	ReleaseMode = "release"
+	TestMode    = "test"
 )
+
 const (
 	debugCode = iota
 	releaseCode

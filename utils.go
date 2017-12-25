@@ -33,18 +33,23 @@ func Bind(val interface{}) HandlerFunc {
 	}
 }
 
+// WrapF is a helper function for wrapping http.HandlerFunc
+// Returns a Gin middleware
 func WrapF(f http.HandlerFunc) HandlerFunc {
 	return func(c *Context) {
 		f(c.Writer, c.Request)
 	}
 }
 
+// WrapH is a helper function for wrapping http.Handler
+// Returns a Gin middleware
 func WrapH(h http.Handler) HandlerFunc {
 	return func(c *Context) {
 		h.ServeHTTP(c.Writer, c.Request)
 	}
 }
 
+// Map is a shortcup for map[string]interface{}
 // type H map[string]interface{}
 type Map map[string]interface{}
 
@@ -66,10 +71,8 @@ func (m Map) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			return err
 		}
 	}
-	if err := e.EncodeToken(xml.EndElement{Name: start.Name}); err != nil {
-		return err
-	}
-	return nil
+
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func assert1(guard bool, text string) {

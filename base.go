@@ -135,11 +135,11 @@ func API(httpUrl string, paramMap Map, method ...string) (rs []byte, err error) 
 
 	if apiMethod == "get" {
 		rs, err = Get(httpUrl, param)
-		return rs, err
+		return
 	}
 
 	rs, err = Post(httpUrl, param)
-	return rs, err
+	return
 }
 
 // PostFile post file

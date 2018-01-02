@@ -193,11 +193,14 @@ func (engine *Engine) Delims(left, right string) *Engine {
 	return engine
 }
 
+// SecureJsonPrefix sets the secureJsonPrefix used in Context.SecureJSON.
 func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
 	engine.secureJsonPrefix = prefix
 	return engine
 }
 
+// LoadHTMLGlob loads HTML files identified by glob pattern
+// and associates the result with HTML renderer.
 func (engine *Engine) LoadHTMLGlob(pattern string) {
 	left := engine.delims.Left
 	right := engine.delims.Right
@@ -212,6 +215,8 @@ func (engine *Engine) LoadHTMLGlob(pattern string) {
 	engine.SetHTMLTemplate(templ)
 }
 
+// GlobFHTML loads HTML files identified by glob pattern
+// and associates the result with HTML renderer.
 func (engine *Engine) GlobFHTML(pattern string) {
 	dir := strings.Trim(pattern, "\\/\\*")
 	file, err := ListFile(dir, "")
@@ -224,7 +229,8 @@ func (engine *Engine) GlobFHTML(pattern string) {
 	}
 }
 
-// GlobHTML
+// GlobHTML loads HTML files identified by glob pattern
+// and associates the result with HTML renderer.
 func (engine *Engine) GlobHTML(pattern string) {
 	left := engine.delims.Left
 	right := engine.delims.Right
@@ -241,6 +247,8 @@ func (engine *Engine) GlobHTML(pattern string) {
 	engine.SetHTMLTemplate(templ)
 }
 
+// LoadHTMLFiles loads a slice of HTML files
+// and associates the result with HTML renderer.
 func (engine *Engine) LoadHTMLFiles(files ...string) {
 	if IsDebugging() {
 		engine.HTMLRender = render.HTMLDebug{Files: files, FuncMap: engine.FuncMap, Delims: engine.delims}
@@ -251,6 +259,7 @@ func (engine *Engine) LoadHTMLFiles(files ...string) {
 	engine.SetHTMLTemplate(templ)
 }
 
+// SetHTMLTemplate associate a template with HTML renderer.
 func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
 	if len(engine.trees) > 0 {
 		debugPrintWARNINGSetHTMLTemplate()
@@ -259,6 +268,7 @@ func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
 	engine.HTMLRender = render.HTMLProduction{Template: templ.Funcs(engine.FuncMap)}
 }
 
+// SetFuncMap sets the FuncMap used for template.FuncMap.
 func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
 	engine.FuncMap = funcMap
 }

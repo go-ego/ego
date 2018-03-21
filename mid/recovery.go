@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http/httputil"
 	"runtime"
+	"time"
 
 	"github.com/go-ego/ego"
 )
@@ -39,7 +40,8 @@ func RecoveryWithWriter(out io.Writer) ego.HandlerFunc {
 				if logger != nil {
 					stack := stack(3)
 					httprequest, _ := httputil.DumpRequest(c.Request, false)
-					logger.Printf("[Recovery] panic recovered:\n%s\n%s\n%s%s", string(httprequest), err, stack, reset)
+					logger.Printf("[Recovery] %s panic recovered:\n%s\n%s\n%s%s",
+						timeFormat(time.Now()), string(httprequest), err, stack, reset)
 				}
 				c.AbortWithStatus(500)
 			}
@@ -53,8 +55,11 @@ func stack(skip int) []byte {
 	buf := new(bytes.Buffer) // the returned data
 	// As we loop, we open files and read them. These variables record the currently
 	// loaded file.
-	var lines [][]byte
-	var lastFile string
+	var (
+		lines    [][]byte
+		lastFile string
+	)
+
 	for i := skip; ; i++ { // Skip the expected number of frames
 		pc, file, line, ok := runtime.Caller(i)
 		if !ok {
@@ -107,4 +112,9 @@ func function(pc uintptr) []byte {
 	}
 	name = bytes.Replace(name, centerDot, dot, -1)
 	return name
+}
+
+func timeFormat(t time.Time) string {
+	var timeString = t.Format("2006/01/02 - 15:04:05")
+	return timeString
 }

@@ -4,6 +4,8 @@
 .idea
 testf
 
+vendor
+
 # Debug files
 *.dSYM/
 *.su

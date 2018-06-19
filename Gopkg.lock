@@ -23,13 +23,13 @@
   branch = "master"
   name = "github.com/go-ego/autotls"
   packages = ["."]
-  revision = "a1e000d4a3832e3ce29629cd136252e6b39b22de"
+  revision = "29d022a5385a89cb4c74e2bc2781eff4261f6b5c"
 
 [[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
-  version = "v1.0.0"
+  revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/json-iterator/go"
@@ -80,8 +80,8 @@
 [[projects]]
   name = "github.com/stretchr/testify"
   packages = ["assert"]
-  revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
-  version = "v1.2.1"
+  revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
+  version = "v1.2.2"
 
 [[projects]]
   name = "github.com/tdewolff/minify"
@@ -94,8 +94,8 @@
     "svg",
     "xml"
   ]
-  revision = "222672169d634c440a73abc47685074e1a9daa60"
-  version = "v2.3.4"
+  revision = "8d72a4127ae33b755e95bffede9b92e396267ce2"
+  version = "v2.3.5"
 
 [[projects]]
   name = "github.com/tdewolff/parse"
@@ -110,8 +110,8 @@
     "svg",
     "xml"
   ]
-  revision = "639f6272aec6b52094db77b9ec488214b0b4b1a1"
-  version = "v2.3.2"
+  revision = "d739d6fccb0971177e06352fea02d3552625efb1"
+  version = "v2.3.3"
 
 [[projects]]
   name = "github.com/ugorji/go"
@@ -126,13 +126,13 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "2b6c08872f4b66da917bb4ce98df4f0307330f78"
+  revision = "027cca12c2d63e3d62b670d901e8a2c95854feec"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "5f9ae10d9af5b1c89ae6904293b14b064d4ada23"
+  revision = "db08ff08e8622530d9ed3a0e8ac279f6d4c02196"
 
 [[projects]]
   branch = "master"
@@ -144,7 +144,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "79b0c6888797020a994db17c8510466c72fe75d9"
+  revision = "f24d3d461d02f3f840cb4ff4ae1c6b3dd9f93db9"
 
 [[projects]]
   name = "gopkg.in/go-playground/validator.v8"

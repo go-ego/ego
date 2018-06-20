@@ -8,14 +8,16 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"html/template"
-	"mime/multipart"
-	"net/http"
-	"net/http/httptest"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
+
+	"html/template"
+	"mime/multipart"
+	"net/http"
+	"net/http/httptest"
 
 	"github.com/gin-contrib/sse"
 	"github.com/go-ego/ego/mid/util"
@@ -96,6 +98,8 @@ func TestContextMultipartForm(t *testing.T) {
 	}
 
 	assert.NoError(t, c.SaveUploadedFile(f.File["file"][0], "testf"))
+
+	os.RemoveAll("testf")
 }
 
 func TestSaveUploadedOpenFailed(t *testing.T) {

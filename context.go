@@ -509,7 +509,7 @@ func (c *Context) BindQuery(obj interface{}) error {
 // See the binding package.
 func (c *Context) BindWith(obj interface{}, b binding.Binding) error {
 	if err := b.Bind(c.Request, obj); err != nil {
-		c.AbortWithError(400, err).SetType(util.ErrorTypeBind)
+		c.AbortWithError(http.StatusBadRequest, err).SetType(util.ErrorTypeBind)
 		return err
 	}
 	return nil
@@ -612,9 +612,9 @@ func bodyAllowedForStatus(status int) bool {
 	switch {
 	case status >= 100 && status <= 199:
 		return false
-	case status == 204:
+	case status == http.StatusNoContent:
 		return false
-	case status == 304:
+	case status == http.StatusNotModified:
 		return false
 	}
 	return true

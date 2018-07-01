@@ -10,6 +10,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v8"
 )
 
+// Content-Type MIME of the most common data formats.
 const (
 	MIMEJSON              = "application/json"
 	MIMEHTML              = "text/html"

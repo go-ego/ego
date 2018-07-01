@@ -16,8 +16,15 @@ const (
 	defaultStatus = http.StatusOK
 )
 
+// ResponseWriter ...
+type ResponseWriter interface {
+	responseWriterBase
+	// get the http.Pusher for server push
+	Pusher() http.Pusher
+}
+
 type (
-	ResponseWriter interface {
+	responseWriterBase interface {
 		http.ResponseWriter
 		http.Hijacker
 		http.Flusher
@@ -53,6 +60,13 @@ func (w *responseWriter) reset(writer http.ResponseWriter) {
 	w.ResponseWriter = writer
 	w.size = noWritten
 	w.status = defaultStatus
+}
+
+func (w *responseWriter) Pusher() (pusher http.Pusher) {
+	if pusher, ok := w.ResponseWriter.(http.Pusher); ok {
+		return pusher
+	}
+	return nil
 }
 
 func (w *responseWriter) WriteHeader(code int) {

@@ -47,6 +47,10 @@ func debugPrint(format string, values ...interface{}) {
 }
 
 func debugPrintWARNINGDefault() {
+	debugPrint(`[WARNING] Now Gin requires Go 1.7 or later and Go 1.8 will be required soon.
+	
+	`)
+
 	debugPrint(`[WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
 	
 	`)

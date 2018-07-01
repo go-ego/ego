@@ -22,6 +22,7 @@ func (v *defaultValidator) ValidateStruct(obj interface{}) error {
 	if valueType == reflect.Ptr {
 		valueType = value.Elem().Kind()
 	}
+
 	if valueType == reflect.Struct {
 		v.lazyinit()
 		if err := v.validate.Struct(obj); err != nil {

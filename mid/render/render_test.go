@@ -9,6 +9,8 @@ import (
 	"encoding/xml"
 	"html/template"
 	"net/http/httptest"
+	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -148,4 +150,25 @@ func TestRenderHTMLTemplate(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, w.Body.String(), "Hello alexandernyquist")
 	assert.Equal(t, w.Header().Get("Content-Type"), "text/html; charset=utf-8")
+}
+
+func TestRenderReader(t *testing.T) {
+	w := httptest.NewRecorder()
+
+	body := "#!PNG some raw data"
+	headers := make(map[string]string)
+	headers["Content-Disposition"] = `attachment; filename="filename.png"`
+
+	err := (Reader{
+		ContentLength: int64(len(body)),
+		ContentType:   "image/png",
+		Reader:        strings.NewReader(body),
+		Headers:       headers,
+	}).Render(w)
+
+	assert.NoError(t, err)
+	assert.Equal(t, body, w.Body.String())
+	assert.Equal(t, "image/png", w.HeaderMap.Get("Content-Type"))
+	assert.Equal(t, strconv.Itoa(len(body)), w.HeaderMap.Get("Content-Length"))
+	assert.Equal(t, headers["Content-Disposition"], w.HeaderMap.Get("Content-Disposition"))
 }

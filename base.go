@@ -203,7 +203,7 @@ func (router *Engine) TestRest(httpUrl string, param url.Values) {
 		data, err := Post(httpUrl, param)
 
 		if err != nil {
-			fmt.Errorf("Request failed, error message:\r\n%v", err)
+			log.Printf("Request failed, error message:\r\n%v", err)
 		} else {
 			var netReturn map[string]interface{}
 
@@ -234,7 +234,7 @@ func (router *Engine) TestJson(httpUrl string, param url.Values, args ...string)
 	router.GET(url, func(c *Context) {
 		data, err := Post(httpUrl, param)
 		if err != nil {
-			fmt.Errorf("Request failed, error message:\r\n%v", err)
+			log.Printf("Request failed, error message:\r\n%v", err)
 		} else {
 			var netReturn map[string]interface{}
 			// ffjson.Unmarshal(data, &netReturn)

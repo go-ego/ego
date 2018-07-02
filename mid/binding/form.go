@@ -6,6 +6,7 @@ package binding
 
 import "net/http"
 
+// 32 MB
 const defaultMemory = 32 * 1024 * 1024
 
 type formBinding struct{}
@@ -20,7 +21,7 @@ func (formBinding) Bind(req *http.Request, obj interface{}) error {
 	if err := req.ParseForm(); err != nil {
 		return err
 	}
-	req.ParseMultipartForm(defaultMemory) // 32 MB
+	req.ParseMultipartForm(defaultMemory)
 	if err := mapForm(obj, req.Form); err != nil {
 		return err
 	}

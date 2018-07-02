@@ -52,7 +52,7 @@ func WrapH(h http.Handler) HandlerFunc {
 	}
 }
 
-// Map is a shortcup for map[string]interface{}
+// Map is a shortcut for map[string]interface{}
 // type H map[string]interface{}
 type Map map[string]interface{}
 

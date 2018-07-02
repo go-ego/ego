@@ -54,6 +54,9 @@ func SetMode(value string) {
 	default:
 		panic("ego mode unknown: " + value)
 	}
+	if value == "" {
+		value = DebugMode
+	}
 	modeName = value
 }
 

@@ -199,20 +199,28 @@ func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
 	return engine
 }
 
-// LoadHTMLGlob loads HTML files identified by glob pattern
+// GlobHTML loads HTML files identified by glob pattern
 // and associates the result with HTML renderer.
-func (engine *Engine) LoadHTMLGlob(pattern string) {
+func (engine *Engine) GlobHTML(pattern string) {
 	left := engine.delims.Left
 	right := engine.delims.Right
+	templ := template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern))
 
 	if IsDebugging() {
-		debugPrintLoadTemplate(template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern)))
+		// debugPrintLoadTemplate(template.Must(template.ParseGlob(pattern)))
+		// engine.HTMLRender = render.HTMLDebug{Glob: pattern}
+		debugPrintLoadTemplate(templ)
 		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
 		return
 	}
 
-	templ := template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern))
 	engine.SetHTMLTemplate(templ)
+}
+
+// LoadHTMLGlob loads HTML files identified by glob pattern
+// and associates the result with HTML renderer.
+func (engine *Engine) LoadHTMLGlob(pattern string) {
+	engine.GlobHTML(pattern)
 }
 
 // GlobFHTML loads HTML files identified by glob pattern
@@ -227,24 +235,6 @@ func (engine *Engine) GlobFHTML(pattern string) {
 	for i := 0; i < len(file); i++ {
 		engine.GlobHTML(file[i])
 	}
-}
-
-// GlobHTML loads HTML files identified by glob pattern
-// and associates the result with HTML renderer.
-func (engine *Engine) GlobHTML(pattern string) {
-	left := engine.delims.Left
-	right := engine.delims.Right
-
-	if IsDebugging() {
-		// debugPrintLoadTemplate(template.Must(template.ParseGlob(pattern)))
-		// engine.HTMLRender = render.HTMLDebug{Glob: pattern}
-		debugPrintLoadTemplate(template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern)))
-		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
-		return
-	}
-
-	templ := template.Must(template.New("").Delims(left, right).Funcs(engine.FuncMap).ParseGlob(pattern))
-	engine.SetHTMLTemplate(templ)
 }
 
 // LoadHTMLFiles loads a slice of HTML files
@@ -494,11 +484,10 @@ func redirectFixedPath(c *Context, root *node, trailingSlash bool) bool {
 	req := c.Request
 	path := req.URL.Path
 
-	fixedPath, found := root.findCaseInsensitivePath(
-		util.CleanPath(path),
-		trailingSlash,
-	)
-	if found {
+	fixedPath, ok := root.findCaseInsensitivePath(
+		util.CleanPath(path), trailingSlash)
+
+	if ok {
 		code := http.StatusMovedPermanently // Permanent redirect, request with GET method
 		if req.Method != "GET" {
 			code = http.StatusTemporaryRedirect

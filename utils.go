@@ -116,11 +116,10 @@ func parseAccept(acceptHeader string) []string {
 }
 
 func lastChar(str string) uint8 {
-	size := len(str)
 	if str == "" {
 		panic("The length of the string can't be 0")
 	}
-	return str[size-1]
+	return str[len(str)-1]
 }
 
 func nameOfFunction(f interface{}) string {

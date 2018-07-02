@@ -109,8 +109,7 @@ func (c *Context) Handler() HandlerFunc {
 // See example in GitHub.
 func (c *Context) Next() {
 	c.index++
-	s := int8(len(c.handlers))
-	for ; c.index < s; c.index++ {
+	for s := int8(len(c.handlers)); c.index < s; c.index++ {
 		c.handlers[c.index](c)
 	}
 }
@@ -663,15 +662,8 @@ func (c *Context) GetRawData() ([]byte, error) {
 // SetCookie adds a Set-Cookie header to the ResponseWriter's headers.
 // The provided cookie must have a valid Name. Invalid cookies may be
 // silently dropped.
-func (c *Context) SetCookie(
-	name string,
-	value string,
-	maxAge int,
-	path string,
-	domain string,
-	secure bool,
-	httpOnly bool,
-) {
+func (c *Context) SetCookie(name string, value string, maxAge int,
+	path string, domain string, secure bool, httpOnly bool) {
 	if path == "" {
 		path = "/"
 	}

@@ -38,7 +38,7 @@ const (
 	defaultMultipartMemory        = 32 << 20 // 32 MB
 )
 
-// GetVersion get version.
+// GetVersion get the ego version.
 func GetVersion() string {
 	return Version
 }
@@ -179,10 +179,7 @@ func Default() *Engine {
 
 // Classic returns an Engine instance with the Logger and Recovery middleware already attached.
 func Classic() *Engine {
-	debugPrintWARNINGDefault()
-	engine := New()
-	engine.Use(Logger(), Recovery())
-	return engine
+	return Default()
 }
 
 func (engine *Engine) allocateContext() *Context {

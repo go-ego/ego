@@ -19,42 +19,42 @@ func TestError(t *testing.T) {
 		Err:  baseError,
 		Type: ErrorTypePrivate,
 	}
-	assert.Equal(t, err.Error(), baseError.Error())
-	assert.Equal(t, err.JSON(), Map{"error": baseError.Error()})
+	assert.Equal(t, baseError.Error(), err.Error())
+	assert.Equal(t, Map{"error": baseError.Error()}, err.JSON())
 
 	assert.Equal(t, err.SetType(ErrorTypePublic), err)
-	assert.Equal(t, err.Type, ErrorTypePublic)
+	assert.Equal(t, ErrorTypePublic, err.Type)
 
 	assert.Equal(t, err.SetMeta("some data"), err)
-	assert.Equal(t, err.Meta, "some data")
-	assert.Equal(t, err.JSON(), Map{
+	assert.Equal(t, "some data", err.Meta)
+	assert.Equal(t, Map{
 		"error": baseError.Error(),
 		"meta":  "some data",
-	})
+	}, err.JSON())
 
 	jsonBytes, _ := json.Marshal(err)
-	assert.Equal(t, string(jsonBytes), "{\"error\":\"test error\",\"meta\":\"some data\"}")
+	assert.Equal(t, "{\"error\":\"test error\",\"meta\":\"some data\"}", string(jsonBytes))
 
 	err.SetMeta(Map{
 		"status": "200",
 		"data":   "some data",
 	})
-	assert.Equal(t, err.JSON(), Map{
+	assert.Equal(t, Map{
 		"error":  baseError.Error(),
 		"status": "200",
 		"data":   "some data",
-	})
+	}, err.JSON())
 
 	err.SetMeta(Map{
 		"error":  "custom error",
 		"status": "200",
 		"data":   "some data",
 	})
-	assert.Equal(t, err.JSON(), Map{
+	assert.Equal(t, Map{
 		"error":  "custom error",
 		"status": "200",
 		"data":   "some data",
-	})
+	}, err.JSON())
 
 	type customError struct {
 		status string
@@ -76,7 +76,7 @@ func TestErrorSlice(t *testing.T) {
 	assert.Equal(t, []string{"first", "second", "third"}, errs.Errors())
 	assert.Equal(t, []string{"third"}, errs.ByType(ErrorTypePublic).Errors())
 	assert.Equal(t, []string{"first", "second"}, errs.ByType(ErrorTypePrivate).Errors())
-	assert.Equal(t, errs.ByType(ErrorTypePublic|ErrorTypePrivate).Errors(), []string{"first", "second", "third"})
+	assert.Equal(t, []string{"first", "second", "third"}, errs.ByType(ErrorTypePublic|ErrorTypePrivate).Errors())
 	assert.Empty(t, errs.ByType(ErrorTypeBind))
 	assert.Empty(t, errs.ByType(ErrorTypeBind).String())
 
@@ -86,13 +86,14 @@ Error #02: second
 Error #03: third
      Meta: map[status:400]
 `, errs.String())
-	assert.Equal(t, errs.JSON(), []interface{}{
+	assert.Equal(t, []interface{}{
 		Map{"error": "first"},
 		Map{"error": "second", "meta": "some data"},
 		Map{"error": "third", "status": "400"},
-	})
+	}, errs.JSON())
 	jsonBytes, _ := json.Marshal(errs)
-	assert.Equal(t, string(jsonBytes), "[{\"error\":\"first\"},{\"error\":\"second\",\"meta\":\"some data\"},{\"error\":\"third\",\"status\":\"400\"}]")
+	assert.Equal(t, "[{\"error\":\"first\"},{\"error\":\"second\",\"meta\":\"some data\"},{\"error\":\"third\",\"status\":\"400\"}]",
+		string(jsonBytes))
 	errs = ErrorMsgs{
 		{Err: errors.New("first"), Type: ErrorTypePrivate},
 	}

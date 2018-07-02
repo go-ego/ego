@@ -9,9 +9,11 @@ import "net/http"
 // 32 MB
 const defaultMemory = 32 * 1024 * 1024
 
-type formBinding struct{}
-type formPostBinding struct{}
-type formMultipartBinding struct{}
+type (
+	formBinding          struct{}
+	formPostBinding      struct{}
+	formMultipartBinding struct{}
+)
 
 func (formBinding) Name() string {
 	return "form"

@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	ENV_EGO_MODE = "EGO_MODE"
+	// EnvEgoMode set the mode env
+	EnvEgoMode = "EGO_MODE"
 
 	DebugMode   = "debug"
 	ReleaseMode = "release"
@@ -41,7 +42,7 @@ var (
 )
 
 func init() {
-	mode := os.Getenv(ENV_EGO_MODE)
+	mode := os.Getenv(EnvEgoMode)
 	SetMode(mode)
 }
 

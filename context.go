@@ -371,8 +371,8 @@ func (c *Context) Querys(key string) []string {
 // GetQuerys returns a slice of strings for a given query key, plus
 // a boolean value whether at least one value exists for the given key.
 func (c *Context) GetQuerys(key string) ([]string, bool) {
-	req := c.Request
-	if values, ok := req.URL.Query()[key]; ok && len(values) > 0 {
+	req := c.Request.URL.Query()
+	if values, ok := req[key]; ok && len(values) > 0 {
 		return values, true
 	}
 	return []string{}, false

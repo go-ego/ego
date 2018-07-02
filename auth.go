@@ -16,13 +16,14 @@ const AuthUserKey = "user"
 
 type (
 	// Accounts defines a key/value for user/pass list of authorized logins.
-	Accounts map[string]string
-	authPair struct {
-		value string
-		user  string
-	}
+	Accounts  map[string]string
 	authPairs []authPair
 )
+
+type authPair struct {
+	value string
+	user  string
+}
 
 func (a authPairs) searchCredential(authValue string) (string, bool) {
 	if authValue == "" {

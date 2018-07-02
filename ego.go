@@ -50,8 +50,12 @@ var (
 	defaultAppEngine bool
 )
 
-type HandlerFunc func(*Context)
-type HandlersChain []HandlerFunc
+type (
+	HandlerFunc   func(*Context)
+	HandlersChain []HandlerFunc
+
+	RoutesInfo []RouteInfo
+)
 
 // Last returns the last handler in the chain. ie. the last handler is the main own.
 func (c HandlersChain) Last() HandlerFunc {
@@ -61,14 +65,11 @@ func (c HandlersChain) Last() HandlerFunc {
 	return nil
 }
 
-type (
-	RoutesInfo []RouteInfo
-	RouteInfo  struct {
-		Method  string
-		Path    string
-		Handler string
-	}
-)
+type RouteInfo struct {
+	Method  string
+	Path    string
+	Handler string
+}
 
 // Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
 // Create an instance of Engine, by using New() or Default()
@@ -118,8 +119,8 @@ type Engine struct {
 	// method call.
 	MaxMultipartMemory int64
 
-	delims           render.Delims
 	secureJsonPrefix string
+	delims           render.Delims
 	HTMLRender       render.HTMLRender
 	FuncMap          template.FuncMap
 	allNoRoute       HandlersChain

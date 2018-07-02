@@ -11,9 +11,9 @@ import (
 	"github.com/go-ego/ego/mid/binding"
 )
 
-const ENV_EGO_MODE = "EGO_MODE"
-
 const (
+	ENV_EGO_MODE = "EGO_MODE"
+
 	DebugMode   = "debug"
 	ReleaseMode = "release"
 	TestMode    = "test"

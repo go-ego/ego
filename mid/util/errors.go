@@ -85,7 +85,8 @@ func (msg *Error) IsType(flags ErrorType) bool {
 }
 
 // ByType returns a readonly copy filtered the byte.
-// ie ByType(util.ErrorTypePublic) returns a slice of errors with type = ErrorTypePublic.
+// ie ByType(util.ErrorTypePublic) returns a slice of errors
+// with type = ErrorTypePublic.
 func (a ErrorMsgs) ByType(typ ErrorType) ErrorMsgs {
 	if len(a) == 0 {
 		return nil

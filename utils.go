@@ -14,7 +14,10 @@ import (
 	"strings"
 )
 
-const BindKey = "_go-ego/ego/bindkey"
+const (
+	BindKey      = "_go-ego/ego/bindkey"
+	BodyBytesKey = "_go-ego/ego/bodybyteskey"
+)
 
 func Bind(val interface{}) HandlerFunc {
 	value := reflect.ValueOf(val)

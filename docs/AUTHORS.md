@@ -1,6 +1,6 @@
 List of all the awesome people working to make Ego the best Web Framework in Go.
 
-    @[vz](https://github.com/vCaesar)
+    @[vz](https://github.com/vcaesar)
 
 See [contributors page](https://github.com/go-ego/ego/graphs/contributors)for full list of contributors
     

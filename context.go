@@ -365,7 +365,7 @@ func (c *Context) GetQuery(key string) (string, bool) {
 // Querys returns a slice of strings for a given query key.
 // The length of the slice depends on the number of params with the given key.
 func (c *Context) Querys(key string) []string {
-	values, _ := c.GetQueryArray(key)
+	values, _ := c.GetQuerys(key)
 	return values
 }
 
@@ -382,18 +382,13 @@ func (c *Context) GetQuerys(key string) ([]string, bool) {
 // QueryArray returns a slice of strings for a given query key.
 // The length of the slice depends on the number of params with the given key.
 func (c *Context) QueryArray(key string) []string {
-	values, _ := c.GetQueryArray(key)
-	return values
+	return c.Querys(key)
 }
 
 // GetQueryArray returns a slice of strings for a given query key, plus
 // a boolean value whether at least one value exists for the given key.
 func (c *Context) GetQueryArray(key string) ([]string, bool) {
-	req := c.Request
-	if values, ok := req.URL.Query()[key]; ok && len(values) > 0 {
-		return values, true
-	}
-	return []string{}, false
+	return c.GetQuerys(key)
 }
 
 // PostForm returns the specified key from a POST urlencoded form or multipart form

@@ -25,24 +25,27 @@ const (
 	testCode
 )
 
-// DefaultWriter is the default io.Writer used the Ego for debug output and
-// middleware output like Logger() or Recovery().
-// Note that both Logger and Recovery provides custom ways to configure their
-// output io.Writer.
-// To support coloring in Windows use:
-// 		import "github.com/mattn/go-colorable"
-// 		ego.DefaultWriter = colorable.NewColorableStdout()
-var DefaultWriter io.Writer = os.Stdout
-var DefaultErrorWriter io.Writer = os.Stderr
+var (
+	// DefaultWriter is the default io.Writer used the Ego for debug output and
+	// middleware output like Logger() or Recovery().
+	// Note that both Logger and Recovery provides custom ways to configure their
+	// output io.Writer.
+	// To support coloring in Windows use:
+	// 		import "github.com/mattn/go-colorable"
+	// 		ego.DefaultWriter = colorable.NewColorableStdout()
+	DefaultWriter      io.Writer = os.Stdout
+	DefaultErrorWriter io.Writer = os.Stderr
 
-var egoMode = debugCode
-var modeName = DebugMode
+	egoMode  = debugCode
+	modeName = DebugMode
+)
 
 func init() {
 	mode := os.Getenv(ENV_EGO_MODE)
 	SetMode(mode)
 }
 
+// SetMode set ego mode
 func SetMode(value string) {
 	switch value {
 	case DebugMode, "":

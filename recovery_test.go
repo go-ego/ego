@@ -2,22 +2,21 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package mid
+package ego
 
 import (
 	"bytes"
 	"testing"
 
-	"github.com/go-ego/ego"
 	"github.com/stretchr/testify/assert"
 )
 
 // TestPanicInHandler assert that panic has been recovered.
 func TestPanicInHandler(t *testing.T) {
 	buffer := new(bytes.Buffer)
-	router := ego.New()
+	router := New()
 	router.Use(RecoveryWithWriter(buffer))
-	router.GET("/recovery", func(_ *ego.Context) {
+	router.GET("/recovery", func(_ *Context) {
 		panic("Oupps, Houston, we have a problem")
 	})
 	// RUN
@@ -31,9 +30,9 @@ func TestPanicInHandler(t *testing.T) {
 
 // TestPanicWithAbort assert that panic has been recovered even if context.Abort was used.
 func TestPanicWithAbort(t *testing.T) {
-	router := ego.New()
+	router := New()
 	router.Use(RecoveryWithWriter(nil))
-	router.GET("/recovery", func(c *ego.Context) {
+	router.GET("/recovery", func(c *Context) {
 		c.AbortWithStatus(400)
 		panic("Oupps, Houston, we have a problem")
 	})

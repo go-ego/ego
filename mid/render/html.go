@@ -9,33 +9,32 @@ import (
 	"net/http"
 )
 
-type (
-	Delims struct {
-		Left  string
-		Right string
-	}
-	HTMLRender interface {
-		Instance(string, interface{}) Render
-	}
+type Delims struct {
+	Left  string
+	Right string
+}
 
-	HTMLProduction struct {
-		Template *template.Template
-		Delims   Delims
-	}
+type HTMLRender interface {
+	Instance(string, interface{}) Render
+}
 
-	HTMLDebug struct {
-		Files   []string
-		Glob    string
-		Delims  Delims
-		FuncMap template.FuncMap
-	}
+type HTMLProduction struct {
+	Template *template.Template
+	Delims   Delims
+}
 
-	HTML struct {
-		Template *template.Template
-		Name     string
-		Data     interface{}
-	}
-)
+type HTMLDebug struct {
+	Files   []string
+	Glob    string
+	Delims  Delims
+	FuncMap template.FuncMap
+}
+
+type HTML struct {
+	Template *template.Template
+	Name     string
+	Data     interface{}
+}
 
 var htmlContentType = []string{"text/html; charset=utf-8"}
 
@@ -54,7 +53,6 @@ func (r HTMLDebug) Instance(name string, data interface{}) Render {
 		Data:     data,
 	}
 }
-
 func (r HTMLDebug) loadTemplate() *template.Template {
 	if r.FuncMap == nil {
 		r.FuncMap = template.FuncMap{}

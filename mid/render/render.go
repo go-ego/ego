@@ -17,6 +17,7 @@ var (
 	_ Render     = FFJSON{}
 	_ Render     = IndentedJSON{}
 	_ Render     = SecureJSON{}
+	_ Render     = JsonpJSON{}
 	_ Render     = XML{}
 	_ Render     = String{}
 	_ Render     = Redirect{}

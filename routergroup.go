@@ -57,7 +57,11 @@ type RouterGroup struct {
 	root     bool
 }
 
-var _ IRouter = &RouterGroup{}
+var (
+	_ IRouter = &RouterGroup{}
+
+	rendersInt int
+)
 
 // Use adds middleware to the group, see example code in github.
 func (group *RouterGroup) Use(middleware ...HandlerFunc) IRoutes {
@@ -235,14 +239,13 @@ func (group *RouterGroup) returnObj() IRoutes {
 
 // Go Router
 func (group *RouterGroup) Go(url, name string, obj ...interface{}) {
-	var aobj interface{}
-
+	var data interface{}
 	if len(obj) > 0 {
-		aobj = obj[0]
+		data = obj[0]
 	}
 
 	group.GET(url, func(c *Context) {
-		c.HTML(http.StatusOK, name, aobj)
+		c.HTML(http.StatusOK, name, data)
 	})
 }
 
@@ -253,9 +256,6 @@ func (group *RouterGroup) GoGroup(rmap Map) {
 	}
 }
 
-///
-var rendersInt int
-
 func UseRenders() {
 	rendersInt = 1
 }
@@ -263,10 +263,10 @@ func UseRenders() {
 // Ego Router
 func (group *RouterGroup) Ego(url, name string, obj ...interface{}) {
 	// func (group *RouterGroup) EgoRouter(url, name string, obj ...interface{}) {
-	var aobj interface{}
+	var data interface{}
 
 	if len(obj) > 0 {
-		aobj = obj[0]
+		data = obj[0]
 	}
 
 	if rendersInt == 1 {
@@ -283,7 +283,7 @@ func (group *RouterGroup) Ego(url, name string, obj ...interface{}) {
 	}
 
 	group.GET(url, func(c *Context) {
-		c.HTML(http.StatusOK, wname, aobj)
+		c.HTML(http.StatusOK, wname, data)
 	})
 }
 
@@ -291,6 +291,18 @@ func (group *RouterGroup) Ego(url, name string, obj ...interface{}) {
 func (group *RouterGroup) EgoGroup(rmap Map) {
 	for k, v := range rmap {
 		group.Ego(k, v.(string))
+	}
+}
+
+// Hand hand map router func(*Context)
+func (group *RouterGroup) Hand(rmap Map, args ...string) {
+	var method = "POST"
+	if len(args) > 0 {
+		method = args[0]
+	}
+
+	for k, v := range rmap {
+		group.Handle(method, k, v.(func(*Context)))
 	}
 }
 
@@ -315,13 +327,13 @@ func Go404(html string) {
 // found. If it is not set, http.NotFound is used.
 // Be sure to set 404 response code in your handler.
 func (router *Engine) NotFound(html ...string) {
-	ahtml := "404.html"
+	html404 := "404.html"
 	if len(html) > 0 {
-		ahtml = html[0]
+		html404 = html[0]
 	}
 	router.Use(func(c *Context) {
 		c.Next()
-		c.HTML(http.StatusNotFound, ahtml, nil)
+		c.HTML(http.StatusNotFound, html404, nil)
 	})
 }
 
@@ -329,16 +341,16 @@ func (router *Engine) NotFound(html ...string) {
 // error. If it is not set, default handler is used.
 // Be sure to set 500 response code in your handler.
 func (router *Engine) Go500(html ...string) {
-	ahtml := "500.html"
+	html500 := "500.html"
 	if len(html) > 0 {
-		ahtml = html[0]
+		html500 = html[0]
 	}
 
 	router.Use(func(c *Context) {
 		c.Next()
 		errorToPrint := c.Errors.ByType(util.ErrorTypePublic).Last()
 		if errorToPrint != nil {
-			c.HTML(500, ahtml, nil)
+			c.HTML(500, html500, nil)
 		}
 	})
 }

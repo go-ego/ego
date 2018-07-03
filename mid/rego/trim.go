@@ -58,7 +58,7 @@ func TrimTVal(tkey string, restr []string) []string {
 	return reval
 }
 
-func TrimVal(fval []string, keyarr, header, tvgostr string) {
+func TrimVal(fval []string, keyarr, header, tvgostr string) string {
 	tkey := TrimB(keyarr)
 	tfval := TrimTVal(tkey, fval)
 
@@ -67,6 +67,8 @@ func TrimVal(fval []string, keyarr, header, tvgostr string) {
 	} else {
 		header = strings.Replace(header, keyarr, tfval[0], -1)
 	}
+
+	return header
 }
 
 func Quotation(rfile string) []string {

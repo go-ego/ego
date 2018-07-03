@@ -770,6 +770,12 @@ func (c *Context) JSONP(code int, obj interface{}) {
 	c.Render(code, render.JsonpJSON{Callback: c.DefaultQuery("callback", ""), Data: obj})
 }
 
+// AsciiJSON serializes the given struct as JSON into the response body with unicode to ASCII string.
+// It also sets the Content-Type as "application/json".
+func (c *Context) AsciiJSON(code int, obj interface{}) {
+	c.Render(code, render.AsciiJSON{Data: obj})
+}
+
 // XML serializes the given struct as XML into the response body.
 // It also sets the Content-Type as "application/xml".
 func (c *Context) XML(code int, obj interface{}) {

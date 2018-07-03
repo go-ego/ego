@@ -763,6 +763,17 @@ func TestContextRenderNoContentHTML(t *testing.T) {
 	assert.Equal(t, "text/html; charset=utf-8", w.HeaderMap.Get("Content-Type"))
 }
 
+func TestContextRenderNoContentAsciiJSON(t *testing.T) {
+	w := httptest.NewRecorder()
+	c, _ := CreateTestContext(w)
+
+	c.AsciiJSON(http.StatusNoContent, []string{"lang", "Go语言"})
+
+	assert.Equal(t, http.StatusNoContent, w.Code)
+	assert.Empty(t, w.Body.String())
+	assert.Equal(t, "application/json", w.HeaderMap.Get("Content-Type"))
+}
+
 // TestContextXML tests that the response is serialized as XML
 // and Content-Type is set to application/xml
 func TestContextRenderXML(t *testing.T) {

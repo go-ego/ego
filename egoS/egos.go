@@ -12,8 +12,10 @@ import (
 	"github.com/go-ego/ego"
 )
 
-var once sync.Once
-var internalEngine *ego.Engine
+var (
+	once           sync.Once
+	internalEngine *ego.Engine
+)
 
 func engine() *ego.Engine {
 	once.Do(func() {
@@ -128,7 +130,7 @@ func Run(addr ...string) (err error) {
 // RunTLS : The router is attached to a http.Server and starts listening and serving HTTPS requests.
 // It is a shortcut for http.ListenAndServeTLS(addr, certFile, keyFile, router)
 // Note: this method will block the calling goroutine undefinitelly unless an error happens.
-func RunTLS(addr string, certFile string, keyFile string) (err error) {
+func RunTLS(addr, certFile, keyFile string) (err error) {
 	return engine().RunTLS(addr, certFile, keyFile)
 }
 

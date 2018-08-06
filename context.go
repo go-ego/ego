@@ -165,11 +165,9 @@ func (c *Context) Error(err error) *util.Error {
 	if err == nil {
 		panic("err is nil")
 	}
-	var parsedError *util.Error
-	switch err.(type) {
-	case *util.Error:
-		parsedError = err.(*util.Error)
-	default:
+
+	parsedError, ok := err.(*util.Error)
+	if !ok {
 		parsedError = &util.Error{
 			Err:  err,
 			Type: util.ErrorTypePrivate,

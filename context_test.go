@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"reflect"
 	"strings"
@@ -27,6 +28,26 @@ import (
 )
 
 var _ context.Context = &Context{}
+
+type TestResponseRecorder struct {
+	*httptest.ResponseRecorder
+	closeChannel chan bool
+}
+
+func (r *TestResponseRecorder) CloseNotify() <-chan bool {
+	return r.closeChannel
+}
+
+func (r *TestResponseRecorder) closeClient() {
+	r.closeChannel <- true
+}
+
+func CreateTestResponseRecorder() *TestResponseRecorder {
+	return &TestResponseRecorder{
+		httptest.NewRecorder(),
+		make(chan bool, 1),
+	}
+}
 
 // Unit tests TODO
 // func (c *Context) File(filepath string) {
@@ -1580,4 +1601,39 @@ func TestContextRenderDataFromReader(t *testing.T) {
 	assert.Equal(t, contentType, w.HeaderMap.Get("Content-Type"))
 	assert.Equal(t, fmt.Sprintf("%d", contentLength), w.HeaderMap.Get("Content-Length"))
 	assert.Equal(t, extraHeaders["Content-Disposition"], w.HeaderMap.Get("Content-Disposition"))
+}
+
+func TestContextStream(t *testing.T) {
+	w := CreateTestResponseRecorder()
+	c, _ := CreateTestContext(w)
+
+	stopStream := true
+	c.Stream(func(w io.Writer) bool {
+		defer func() {
+			stopStream = false
+		}()
+
+		w.Write([]byte("test"))
+
+		return stopStream
+	})
+
+	assert.Equal(t, "testtest", w.Body.String())
+}
+
+func TestContextStreamWithClientGone(t *testing.T) {
+	w := CreateTestResponseRecorder()
+	c, _ := CreateTestContext(w)
+
+	c.Stream(func(writer io.Writer) bool {
+		defer func() {
+			w.closeClient()
+		}()
+
+		writer.Write([]byte("test"))
+
+		return true
+	})
+
+	assert.Equal(t, "test", w.Body.String())
 }

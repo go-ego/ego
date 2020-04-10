@@ -14,8 +14,6 @@
 
 这是一项正在完善的工作.
 
-QQ 群: 120563750
-
 ## Contents
 - [Docs](#docs)
 - [Requirements](#requirements)
